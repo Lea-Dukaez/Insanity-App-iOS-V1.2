@@ -28,8 +28,8 @@
 		DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793272452265D009358F8 /* SceneDelegate.swift */; };
 		DBD7932A2452265D009358F8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793292452265D009358F8 /* HomeViewController.swift */; };
 		DBD7932D2452265D009358F8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD7932B2452265D009358F8 /* Main.storyboard */; };
-		DBD7932F24522661009358F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBD7932E24522661009358F8 /* Assets.xcassets */; };
 		DBD7933224522661009358F8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBD7933024522661009358F8 /* LaunchScreen.storyboard */; };
+		DBD82ACF2493CC7300BF37E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBD82ACE2493CC7200BF37E9 /* Assets.xcassets */; };
 		DBDE225A2455B1A500D961E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -57,9 +57,9 @@
 		DBD793272452265D009358F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DBD793292452265D009358F8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DBD7932C2452265D009358F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DBD7932E24522661009358F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBD7933124522661009358F8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DBD7933324522661009358F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBD82ACE2493CC7200BF37E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FBD0E847B193FD1255230848 /* Pods_Insanity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Insanity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -135,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				DBD793242452265D009358F8 /* Insanity */,
+				DBD82ACE2493CC7200BF37E9 /* Assets.xcassets */,
 				DBD793232452265D009358F8 /* Products */,
 				938DA22439EBD982EC2E643F /* Pods */,
 				1E6D99CC7A4838A98812175D /* Frameworks */,
@@ -157,7 +158,6 @@
 				DB69839324543DE100B84087 /* Models */,
 				DB989B302452EE34009F2C6F /* View */,
 				DB989B312452EE3D009F2C6F /* Controller */,
-				DBD7932E24522661009358F8 /* Assets.xcassets */,
 				DBD7933024522661009358F8 /* LaunchScreen.storyboard */,
 				DBD7933324522661009358F8 /* Info.plist */,
 				DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */,
@@ -229,8 +229,8 @@
 				DBD7933224522661009358F8 /* LaunchScreen.storyboard in Resources */,
 				DBDE225A2455B1A500D961E0 /* GoogleService-Info.plist in Resources */,
 				DB989B352452EE74009F2C6F /* UserCell.xib in Resources */,
-				DBD7932F24522661009358F8 /* Assets.xcassets in Resources */,
 				DB69838E24543B0C00B84087 /* WorkoutCell.xib in Resources */,
+				DBD82ACF2493CC7300BF37E9 /* Assets.xcassets in Resources */,
 				DBD7932D2452265D009358F8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

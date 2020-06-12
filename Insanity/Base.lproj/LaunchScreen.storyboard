@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,16 +15,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="insanityLP" translatesAutoresizingMaskIntoConstraints="NO" id="2tY-Jv-I6T">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INSANITY-LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Z04-ST-3ZK">
+                                <rect key="frame" x="10" y="251" width="394" height="394"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="394" id="9Ii-3W-6bw"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="2tY-Jv-I6T" secondAttribute="trailing" id="KFJ-J5-DDr"/>
-                            <constraint firstItem="2tY-Jv-I6T" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="gBd-q3-O26"/>
-                            <constraint firstItem="2tY-Jv-I6T" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="jIh-fY-p2S"/>
-                            <constraint firstAttribute="bottom" secondItem="2tY-Jv-I6T" secondAttribute="bottom" id="p3X-VX-EKn"/>
+                            <constraint firstItem="Z04-ST-3ZK" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="2rT-6g-ZPA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Z04-ST-3ZK" secondAttribute="trailing" constant="10" id="Qpe-kF-hzW"/>
+                            <constraint firstItem="Z04-ST-3ZK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="x3T-uf-Isf"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -35,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="insanityLP" width="1242" height="2208"/>
+        <image name="INSANITY-LOGO" width="1024" height="1024"/>
     </resources>
 </document>
