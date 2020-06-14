@@ -10,6 +10,8 @@
 		0F764AF46A0531FF3F017AC4 /* Pods_Insanity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD0E847B193FD1255230848 /* Pods_Insanity.framework */; };
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
 		DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4454F8245B186D008D4398 /* PodiumViewController.swift */; };
+		DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */; };
+		DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469762496B94F0007AC71 /* ResetViewController.swift */; };
 		DB69838D24543B0C00B84087 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB69838B24543B0C00B84087 /* WorkoutCell.swift */; };
 		DB69838E24543B0C00B84087 /* WorkoutCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB69838C24543B0C00B84087 /* WorkoutCell.xib */; };
 		DB69839024543DCE00B84087 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB69838F24543DCE00B84087 /* Workout.swift */; };
@@ -38,6 +40,8 @@
 		775272C35787601C39137079 /* Pods-Insanity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.debug.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.debug.xcconfig"; sourceTree = "<group>"; };
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
 		DB4454F8245B186D008D4398 /* PodiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumViewController.swift; sourceTree = "<group>"; };
+		DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
+		DB5469762496B94F0007AC71 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
 		DB69838B24543B0C00B84087 /* WorkoutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCell.swift; sourceTree = "<group>"; };
 		DB69838C24543B0C00B84087 /* WorkoutCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WorkoutCell.xib; sourceTree = "<group>"; };
 		DB69838F24543DCE00B84087 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				DB97C558246A815C008348E1 /* SignUpViewController.swift */,
 				DB97C55A246A81FD008348E1 /* WelcomeViewController.swift */,
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
+				DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */,
+				DB5469762496B94F0007AC71 /* ResetViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -292,7 +298,9 @@
 				DB989B342452EE74009F2C6F /* UserCell.swift in Sources */,
 				DB989B3B2452F740009F2C6F /* ProgressViewController.swift in Sources */,
 				DBD793262452265D009358F8 /* AppDelegate.swift in Sources */,
+				DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */,
 				DB97C55B246A81FD008348E1 /* WelcomeViewController.swift in Sources */,
+				DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */,
 				DB97C55F246AF891008348E1 /* AvatarCollectionViewCell.swift in Sources */,
 				DB69839024543DCE00B84087 /* Workout.swift in Sources */,
 				DB989B392452F730009F2C6F /* TestViewController.swift in Sources */,
