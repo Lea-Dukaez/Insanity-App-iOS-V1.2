@@ -14,13 +14,15 @@ class WelcomeViewController: UIViewController {
     
     @IBOutlet weak var logInButton: UIButton!
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        navigationController?.isNavigationBarHidden = true
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        navigationController?.isNavigationBarHidden = false
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
