@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0F764AF46A0531FF3F017AC4 /* Pods_Insanity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD0E847B193FD1255230848 /* Pods_Insanity.framework */; };
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
+		DB1F3E7F24977CD100F76EE1 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F3E7E24977CD100F76EE1 /* FeedViewController.swift */; };
 		DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4454F8245B186D008D4398 /* PodiumViewController.swift */; };
 		DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */; };
 		DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469762496B94F0007AC71 /* ResetViewController.swift */; };
@@ -39,6 +40,7 @@
 		18923745523456280EA15E20 /* Pods-Insanity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.release.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.release.xcconfig"; sourceTree = "<group>"; };
 		775272C35787601C39137079 /* Pods-Insanity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.debug.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.debug.xcconfig"; sourceTree = "<group>"; };
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
+		DB1F3E7E24977CD100F76EE1 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		DB4454F8245B186D008D4398 /* PodiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumViewController.swift; sourceTree = "<group>"; };
 		DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		DB5469762496B94F0007AC71 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */,
 				DB5469762496B94F0007AC71 /* ResetViewController.swift */,
+				DB1F3E7E24977CD100F76EE1 /* FeedViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			files = (
 				DB989B372452F085009F2C6F /* Constants.swift in Sources */,
 				DBD7932A2452265D009358F8 /* HomeViewController.swift in Sources */,
+				DB1F3E7F24977CD100F76EE1 /* FeedViewController.swift in Sources */,
 				DB97C55D246AC4D0008348E1 /* AccountViewController.swift in Sources */,
 				DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */,
 				DB97C561246BF221008348E1 /* User.swift in Sources */,

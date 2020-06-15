@@ -14,17 +14,17 @@
             <objects>
                 <viewController id="dww-Yy-116" customClass="SignUpViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YgG-yd-1xr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INSANITY-LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi0-Sw-eVz">
-                                <rect key="frame" x="40" y="10" width="334" height="200"/>
+                                <rect key="frame" x="40" y="98" width="334" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="GRu-VW-tKD"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="zP7-Rf-ZvI" userLabel="TextField Stack View">
-                                <rect key="frame" x="40" y="321" width="334" height="140"/>
+                                <rect key="frame" x="40" y="409" width="334" height="140"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="834-k1-XZe">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="55"/>
@@ -47,7 +47,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1e-15-yaS">
-                                <rect key="frame" x="40" y="658" width="334" height="50"/>
+                                <rect key="frame" x="40" y="712" width="334" height="50"/>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="tLJ-vM-A02"/>
@@ -66,7 +66,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="pwf-HU-MUa" userLabel="Button Stack View">
-                                <rect key="frame" x="50" y="738" width="314" height="33"/>
+                                <rect key="frame" x="50" y="792" width="314" height="33"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already a member?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SH3-UN-LZP">
                                         <rect key="frame" x="0.0" y="0.0" width="182" height="33"/>
@@ -87,7 +87,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9zk-yw-jTo" userLabel="CloseView">
-                                <rect key="frame" x="379" y="10" width="25" height="25"/>
+                                <rect key="frame" x="379" y="98" width="25" height="25"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ka8-aa-6aJ">
                                         <rect key="frame" x="0.0" y="0.5" width="25" height="24"/>
@@ -116,7 +116,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="B8O-Z1-KIQ" userLabel="Label Stack View">
-                                <rect key="frame" x="40" y="220" width="334" height="71"/>
+                                <rect key="frame" x="40" y="308" width="334" height="71"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SIGN UP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMn-eg-JXR">
                                         <rect key="frame" x="126.5" y="0.0" width="81.5" height="24"/>
@@ -340,18 +340,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGx-Dw-6Xp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4206" y="-970"/>
+            <point key="canvasLocation" x="4725" y="-619"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="egk-jY-tiC">
             <objects>
                 <viewController id="x3f-LA-dVw" customClass="LoginViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WRq-dV-8ME">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="04D-OC-yMd">
-                                <rect key="frame" x="40" y="327" width="334" height="140"/>
+                                <rect key="frame" x="40" y="415" width="334" height="140"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Np1-XE-Tf0">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="55"/>
@@ -374,7 +374,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEY-k7-Dpr">
-                                <rect key="frame" x="40" y="658" width="334" height="50"/>
+                                <rect key="frame" x="40" y="712" width="334" height="50"/>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="zpN-GY-bb9"/>
@@ -393,13 +393,13 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INSANITY-LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="lqT-ZE-aem">
-                                <rect key="frame" x="40" y="10" width="334" height="200"/>
+                                <rect key="frame" x="40" y="98" width="334" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="WTy-Sv-UZz"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-50" translatesAutoresizingMaskIntoConstraints="NO" id="mYf-Az-zNi">
-                                <rect key="frame" x="50" y="738" width="314" height="33"/>
+                                <rect key="frame" x="50" y="792" width="314" height="33"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not a member yet?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="27s-Ue-TLu">
                                         <rect key="frame" x="0.0" y="0.0" width="182" height="33"/>
@@ -420,7 +420,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAu-fD-s17">
-                                <rect key="frame" x="246" y="487" width="123" height="30"/>
+                                <rect key="frame" x="246" y="575" width="123" height="30"/>
                                 <state key="normal" title="Forgot Password?">
                                     <color key="titleColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -429,7 +429,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCI-YN-L9u" userLabel="CloseView">
-                                <rect key="frame" x="379" y="10" width="25" height="25"/>
+                                <rect key="frame" x="379" y="98" width="25" height="25"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Qtc-k0-lbU">
                                         <rect key="frame" x="0.0" y="0.5" width="25" height="24"/>
@@ -483,7 +483,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="Np1-XE-Tf0" id="PwR-Vg-MmG"/>
                         <outlet property="passwordTextField" destination="3SX-KD-FN2" id="zMv-Nc-ZVD"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="loginToHome" id="uBS-hp-fgY"/>
+                        <segue destination="YWP-mJ-lBE" kind="show" identifier="loginToHome" id="De9-9z-J4q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3gm-XP-Y90" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -495,11 +495,11 @@
             <objects>
                 <viewController id="kQS-JR-DS4" customClass="NewPasswordViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nbe-dv-HaV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mEl-za-iP0">
-                                <rect key="frame" x="40" y="359" width="334" height="55"/>
+                                <rect key="frame" x="40" y="447" width="334" height="55"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="Nz1-tT-U7c"/>
                                 </constraints>
@@ -508,7 +508,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLR-is-R3u">
-                                <rect key="frame" x="40" y="658" width="334" height="50"/>
+                                <rect key="frame" x="40" y="712" width="334" height="50"/>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Pzb-sV-OYk"/>
@@ -528,13 +528,13 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INSANITY-LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="gjv-Fq-6W1">
-                                <rect key="frame" x="40" y="10" width="334" height="200"/>
+                                <rect key="frame" x="40" y="98" width="334" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="jzJ-zz-GyV"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-80" translatesAutoresizingMaskIntoConstraints="NO" id="xdz-Og-Azm">
-                                <rect key="frame" x="50" y="738" width="314" height="33"/>
+                                <rect key="frame" x="50" y="792" width="314" height="33"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or go back to" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zt5-5E-Xi4">
                                         <rect key="frame" x="0.0" y="0.0" width="197" height="33"/>
@@ -555,7 +555,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="wGq-ib-28G">
-                                <rect key="frame" x="40" y="220" width="334" height="89"/>
+                                <rect key="frame" x="40" y="308" width="334" height="89"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FORGOT PASSWORD?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXU-KK-fxZ">
                                         <rect key="frame" x="59.5" y="0.0" width="215.5" height="24"/>
@@ -572,7 +572,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPC-kz-UAf" userLabel="CloseView">
-                                <rect key="frame" x="379" y="10" width="25" height="25"/>
+                                <rect key="frame" x="379" y="98" width="25" height="25"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="nPS-1c-Orw">
                                         <rect key="frame" x="0.0" y="0.5" width="25" height="24"/>
@@ -638,11 +638,11 @@
             <objects>
                 <viewController id="KnX-AH-uGq" customClass="ResetViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAQ-ku-yI8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-3m-3Aw">
-                                <rect key="frame" x="40" y="658" width="334" height="50"/>
+                                <rect key="frame" x="40" y="712" width="334" height="50"/>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Jis-GD-Y3u"/>
@@ -662,13 +662,13 @@
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INSANITY-LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="kMl-kN-s76">
-                                <rect key="frame" x="40" y="34" width="334" height="200"/>
+                                <rect key="frame" x="40" y="122" width="334" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Pa8-Lq-3We"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="bS7-St-hXT">
-                                <rect key="frame" x="40" y="244" width="334" height="89"/>
+                                <rect key="frame" x="40" y="332" width="334" height="89"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PASSWORD RESET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IhZ-Ck-8ak">
                                         <rect key="frame" x="75" y="0.0" width="184" height="24"/>
@@ -685,13 +685,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="lea.dukaez@gmail.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0m-hx-f7f">
-                                <rect key="frame" x="40" y="383" width="334" height="20.5"/>
+                                <rect key="frame" x="40" y="471" width="334" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="quz-Sa-3E6" userLabel="CloseView">
-                                <rect key="frame" x="379" y="10" width="25" height="25"/>
+                                <rect key="frame" x="379" y="98" width="25" height="25"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="OGl-7e-BMC">
                                         <rect key="frame" x="0.0" y="0.5" width="25" height="24"/>
@@ -748,7 +748,7 @@
             </objects>
             <point key="canvasLocation" x="1516" y="1501"/>
         </scene>
-        <!--Home View Controller-->
+        <!--Item-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
@@ -896,6 +896,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="tuS-9k-WFl"/>
                     <navigationItem key="navigationItem" id="6xT-i4-bd1">
                         <barButtonItem key="rightBarButtonItem" title="Logout" id="n9E-YK-OOr"/>
                     </navigationItem>
@@ -910,9 +911,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2960.8695652173915" y="308.70535714285711"/>
+            <point key="canvasLocation" x="3896" y="163"/>
         </scene>
-        <!--Progress View Controller-->
+        <!--Item-->
         <scene sceneID="DZB-qt-MRf">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="0R8-ZT-1QA" customClass="ProgressViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
@@ -974,6 +975,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="glq-rp-bN8"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="TjB-EO-Vfg"/>
                     <navigationItem key="navigationItem" id="WrI-O4-BLw"/>
                     <connections>
                         <outlet property="msgLabel" destination="VRV-1k-e7D" id="d1C-xX-zKM"/>
@@ -984,7 +986,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4s-48-Zbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5115.9420289855079" y="-74.330357142857139"/>
+            <point key="canvasLocation" x="4029" y="1799"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Ad6-3n-5fN">
+            <objects>
+                <viewController id="YWP-mJ-lBE" customClass="FeedViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AeM-54-q3i">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Feed for the moment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPL-AW-DPF">
+                                <rect key="frame" x="113.5" y="437.5" width="187" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yPL-AW-DPF" firstAttribute="centerY" secondItem="AeM-54-q3i" secondAttribute="centerY" id="266-ub-GHI"/>
+                            <constraint firstItem="yPL-AW-DPF" firstAttribute="centerX" secondItem="AeM-54-q3i" secondAttribute="centerX" id="lAD-tO-ARi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dMh-bG-btg"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="lc7-Tm-25E"/>
+                    <navigationItem key="navigationItem" id="oEz-vd-XlP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DrE-Hc-8Aj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3948" y="968"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="nPV-eI-Tll">
@@ -1250,9 +1281,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kd1-Uo-hr4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4277" y="1501"/>
+            <point key="canvasLocation" x="5500" y="719"/>
         </scene>
-        <!--Podium View Controller-->
+        <!--Item-->
         <scene sceneID="Di4-Sa-O3q">
             <objects>
                 <viewController id="22Z-vv-aaw" customClass="PodiumViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
@@ -1395,6 +1426,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TYt-p9-fnN"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="r69-KE-M12"/>
                     <navigationItem key="navigationItem" id="N4J-WN-mNK"/>
                     <connections>
                         <outlet property="scoreNotOnPodiumLabel" destination="8x1-O1-ZO9" id="6hJ-Vq-Kib"/>
@@ -1413,7 +1445,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JoA-gI-ZqV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5186.9565217391309" y="701.78571428571422"/>
+            <point key="canvasLocation" x="4101" y="2567"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="S07-b6-zkX">
@@ -1488,7 +1520,7 @@
                     <navigationItem key="navigationItem" id="7lh-MI-4sj"/>
                     <connections>
                         <outlet property="logInButton" destination="SpW-Mq-MF0" id="zKD-nL-VnW"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="welcomeToHomeloggedIn" id="hQ0-ed-Idj"/>
+                        <segue destination="YWP-mJ-lBE" kind="show" identifier="welcomeToHomeloggedIn" id="kom-Bh-yhf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hb1-sz-plQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1513,11 +1545,34 @@
             </objects>
             <point key="canvasLocation" x="-678.26086956521749" y="99.776785714285708"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="2Um-th-vfX">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="wzm-WG-hmc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ITq-bL-sM4">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="YWP-mJ-lBE" kind="relationship" relationship="viewControllers" id="BcB-5O-Ow4"/>
+                        <segue destination="0R8-ZT-1QA" kind="relationship" relationship="viewControllers" id="bfZ-oB-nfQ"/>
+                        <segue destination="22Z-vv-aaw" kind="relationship" relationship="viewControllers" id="Vyk-BP-OsL"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="opm-Ka-rnN"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cab-5o-dE9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2933.3333333333335" y="1407.5892857142856"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="uBS-hp-fgY"/>
-        <segue reference="tSc-Tn-2qc"/>
-        <segue reference="zsY-er-2St"/>
+        <segue reference="6nM-22-Zwq"/>
+        <segue reference="De9-9z-J4q"/>
+        <segue reference="cbn-a3-vQZ"/>
+        <segue reference="scJ-P1-cIh"/>
+        <segue reference="Qao-Td-9yb"/>
+        <segue reference="YN2-s5-Ghs"/>
         <segue reference="ffr-XT-wBd"/>
     </inferredMetricsTieBreakers>
     <resources>
