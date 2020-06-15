@@ -42,8 +42,17 @@ class WelcomeViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueWelcomeToHome {
-            let homeView = segue.destination as! HomeViewController
+            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
+            let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
+            destinationVC.currentUserID = currentUserID
+            
+            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
             homeView.currentUserID = currentUserID
+            
+            let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
+            progressView.userName = "Malfouf le moche"
+            progressView.avatarImg = "avatar7"
+            progressView.uid = currentUserID
         }
     }
 }

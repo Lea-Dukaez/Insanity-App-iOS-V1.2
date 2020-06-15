@@ -28,8 +28,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
-    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+//    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
+//    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
 
     
     override func viewDidLoad() {
@@ -159,10 +159,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        avatar = dataUsers[indexPath.row].avatar
-        pseudo = dataUsers[indexPath.row].pseudo
-        uid = dataUsers[indexPath.row].id
-        performSegue(withIdentifier: K.segueToProgress, sender: self)
+        print(dataUsers[indexPath.row].id)
+        print(dataUsers[indexPath.row].pseudo)
+//        avatar = dataUsers[indexPath.row].avatar
+//        pseudo = dataUsers[indexPath.row].pseudo
+//        uid = dataUsers[indexPath.row].id
+//        performSegue(withIdentifier: K.segueToProgress, sender: self)
     }
     
 }

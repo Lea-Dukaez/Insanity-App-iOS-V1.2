@@ -71,10 +71,20 @@ class LoginViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueLoginToHome {
-            let homeView = segue.destination as! HomeViewController
+            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
+            let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
+            destinationVC.currentUserID = userID
+            
+            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
             homeView.currentUserID = userID
+            
+            let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
+            progressView.userName = "Malfouf le moche"
+            progressView.avatarImg = "avatar7"
+            progressView.uid = userID
         }
     }
     
