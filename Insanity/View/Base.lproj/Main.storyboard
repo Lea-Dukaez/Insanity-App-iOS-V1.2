@@ -1397,6 +1397,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="N4J-WN-mNK"/>
                     <connections>
+                        <outlet property="scoreNotOnPodiumLabel" destination="8x1-O1-ZO9" id="6hJ-Vq-Kib"/>
+                        <outlet property="textNotOnPodiumLabel" destination="x6D-Ie-ZPq" id="0w1-HQ-EHk"/>
                         <outlet property="topOneImage" destination="oxl-Kd-h1N" id="PQE-rm-042"/>
                         <outlet property="topOneLabel" destination="Mvl-qN-lWR" id="yTK-hX-x9F"/>
                         <outlet property="topOnePseudoLabel" destination="s37-r3-l5w" id="RvR-kn-EQ8"/>

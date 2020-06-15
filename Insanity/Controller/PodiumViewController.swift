@@ -15,7 +15,9 @@ class PodiumViewController: UIViewController {
     let db = Firestore.firestore()
     var dataPodium: [PodiumCompetitor] = []
 
-
+    @IBOutlet weak var scoreNotOnPodiumLabel: UILabel!
+    @IBOutlet weak var textNotOnPodiumLabel: UILabel!
+    
     @IBOutlet weak var topOneLabel: UILabel!
     @IBOutlet weak var topTwoLabel: UILabel!
     @IBOutlet weak var topThreeLabel: UILabel!
