@@ -10,6 +10,8 @@ import UIKit
 
 class NewPasswordViewController: UIViewController {
 
+    @IBOutlet weak var emailTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -17,6 +19,9 @@ class NewPasswordViewController: UIViewController {
     }
     
 
+    @IBAction func sendPressed(_ sender: UIButton) {
+    }
+    
     /*
     // MARK: - Navigation
 

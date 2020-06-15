@@ -10,6 +10,8 @@ import UIKit
 
 class ResetViewController: UIViewController {
 
+    @IBOutlet weak var emailLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
