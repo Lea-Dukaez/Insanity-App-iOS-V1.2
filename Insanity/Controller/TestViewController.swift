@@ -24,7 +24,6 @@ class TestViewController: UIViewController {
     let alert = UIAlertController(title: "Incomplete", message: "Please fill all the exercises", preferredStyle: UIAlertController.Style.alert)
     let forbiddenNumber = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
 
-    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
     
@@ -39,6 +38,8 @@ class TestViewController: UIViewController {
     @IBOutlet weak var PUJKTextField: UITextField!
     @IBOutlet weak var PMCTextField: UITextField!
     
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
     
     override func viewDidLoad() {
         super.viewDidLoad()

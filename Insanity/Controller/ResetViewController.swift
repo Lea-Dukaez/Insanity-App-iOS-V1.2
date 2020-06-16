@@ -14,13 +14,10 @@ class ResetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     @IBAction func closePressed(_ sender: UIButton) {
         self.navigationController!.popToRootViewController(animated: true)
-
-//        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
 
 }

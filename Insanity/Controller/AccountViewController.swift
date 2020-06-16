@@ -17,19 +17,10 @@ class AccountViewController: UIViewController {
     var pseudo = ""
     var userID = ""
 
-    
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
-
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,38 +35,33 @@ class AccountViewController: UIViewController {
         
     }
 
-    @IBAction func logoutPressed(_ sender: UIButton) {
-        do {
-          try Auth.auth().signOut()
-        } catch let signOutError as NSError {
-          print ("Error signing out: %@", signOutError)
-            return
-        }
-        if Auth.auth().currentUser == nil {
-            // Remove User Session from device
-            UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
-            UserDefaults.standard.synchronize()
-        print("user logged out")
-        self.navigationController!.popToRootViewController(animated: true)
-        }
+    @IBAction func closePressed(_ sender: UIButton) {
+        saveProfile()
     }
     
     @IBAction func validatePressed(_ sender: UIButton) {
+        saveProfile()
+    }
+    
+    func saveProfile() {
         if pseudoTextField.text?.isEmpty == false {
             pseudo = pseudoTextField.text!
         }
         changePseudoAndImage()
-        performSegue(withIdentifier: K.segueAccountToHome, sender: self)
+        self.navigationController?.popViewController(animated: true)
+//        self.dismiss(animated: true, completion: nil)
+//        performSegue(withIdentifier: K.segueAccountToProfile, sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueAccountToHome {
-            let homeView = segue.destination as! HomeViewController
-            homeView.pseudoCurrentUser = pseudo
-            homeView.avatarCurrentUser = avatarImage
-            homeView.currentUserID = userID
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == K.segueAccountToProfile {
+//            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
+//            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
+//            homeView.pseudoCurrentUser = pseudo
+//            homeView.avatarCurrentUser = avatarImage
+//            homeView.currentUserID = userID
+//        }
+//    }
     
     func changePseudoAndImage() {
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([

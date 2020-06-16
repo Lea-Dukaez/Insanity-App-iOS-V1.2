@@ -16,14 +16,6 @@ class WelcomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        navigationController?.isNavigationBarHidden = true
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        navigationController?.isNavigationBarHidden = false
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +27,6 @@ class WelcomeViewController: UIViewController {
         }
         
         logInButton.backgroundColor = .clear
-//        logInButton.layer.cornerRadius = 5
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = UIColor.label.cgColor
     }

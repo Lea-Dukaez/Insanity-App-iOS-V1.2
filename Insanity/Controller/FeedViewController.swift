@@ -12,6 +12,7 @@ class FeedViewController: UIViewController {
     
     var currentUserID = ""
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

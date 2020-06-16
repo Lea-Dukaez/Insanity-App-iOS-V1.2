@@ -27,20 +27,25 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    
-//    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
-//    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    @IBOutlet weak var addFriendsButton: UIButton!
+    @IBOutlet weak var logOutButton: UIButton!    
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true);
         print("HomeViewController  ViewDidLoad called")
         print("ViewDidLoad HomeView , userID = \(currentUserID)")
         
+        addFriendsButton.backgroundColor = .clear
+        addFriendsButton.layer.borderWidth = 1
+        addFriendsButton.layer.borderColor = UIColor.label.cgColor
+        logOutButton.backgroundColor = .clear
+        logOutButton.layer.borderWidth = 1
+        logOutButton.layer.borderColor = UIColor.label.cgColor
+        
         getCurrentUser()
         
-        self.competitorsLabel.text = "No competitor yet !"
+        self.competitorsLabel.text = "No Friends to compete with yet !"
         self.competitorsLabel.textAlignment = .center
         
         self.tableView.dataSource = self
@@ -88,7 +93,7 @@ class HomeViewController: UIViewController {
                                     // when data is collected, create the tableview
                                     DispatchQueue.main.async {
                                         self.tableView.reloadData()
-                                        self.competitorsLabel.text = "Other competitors :"
+                                        self.competitorsLabel.text = "FRIENDS:"
                                         self.competitorsLabel.textAlignment = .left
                                     }
                                 }
@@ -99,23 +104,41 @@ class HomeViewController: UIViewController {
             } // fin getDocument
     }
     
-    @IBAction func currentUserPressed(_ sender: UIButton) {
-        avatar = avatarCurrentUser
-        pseudo = pseudoCurrentUser
-        uid = currentUserID
-        performSegue(withIdentifier: K.segueToProgress, sender: self) 
-    }
+//    @IBAction func currentUserPressed(_ sender: UIButton) {
+//        avatar = avatarCurrentUser
+//        pseudo = pseudoCurrentUser
+//        uid = currentUserID
+//        performSegue(withIdentifier: K.segueToProgress, sender: self) 
+//    }
     
-    @IBAction func addTestPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueHomeToTest, sender: self)
-
-    }
+//    @IBAction func addTestPressed(_ sender: UIButton) {
+//        performSegue(withIdentifier: K.segueHomeToTest, sender: self)
+//
+//    }
     
     @IBAction func accountPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueHomeToAccount, sender: self)
     }
 
 
+    @IBAction func logOutPressed(_ sender: UIButton) {
+        do {
+          try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+            return
+        }
+        if Auth.auth().currentUser == nil {
+            // Remove User Session from device
+            UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
+            UserDefaults.standard.synchronize()
+        print("user logged out")
+        self.navigationController!.popToRootViewController(animated: true)
+        }
+    }
+    
+    @IBAction func addFriendsPressed(_ sender: UIButton) {
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueToProgress {
@@ -124,12 +147,12 @@ class HomeViewController: UIViewController {
             progressView.avatarImg = avatar
             progressView.uid = uid
         }
-        if segue.identifier == K.segueHomeToTest {
-            let testView = segue.destination as! TestViewController
-            testView.userName = pseudoCurrentUser
-            testView.avatarImg = avatarCurrentUser
-            testView.currentUserId = currentUserID
-        }
+//        if segue.identifier == K.segueHomeToTest {
+//            let testView = segue.destination as! TestViewController
+//            testView.userName = pseudoCurrentUser
+//            testView.avatarImg = avatarCurrentUser
+//            testView.currentUserId = currentUserID
+//        }
         if segue.identifier == K.segueHomeToAccount {
             let accountView = segue.destination as! AccountViewController
             accountView.pseudo = pseudoCurrentUser

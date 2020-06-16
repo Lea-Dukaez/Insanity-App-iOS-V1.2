@@ -23,16 +23,21 @@ class ProgressViewController: UIViewController {
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var msgLabel: UILabel!
+    @IBOutlet weak var addTestButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTestButton.backgroundColor = .clear
+        addTestButton.layer.borderWidth = 1
+        addTestButton.layer.borderColor = UIColor.label.cgColor
+        
         userLabel.text = userName
         userImage.image = UIImage(named: avatarImg)
             
         loadWorkoutData()
     }
     
-    
+
     func loadWorkoutData() {
         dataWorkoutTest = []
         
@@ -98,6 +103,19 @@ class ProgressViewController: UIViewController {
     
     func dismissMsg() {
         msgLabel.textColor = .clear
+    }
+    
+    @IBAction func addTestPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: K.segueResultsToTest, sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == K.segueResultsToTest {
+            let testView = segue.destination as! TestViewController
+            testView.userName = userName
+            testView.avatarImg = avatarImg
+            testView.currentUserId = uid
+        }
     }
     
     

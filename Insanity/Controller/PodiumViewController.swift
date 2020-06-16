@@ -31,7 +31,7 @@ class PodiumViewController: UIViewController {
     @IBOutlet weak var topThreePseudoLabel: UILabel!
     
     @IBOutlet weak var workoutPickerView: UIPickerView!
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +45,8 @@ class PodiumViewController: UIViewController {
         topThreeImage.image = UIImage(named: K.userCell.noOpponentAvatar)
         topThreeLabel.text = "X"
         topThreePseudoLabel.text = "N/A"
+        scoreNotOnPodiumLabel.text = ""
+        textNotOnPodiumLabel.text = ""
 
         workoutPickerView.dataSource = self
         workoutPickerView.delegate = self
@@ -180,7 +182,7 @@ extension PodiumViewController: UIPickerViewDelegate {
             return attributedString
         }
         
-        let attributedString = NSAttributedString(string: K.workout.workoutMove[row-1], attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        let attributedString = NSAttributedString(string: K.workout.workoutMove[row-1], attributes: [NSAttributedString.Key.foregroundColor : UIColor.label])
         return attributedString
     }
     
