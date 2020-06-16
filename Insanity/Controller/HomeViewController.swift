@@ -138,6 +138,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func addFriendsPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: K.segueGoToAddFriends, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
