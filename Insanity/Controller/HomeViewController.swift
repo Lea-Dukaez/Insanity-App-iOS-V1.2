@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     var pseudoCurrentUser : String = ""
     var avatarCurrentUser : String = ""
     var currentUserID = ""
+    var imageCurrentUser: UIImage = UIImage()
     
     var pseudo = ""
     var avatar = ""
@@ -56,21 +57,39 @@ class HomeViewController: UIViewController {
     }
     
     func getCurrentUser() {
-        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
-            .getDocument { (document, error) in
-            if let doc = document {
-                if let data = doc.data() {
-                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                        self.pseudoCurrentUser = pseudo
-                        self.avatarCurrentUser = avatar
-                        DispatchQueue.main.async {
-                            self.currentUserLabel.text = self.pseudoCurrentUser
-                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
-                        }
-                    }
-                }
+        // Update inside Auth
+        let user = Auth.auth().currentUser
+        if let user = user {
+            currentUserID = user.uid
+            pseudoCurrentUser = user.displayName ?? "no name"
+            
+            let photoUrl = user.photoURL!
+               if let data = try? Data(contentsOf: photoUrl)
+               {
+                imageCurrentUser = UIImage(data: data)!
+               }
+            DispatchQueue.main.async {
+                self.currentUserLabel.text = self.pseudoCurrentUser
+                self.currentUserImage.image = self.imageCurrentUser
             }
         }
+        
+        // Update inside Fairestore
+//        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
+//            .getDocument { (document, error) in
+//            if let doc = document {
+//                if let data = doc.data() {
+//                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+//                        self.pseudoCurrentUser = pseudo
+//                        self.avatarCurrentUser = avatar
+//                        DispatchQueue.main.async {
+//                            self.currentUserLabel.text = self.pseudoCurrentUser
+//                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
     
     

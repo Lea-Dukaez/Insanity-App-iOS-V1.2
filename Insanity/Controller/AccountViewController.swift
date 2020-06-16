@@ -64,6 +64,16 @@ class AccountViewController: UIViewController {
 //    }
     
     func changePseudoAndImage() {
+        let imageURL = Bundle.main.url(forResource: self.avatarImage, withExtension: "png")
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = self.pseudo
+        changeRequest?.photoURL = imageURL
+        changeRequest?.commitChanges { (error) in
+            if let err = error {
+                print(err)
+            }
+        }
+        
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([
             K.FStore.pseudoField: self.pseudo,
             K.FStore.avatarField: self.avatarImage,

@@ -59,6 +59,16 @@ class SignUpViewController: UIViewController {
                     let randomInt = Int.random(in: 0...17)
                     self.pseudo = email
                     self.avatar = K.avatarImages[randomInt]
+                    let imageURL = Bundle.main.url(forResource: self.avatar, withExtension: "png")
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.displayName = self.pseudo
+                    changeRequest?.photoURL = imageURL
+                    changeRequest?.commitChanges { (error) in
+                        if let err = error {
+                            print(err)
+                        }
+                        print("changes done!")
+                    }
                     self.createUserInfo(emailDefault: email, avatarDefault: K.avatarImages[randomInt])
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
