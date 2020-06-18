@@ -12,4 +12,5 @@ struct PodiumCompetitor {
     let pseudo: String
     let avatar: String
     let max: [Double]
+    let userID: String
 }

@@ -9,11 +9,14 @@
 import UIKit
 
 class ResetViewController: UIViewController {
+    
+    var userEmail = ""
 
     @IBOutlet weak var emailLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailLabel.text = userEmail
     }
     
     @IBAction func closePressed(_ sender: UIButton) {

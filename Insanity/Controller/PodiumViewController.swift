@@ -11,6 +11,8 @@ import Firebase
 
 class PodiumViewController: UIViewController {
     
+    var currentUserID = ""
+    
     var workoutSelected = "Switch Kicks"
     let db = Firestore.firestore()
     var dataPodium: [PodiumCompetitor] = []
@@ -35,7 +37,31 @@ class PodiumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Podium View Did Load")
         
+        topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topOneLabel.text = ""
+        topOnePseudoLabel.text = "N/A"
+        topTwoImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topTwoLabel.text = ""
+        topTwoPseudoLabel.text = "N/A"
+        topThreeImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topThreeLabel.text = ""
+        topThreePseudoLabel.text = "N/A"
+        scoreNotOnPodiumLabel.text = ""
+        textNotOnPodiumLabel.text = ""
+
+        workoutPickerView.dataSource = self
+        workoutPickerView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("Podium View will appear")
+        recupMaxValues()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.workoutPickerView.selectRow(0, inComponent: 0, animated: false)
         topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
         topOneLabel.text = "X"
         topOnePseudoLabel.text = "N/A"
@@ -47,19 +73,17 @@ class PodiumViewController: UIViewController {
         topThreePseudoLabel.text = "N/A"
         scoreNotOnPodiumLabel.text = ""
         textNotOnPodiumLabel.text = ""
-
-        workoutPickerView.dataSource = self
-        workoutPickerView.delegate = self
-        
-        recupMaxValues()
     }
+
+    
     
     func recupMaxValues() {
+        print("recupMaxValues called")
         dataPodium = []
 
         db.collection(K.FStore.collectionUsersName)
 //            .order(by:  K.FStore.idField)
-            .getDocuments { (querySnapshot, error) in
+            .addSnapshotListener { (querySnapshot, error) in
                 if let err = error {
                     print("Error retrieving document: \(err)")
                     return
@@ -70,8 +94,9 @@ class PodiumViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for doc in snapshotDocuments {
                             let data = doc.data()
+                            let userID = doc.documentID
                             if let maxValues = data[K.FStore.maxField] as? [Double], let avatar = data[K.FStore.avatarField] as? String, let pseudo = data[K.FStore.pseudoField] as? String {
-                                let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues)
+                                let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
                                 self.dataPodium.append(podiumCompetitor)
                             } // end if let get data
                         } // end for loop
@@ -83,7 +108,13 @@ class PodiumViewController: UIViewController {
 
 
     func updatePodium(sportRow: Int) {
-        
+        // by default, set the comment as if out of Podium
+        let currentUserIndex = dataPodium.indices.filter { dataPodium[$0].userID == currentUserID}
+        print("currentUserIndex :\(currentUserIndex)")
+        print("sportRow :\(sportRow)")
+        var commentScore = String(format: "%.0f", dataPodium[currentUserIndex[0]].max[sportRow])
+        var commentLabel = K.podium.notOnPodium
+   
         let dataPodiumFiltered = dataPodium.filter { $0.max.isEmpty == false }
 
         switch dataPodiumFiltered.count {
@@ -93,7 +124,11 @@ class PodiumViewController: UIViewController {
             topOneImage.image = UIImage(named: dataPodium[index[0]].avatar)
             topOneLabel.text = String(format: "%.0f", dataPodium[index[0]].max[sportRow])
             topOnePseudoLabel.text = dataPodium[index[0]].pseudo
-        
+            if dataPodium[index[0]].userID == currentUserID {
+                commentLabel = K.podium.first
+                commentScore = ""
+//                commentScore = "Add Friends to compare yourself to them !"
+            }
         case 2:
             // case 2 array Max not empty => Data for 2 users
             let maxScore = dataPodiumFiltered.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
@@ -101,60 +136,116 @@ class PodiumViewController: UIViewController {
             topOneImage.image = UIImage(named: dataPodium[index[0]].avatar)
             topOneLabel.text = String(format: "%.0f", dataPodium[index[0]].max[sportRow])
             topOnePseudoLabel.text = dataPodium[index[0]].pseudo
+            if dataPodium[index[0]].userID == currentUserID {
+                commentLabel = K.podium.first
+                commentScore = ""
+            }
             if index.count == 2 {
                 topTwoImage.image = UIImage(named: dataPodium[index[1]].avatar)
                 topTwoLabel.text = String(format: "%.0f", dataPodium[index[1]].max[sportRow])
                 topTwoPseudoLabel.text = dataPodium[index[1]].pseudo
+                if dataPodium[index[1]].userID == currentUserID {
+                    commentLabel = K.podium.second
+                    commentScore = ""
+                }
             } else {
                 let secondScore = dataPodiumFiltered.filter { $0.max != maxScore!.max }
                 let indexSecond = dataPodium.indices.filter { dataPodium[$0].max == secondScore[0].max }
                 topTwoImage.image = UIImage(named: dataPodium[indexSecond[0]].avatar)
                 topTwoLabel.text = String(format: "%.0f", dataPodium[indexSecond[0]].max[sportRow])
                 topTwoPseudoLabel.text = dataPodium[indexSecond[0]].pseudo
+                if dataPodium[indexSecond[0]].userID == currentUserID {
+                    commentLabel = K.podium.second
+                    commentScore = ""
+                }
             }
         
         case 3...4:
-            // case 3 or 4 array Max not empty => Data for 3 users
+            // case 3 or more array "Max" not empty => Data for 3 users or more
             let maxScore = dataPodiumFiltered.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
             let index = dataPodium.indices.filter { dataPodium[$0].max == maxScore!.max }
             topOneImage.image = UIImage(named: dataPodium[index[0]].avatar)
             topOneLabel.text = String(format: "%.0f", dataPodium[index[0]].max[sportRow])
             topOnePseudoLabel.text = dataPodium[index[0]].pseudo
+            if dataPodium[index[0]].userID == currentUserID {
+                commentLabel = K.podium.first
+                commentScore = ""
+            }
             if index.count == 3 || index.count == 4 {
+                // case Ex-aequo between Top 1-2-3-4
                 topTwoImage.image = UIImage(named: dataPodium[index[1]].avatar)
                 topTwoLabel.text = String(format: "%.0f", dataPodium[index[1]].max[sportRow])
                 topTwoPseudoLabel.text = dataPodium[index[1]].pseudo
                 topThreeImage.image = UIImage(named: dataPodium[index[2]].avatar)
                 topThreeLabel.text = String(format: "%.0f", dataPodium[index[2]].max[sportRow])
                 topThreePseudoLabel.text = dataPodium[index[2]].pseudo
+                if dataPodium[index[1]].userID == currentUserID {
+                    commentLabel = K.podium.second
+                    commentScore = ""
+                } else if dataPodium[index[2]].userID == currentUserID {
+                    commentLabel = K.podium.third
+                    commentScore = ""
+                } else {
+                    if index.count == 4 && dataPodium[index[3]].userID == currentUserID {
+                        commentLabel = K.podium.notOnPodium
+                        commentScore = String(format: "%.0f", dataPodium[index[3]].max[sportRow])
+                    }
+                }
             } else if index.count == 2 {
+                // case Ex-aequo between Top 1-2
                 topTwoImage.image = UIImage(named: dataPodium[index[1]].avatar)
                 topTwoLabel.text = String(format: "%.0f", dataPodium[index[1]].max[sportRow])
                 topTwoPseudoLabel.text = dataPodium[index[1]].pseudo
+                if dataPodium[index[1]].userID == currentUserID {
+                    commentLabel = K.podium.second
+                    commentScore = ""
+                }
             } else {
+                // case No Ex-aequo between Top 1-2
                 let dataPodiumWithouFirst = dataPodiumFiltered.filter { $0.max != maxScore!.max }
                 let SecondMaxScore = dataPodiumWithouFirst.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
                 let indexSecond = dataPodium.indices.filter { dataPodium[$0].max == SecondMaxScore!.max }
                 topTwoImage.image = UIImage(named: dataPodium[indexSecond[0]].avatar)
                 topTwoLabel.text = String(format: "%.0f", dataPodium[indexSecond[0]].max[sportRow])
                 topTwoPseudoLabel.text = dataPodium[indexSecond[0]].pseudo
-                if indexSecond.count == 2 || index.count == 3 {
+                if dataPodium[indexSecond[0]].userID == currentUserID {
+                    commentLabel = K.podium.second
+                    commentScore = ""
+                }
+                if indexSecond.count == 2 || indexSecond.count == 3 {
+                    // case, after Top 1, Ex-aequo between Top 2-3-4
                     topThreeImage.image = UIImage(named: dataPodium[indexSecond[1]].avatar)
                     topThreeLabel.text = String(format: "%.0f", dataPodium[indexSecond[1]].max[sportRow])
                     topThreePseudoLabel.text = dataPodium[indexSecond[1]].pseudo
+                    if dataPodium[indexSecond[1]].userID == currentUserID {
+                        commentLabel = K.podium.third
+                        commentScore = ""
+                    }
+                    if indexSecond.count == 3 && dataPodium[indexSecond[2]].userID == currentUserID{
+                        commentLabel = K.podium.notOnPodium
+                        commentScore = String(format: "%.0f", dataPodium[indexSecond[2]].max[sportRow])
+                    }
                 } else {
+                    // case No Ex-aequo between Top 1-2-3
                     let dataPodiumThird = dataPodiumWithouFirst.filter { $0.max != SecondMaxScore!.max }
                     let thirdMaxScore = dataPodiumThird.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
                     let indexThird = dataPodium.indices.filter { dataPodium[$0].max == thirdMaxScore!.max }
                     topThreeImage.image = UIImage(named: dataPodium[indexThird[0]].avatar)
                     topThreeLabel.text = String(format: "%.0f", dataPodium[indexThird[0]].max[sportRow])
                     topThreePseudoLabel.text = dataPodium[indexThird[0]].pseudo
+                    if dataPodium[indexThird[0]].userID == currentUserID {
+                          commentLabel = K.podium.third
+                        commentScore = ""
+                    }
                 }
             }
         default:
             // case if dataPodium contains only empty array => dataPodiumFiltered.count = 0
-            print("no data recorded")
+            print("No data recorded")
         }
+        
+        textNotOnPodiumLabel.text = commentLabel
+        scoreNotOnPodiumLabel.text = commentScore
     }
         
 } // end PodiumViewController

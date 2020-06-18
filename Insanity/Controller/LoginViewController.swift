@@ -78,13 +78,16 @@ class LoginViewController: UIViewController {
             let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
             destinationVC.currentUserID = userID
             
-            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
-            homeView.currentUserID = userID
-            
             let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
             progressView.userName = "Malfouf le moche"
             progressView.avatarImg = "avatar7"
             progressView.uid = userID
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
+            podiumView.currentUserID = userID
+            
+            let homeView = tabCtrl.viewControllers![3] as! ProfileViewController
+            homeView.currentUserID = userID
         }
     }
     

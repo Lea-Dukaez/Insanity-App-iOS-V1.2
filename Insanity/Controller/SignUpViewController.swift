@@ -14,11 +14,12 @@ class SignUpViewController: UIViewController {
 
     let db = Firestore.firestore()
     
-    var pseudo = ""
+    var pseudoCurrentUser = ""
     var avatar = ""
-     var userID = ""
+    var userID = ""
 
 
+    @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -26,6 +27,8 @@ class SignUpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Pseudo",
+        attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password",
@@ -34,13 +37,13 @@ class SignUpViewController: UIViewController {
 
     @IBAction func signUpPressed(_ sender: UIButton) {
         
-        let textFieldArray = [emailTextField, passwordTextField]
+        let textFieldArray = [pseudoTextField, emailTextField, passwordTextField]
         let allHaveText = textFieldArray.allSatisfy { $0!.text?.isEmpty == false }
         
         if !allHaveText {
             showAlert(for: alertEmpty)
         } else {
-            if let email = self.emailTextField.text, let password = self.passwordTextField.text {
+            if let pseudo = self.pseudoTextField.text, let email = self.emailTextField.text, let password = self.passwordTextField.text {
                 
                 Auth.auth().createUser(withEmail: email, password: password) { (dataResult, error) in
                     if let err = error {
@@ -57,22 +60,13 @@ class SignUpViewController: UIViewController {
                           UserDefaults.standard.synchronize()
                     }
                     let randomInt = Int.random(in: 0...17)
-                    self.pseudo = email
+                    self.pseudoCurrentUser = pseudo
                     self.avatar = K.avatarImages[randomInt]
-                    let imageURL = Bundle.main.url(forResource: self.avatar, withExtension: "png")
-                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                    changeRequest?.displayName = self.pseudo
-                    changeRequest?.photoURL = imageURL
-                    changeRequest?.commitChanges { (error) in
-                        if let err = error {
-                            print(err)
-                        }
-                        print("changes done!")
-                    }
-                    self.createUserInfo(emailDefault: email, avatarDefault: K.avatarImages[randomInt])
+                    self.createUserInfo(pseudoDefault: self.pseudoCurrentUser, avatarDefault: self.avatar)
+                    self.pseudoTextField.text = ""
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
-                    self.performSegue(withIdentifier: K.segueSignUpToAccount, sender: self)
+                    self.performSegue(withIdentifier: K.segueSignUpToHome, sender: self)
                     print("user sign up !")
                 }
             }
@@ -91,11 +85,11 @@ class SignUpViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
-    func createUserInfo(emailDefault: String, avatarDefault: String) {
+    func createUserInfo(pseudoDefault: String, avatarDefault: String) {
         // Add a new document in Firestore for new user
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).setData([
             K.FStore.maxField: [Double](),
-            K.FStore.pseudoField: emailDefault,
+            K.FStore.pseudoField: pseudoDefault,
             K.FStore.avatarField: avatarDefault
         ]) { error in
             if let err = error {
@@ -106,11 +100,23 @@ class SignUpViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueSignUpToAccount {
-            let accountView = segue.destination as! AccountViewController
-            accountView.pseudo = pseudo
-            accountView.avatarImage = avatar
-            accountView.userID = userID
+        if segue.identifier == K.segueSignUpToHome {
+            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
+            let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
+            destinationVC.currentUserID = userID
+            
+            let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
+            progressView.userName = pseudoCurrentUser
+            progressView.avatarImg = avatar
+            progressView.uid = userID
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
+            podiumView.currentUserID = userID
+            
+            let homeView = tabCtrl.viewControllers![3] as! ProfileViewController
+            homeView.currentUserID = userID
+            homeView.pseudoCurrentUser = pseudoCurrentUser
+            homeView.avatarCurrentUser = avatar
         }
     }
     

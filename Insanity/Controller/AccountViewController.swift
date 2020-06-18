@@ -10,8 +10,13 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
+protocol accountViewDelegate {
+    func sendDataBackToProfileVC(pseudo: String, avatar: String)
+}
+
 class AccountViewController: UIViewController {
 
+    var accountDelegate: accountViewDelegate?
     let db = Firestore.firestore()
     var avatarImage = ""
     var pseudo = ""
@@ -24,6 +29,7 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Account View Did Load")
         pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Change your pseudonyme", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         currentUserImage.image = UIImage(named: avatarImage)
@@ -48,6 +54,7 @@ class AccountViewController: UIViewController {
             pseudo = pseudoTextField.text!
         }
         changePseudoAndImage()
+        self.accountDelegate?.sendDataBackToProfileVC(pseudo: pseudo, avatar: avatarImage)
         self.navigationController?.popViewController(animated: true)
 //        self.dismiss(animated: true, completion: nil)
 //        performSegue(withIdentifier: K.segueAccountToProfile, sender: self)
@@ -64,16 +71,6 @@ class AccountViewController: UIViewController {
 //    }
     
     func changePseudoAndImage() {
-        let imageURL = Bundle.main.url(forResource: self.avatarImage, withExtension: "png")
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = self.pseudo
-        changeRequest?.photoURL = imageURL
-        changeRequest?.commitChanges { (error) in
-            if let err = error {
-                print(err)
-            }
-        }
-        
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([
             K.FStore.pseudoField: self.pseudo,
             K.FStore.avatarField: self.avatarImage,
@@ -83,8 +80,8 @@ class AccountViewController: UIViewController {
             } else {
                 print("Document added!")
                 self.pseudoTextField.text = ""
-                self.avatarImage = ""
-                self.pseudo = ""
+//                self.avatarImage = ""
+//                self.pseudo = ""
             }
         }
     }

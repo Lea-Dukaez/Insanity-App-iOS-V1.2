@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import FirebaseAuth
+import Firebase
 
 class WelcomeViewController: UIViewController {
     
     var currentUserID = ""
-    
+        
     @IBOutlet weak var logInButton: UIButton!
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
@@ -21,9 +23,9 @@ class WelcomeViewController: UIViewController {
         
         // Check if the user is logged in
         if UserDefaults.standard.object(forKey: "USER_KEY_UID") != nil {
-        // send them to a new view controller or do whatever you want
             currentUserID = UserDefaults.standard.object(forKey: "USER_KEY_UID") as! String
-            performSegue(withIdentifier: K.segueWelcomeToHome, sender: self)
+            
+            self.performSegue(withIdentifier: K.segueWelcomeToHome, sender: self)
         }
         
         logInButton.backgroundColor = .clear
@@ -37,13 +39,15 @@ class WelcomeViewController: UIViewController {
             let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
             destinationVC.currentUserID = currentUserID
             
-            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
-            homeView.currentUserID = currentUserID
-            
             let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
-            progressView.userName = "Malfouf le moche"
-            progressView.avatarImg = "avatar7"
             progressView.uid = currentUserID
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
+            podiumView.currentUserID = currentUserID
+            
+            let homeView = tabCtrl.viewControllers![3] as! ProfileViewController
+            homeView.currentUserID = currentUserID
         }
     }
+        
 }

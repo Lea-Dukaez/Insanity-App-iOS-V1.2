@@ -10,12 +10,11 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class HomeViewController: UIViewController {
+class ProfileViewController: UIViewController {
     
     var pseudoCurrentUser : String = ""
     var avatarCurrentUser : String = ""
     var currentUserID = ""
-    var imageCurrentUser: UIImage = UIImage()
     
     var pseudo = ""
     var avatar = ""
@@ -34,8 +33,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true);
-        print("HomeViewController  ViewDidLoad called")
-        print("ViewDidLoad HomeView , userID = \(currentUserID)")
+        print("Profile / HomeViewController  ViewDidLoad called")
         
         addFriendsButton.backgroundColor = .clear
         addFriendsButton.layer.borderWidth = 1
@@ -56,40 +54,27 @@ class HomeViewController: UIViewController {
         loadUsers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.currentUserLabel.text = self.pseudoCurrentUser
+        self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
+    }
+    
     func getCurrentUser() {
-        // Update inside Auth
-        let user = Auth.auth().currentUser
-        if let user = user {
-            currentUserID = user.uid
-            pseudoCurrentUser = user.displayName ?? "no name"
-            
-            let photoUrl = user.photoURL!
-               if let data = try? Data(contentsOf: photoUrl)
-               {
-                imageCurrentUser = UIImage(data: data)!
-               }
-            DispatchQueue.main.async {
-                self.currentUserLabel.text = self.pseudoCurrentUser
-                self.currentUserImage.image = self.imageCurrentUser
+        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
+            .getDocument { (document, error) in
+            if let doc = document {
+                if let data = doc.data() {
+                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                        self.pseudoCurrentUser = pseudo
+                        self.avatarCurrentUser = avatar
+                        DispatchQueue.main.async {
+                            self.currentUserLabel.text = self.pseudoCurrentUser
+                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
+                        }
+                    }
+                }
             }
         }
-        
-        // Update inside Fairestore
-//        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
-//            .getDocument { (document, error) in
-//            if let doc = document {
-//                if let data = doc.data() {
-//                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-//                        self.pseudoCurrentUser = pseudo
-//                        self.avatarCurrentUser = avatar
-//                        DispatchQueue.main.async {
-//                            self.currentUserLabel.text = self.pseudoCurrentUser
-//                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
     
     
@@ -167,17 +152,13 @@ class HomeViewController: UIViewController {
             progressView.avatarImg = avatar
             progressView.uid = uid
         }
-//        if segue.identifier == K.segueHomeToTest {
-//            let testView = segue.destination as! TestViewController
-//            testView.userName = pseudoCurrentUser
-//            testView.avatarImg = avatarCurrentUser
-//            testView.currentUserId = currentUserID
-//        }
         if segue.identifier == K.segueHomeToAccount {
             let accountView = segue.destination as! AccountViewController
+            print("segue from Profile /Home to Account")
             accountView.pseudo = pseudoCurrentUser
             accountView.avatarImage = avatarCurrentUser
             accountView.userID = currentUserID
+            accountView.accountDelegate = self
         }
     }
 
@@ -187,7 +168,7 @@ class HomeViewController: UIViewController {
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataUsers.count
@@ -212,3 +193,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+
+extension ProfileViewController: accountViewDelegate {
+    func sendDataBackToProfileVC(pseudo: String, avatar: String) {
+        pseudoCurrentUser = pseudo
+        avatarCurrentUser = avatar
+    }
+    
+    
+}
