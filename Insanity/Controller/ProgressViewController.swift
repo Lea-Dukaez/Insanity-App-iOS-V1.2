@@ -20,8 +20,6 @@ class ProgressViewController: UIViewController {
     var uid = ""
 
     @IBOutlet weak var tableView: UITableView!
-//    @IBOutlet weak var userImage: UIImageView!
-//    @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
     
@@ -32,10 +30,7 @@ class ProgressViewController: UIViewController {
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
-        
-//        userLabel.text = userName
-//        userImage.image = UIImage(named: avatarImg)
-        
+
         loadWorkoutData()
     }
     
@@ -43,7 +38,7 @@ class ProgressViewController: UIViewController {
     func loadWorkoutData() {
         dataWorkoutTest = []
         
-        db.collection(K.FStore.collectionTestName).order(by:  K.FStore.dateField, descending: true).limit(to: 2)
+        db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
             .whereField(K.FStore.idField, isEqualTo: self.uid)
             .getDocuments { (querySnapshot, error) in
             if let err = error {
@@ -81,10 +76,10 @@ class ProgressViewController: UIViewController {
         let percentString = String(format: "%.0f", percent)
         
         if percent>=0 {
-            cellForPercent.percentLabel.textColor = .green
+            cellForPercent.test5Label.textColor = .green
             return "+"+percentString+"%"
         } else {
-            cellForPercent.percentLabel.textColor = .red
+            cellForPercent.test5Label.textColor = .red
             return percentString+"%"
         }
     }
@@ -134,34 +129,116 @@ extension ProgressViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: K.workout.workoutCellIdentifier, for: indexPath) as! WorkoutCell
         
-        // cas particulier seulement : 1 test fait par le user
-        if dataWorkoutTest.count == 1 {
+        let cellTestLabelArray = [cell.test1Label, cell.test2Label, cell.test3Label, cell.test4Label, cell.test5Label]
+        
+//        let nbWorkoutTest = dataWorkoutTest.count
+        
+        switch dataWorkoutTest.count {
+        case 1:
             if indexPath.row == 0 {
                 cell.workoutMoveLabel.text = ""
-                cell.oldDataLabel.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.newDataLabel.text = "N/A"
-                cell.percentLabel.text = "%"
+                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
             } else {
                 cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.oldDataLabel.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.newDataLabel.text = "N/A"
-                cell.percentLabel.text = "N/A"
-                cell.newDataLabel.textColor = UIColor(named: K.BrandColor.greenBrandColor)
-                cell.percentLabel.textColor = UIColor(named: K.BrandColor.greenBrandColor)
+                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
             }
-        } else {
+            for index in 1...4 {
+                cellTestLabelArray[index]?.text = ""
+            }
+        case 2:
             if indexPath.row == 0 {
                 cell.workoutMoveLabel.text = ""
-                cell.oldDataLabel.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-                cell.newDataLabel.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.percentLabel.text = "%"
+                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
             } else {
                 cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.oldDataLabel.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-                cell.newDataLabel.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.percentLabel.text = Percent(old: dataWorkoutTest[1].workOutResult[indexPath.row-1], new: dataWorkoutTest[0].workOutResult[indexPath.row-1], cellForPercent: cell)
+                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
+            }
+            for index in 2...4 {
+                cellTestLabelArray[index]?.text = ""
+            }
+        case 3:
+            if indexPath.row == 0 {
+                cell.workoutMoveLabel.text = ""
+                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
+                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
+            } else {
+                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
+                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
+                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
+            }
+            for index in 3...4 {
+                cellTestLabelArray[index]?.text = ""
+            }
+        case 4:
+            if indexPath.row == 0 {
+                cell.workoutMoveLabel.text = ""
+                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
+                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
+                cell.test4Label.text = dateString(timeStampDate: dataWorkoutTest[3].date)
+                cell.test5Label.text = ""
+            } else {
+                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
+                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
+                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
+                cell.test4Label.text = String(format: "%.0f", dataWorkoutTest[3].workOutResult[indexPath.row-1])
+                cell.test5Label.text = ""
+            }
+        default:
+            if indexPath.row == 0 {
+                cell.workoutMoveLabel.text = ""
+                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
+                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
+                cell.test4Label.text = dateString(timeStampDate: dataWorkoutTest[3].date)
+                cell.test5Label.text = dateString(timeStampDate: dataWorkoutTest[4].date)
+            } else {
+                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
+                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
+                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
+                cell.test4Label.text = String(format: "%.0f", dataWorkoutTest[3].workOutResult[indexPath.row-1])
+                cell.test5Label.text = String(format: "%.0f", dataWorkoutTest[4].workOutResult[indexPath.row-1])
             }
         }
+        
+//        // cas particulier seulement : 1 test fait par le user
+//        if dataWorkoutTest.count == 1 {
+//            if indexPath.row == 0 {
+//                cell.workoutMoveLabel.text = ""
+//                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+//                cell.test2Label.text = "N/A"
+//                cell.test3Label.text = "N/A"
+//                cell.test4Label.text = "N/A"
+//                cell.test5Label.text = "N/A"
+//            } else {
+//                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
+//                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+//                cell.test2Label.text = "N/A"
+//                cell.test3Label.text = "N/A"
+//                cell.test4Label.text = "N/A"
+//                cell.test5Label.text = "N/A"
+//                cell.test2Label.textColor = UIColor(named: K.BrandColor.greenBrandColor)
+//                cell.test5Label.textColor = UIColor(named: K.BrandColor.greenBrandColor)
+//            }
+//        } else {
+//            if indexPath.row == 0 {
+//                cell.workoutMoveLabel.text = ""
+//                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
+//                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
+//                cell.test5Label.text = "%"
+//            } else {
+//                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
+//                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
+//                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
+//                cell.test5Label.text = Percent(old: dataWorkoutTest[1].workOutResult[indexPath.row-1], new: dataWorkoutTest[0].workOutResult[indexPath.row-1], cellForPercent: cell)
+//            }
+//        }
 
         return cell
     }

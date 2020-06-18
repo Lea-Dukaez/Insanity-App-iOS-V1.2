@@ -31,10 +31,13 @@ struct K {
     struct userCell {
         static let userCellIdentifier = "myReusableCell"
         static let userCellNibName = "UserCell"
+        static let addFriendCellIdentifier = "reuseAddFriend"
+        static let addFriendCellNibName = "AddFriendCell"
         static let noOpponentAvatar = "noOpponentAvatar"
         static let usersAvatar = ["MalekAvatar", "LeaAvatar", "MathAvatar", "LouxAvatar"]
         static let usersLabel = ["Malfouf, le Nul", "Lea, fit Courgette", "Mathou, super Blonde", "Loux, nihon Kyojin"]
     }
+    
     
     
     struct workout {
