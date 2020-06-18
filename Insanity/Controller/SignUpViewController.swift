@@ -106,10 +106,10 @@ class SignUpViewController: UIViewController {
             destinationVC.currentUserID = userID
             
             let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
-            progressView.userName = pseudoCurrentUser
-            progressView.avatarImg = avatar
+//            progressView.userName = pseudoCurrentUser
+//            progressView.avatarImg = avatar
             progressView.uid = userID
-            
+
             let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID
             

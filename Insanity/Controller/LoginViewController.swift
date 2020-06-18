@@ -79,9 +79,10 @@ class LoginViewController: UIViewController {
             destinationVC.currentUserID = userID
             
             let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
-            progressView.userName = "Malfouf le moche"
-            progressView.avatarImg = "avatar7"
+//            progressView.userName = "Malfouf le moche"
+//            progressView.avatarImg = "avatar7"
             progressView.uid = userID
+
             
             let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID

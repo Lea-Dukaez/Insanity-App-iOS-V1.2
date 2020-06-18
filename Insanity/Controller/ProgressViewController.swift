@@ -14,14 +14,14 @@ class ProgressViewController: UIViewController {
     let db = Firestore.firestore()
     
     var dataWorkoutTest: [Workout] = []
-    
+        
     var userName = ""
     var avatarImg = ""
     var uid = ""
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var userLabel: UILabel!
+//    @IBOutlet weak var userImage: UIImageView!
+//    @IBOutlet weak var userLabel: UILabel!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
     
@@ -33,9 +33,9 @@ class ProgressViewController: UIViewController {
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
         
-        userLabel.text = userName
-        userImage.image = UIImage(named: avatarImg)
-            
+//        userLabel.text = userName
+//        userImage.image = UIImage(named: avatarImg)
+        
         loadWorkoutData()
     }
     
