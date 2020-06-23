@@ -78,11 +78,9 @@ class PodiumViewController: UIViewController {
     
     
     func recupMaxValues() {
-        print("recupMaxValues called")
         dataPodium = []
 
         db.collection(K.FStore.collectionUsersName)
-//            .order(by:  K.FStore.idField)
             .addSnapshotListener { (querySnapshot, error) in
                 if let err = error {
                     print("Error retrieving document: \(err)")
@@ -110,8 +108,7 @@ class PodiumViewController: UIViewController {
     func updatePodium(sportRow: Int) {
         // by default, set the comment as if out of Podium
         let currentUserIndex = dataPodium.indices.filter { dataPodium[$0].userID == currentUserID}
-        print("currentUserIndex :\(currentUserIndex)")
-        print("sportRow :\(sportRow)")
+
         var commentScore = String(format: "%.0f", dataPodium[currentUserIndex[0]].max[sportRow])
         var commentLabel = K.podium.notOnPodium
    
@@ -127,7 +124,6 @@ class PodiumViewController: UIViewController {
             if dataPodium[index[0]].userID == currentUserID {
                 commentLabel = K.podium.first
                 commentScore = ""
-//                commentScore = "Add Friends to compare yourself to them !"
             }
         case 2:
             // case 2 array Max not empty => Data for 2 users
@@ -248,7 +244,7 @@ class PodiumViewController: UIViewController {
         scoreNotOnPodiumLabel.text = commentScore
     }
         
-} // end PodiumViewController
+}
 
 
 // MARK: - UIPickerViewDataSource

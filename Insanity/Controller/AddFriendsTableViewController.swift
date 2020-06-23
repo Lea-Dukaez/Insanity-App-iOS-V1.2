@@ -48,7 +48,9 @@ class AddFriendsTableViewController: UITableViewController {
     
     func updateFriendsIDArray() {
         for user in dataUsers {
-            friendsIDArray.append(user.id)
+            if friendsIDArray.filter( { $0.contains(user.id) } ).isEmpty {
+                friendsIDArray.append(user.id)
+            }
         }
     }
 
@@ -78,14 +80,13 @@ class AddFriendsTableViewController: UITableViewController {
         }
 
         cell.user = { userIDAdded in
+            
             let userAdded = self.allUsersArray.filter( { $0.id.contains(userIDAdded!) } )
+            
             if cell.addButton.titleLabel?.text == "Add" {
                 self.dataUsers.append(userAdded[0])
-                self.friendsIDArray.append(userAdded[0].id)
-                print("hello1")
                 self.updateOtherUsersFriends(userID: userIDAdded!, added: true)
             } else {
-                print("hello2")
                 if let index = self.dataUsers.firstIndex(of: userAdded[0]) {
                     let removedFriend = self.dataUsers.remove(at: index)
                     if let indexRemoved = self.friendsIDArray.firstIndex(of: removedFriend.id) {
@@ -94,7 +95,6 @@ class AddFriendsTableViewController: UITableViewController {
                 }
                 self.updateOtherUsersFriends(userID: userIDAdded!, added: false)
             }
-            
             self.updateFriendsCurrentUser()
             self.tableView.reloadData()
         }
@@ -118,7 +118,6 @@ class AddFriendsTableViewController: UITableViewController {
     }
     
     func updateOtherUsersFriends(userID: String, added: Bool) {
-        print("inside updateOtherUsersFriends for user : \(userID)")
         
         let otherUsersRef = db.collection(K.FStore.collectionUsersName).document(userID)
 

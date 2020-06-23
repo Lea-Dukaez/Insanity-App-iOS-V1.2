@@ -32,9 +32,6 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         
-        print("ProfileViewController viewDidLoad")
-        print("dataUsers = \(dataUsers)")
-        
         super.viewDidLoad()
         self.navigationItem.setHidesBackButton(true, animated: true);
 
@@ -83,15 +80,9 @@ class ProfileViewController: UIViewController {
     
     
     func loadUsers() {
-        print("inside loadUsers, dataUsers = \(dataUsers)")
-//        dataUsers = []
 
-//        self.db.collection(K.FStore.collectionUsersName)
         if dataUsers.isEmpty {
-            print("dataUsers isEmpty so iside db call")
-            
             let currentUserRef = db.collection(K.FStore.collectionUsersName)
-                
             currentUserRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
                 .getDocuments { (querySnapshot, error) in
                     if let err = error {
@@ -102,27 +93,20 @@ class ProfileViewController: UIViewController {
                             for doc in snapshotDocuments {
                                 let data = doc.data()
                                  if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                                    let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                                    self.dataUsers.append(newUser)
                                     
-    //                                if doc.documentID != self.currentUserID {
-                                        let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
-                                        self.dataUsers.append(newUser)
-                                    print(self.dataUsers)
-                                        // when data is collected, create the tableview
-                                        DispatchQueue.main.async {
-                                            self.tableView.reloadData()
-                                            self.competitorsLabel.text = "FRIENDS:"
-                                            self.competitorsLabel.textAlignment = .left
-                                        }
-    //                                }
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                        self.competitorsLabel.text = "FRIENDS:"
+                                        self.competitorsLabel.textAlignment = .left
+                                    }
                                  }
                             }
                         } // fin if let snapshotDoc
                     } // fin else no error ...so access data possible
                 } // fin getDocument
-            
-            
         }
-
     }
 
     
