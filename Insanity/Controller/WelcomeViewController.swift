@@ -20,8 +20,6 @@ class WelcomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("WelcomeViewController viewDidLoad called")
-
         
         // Check if the user is logged in
         if UserDefaults.standard.object(forKey: "USER_KEY_UID") != nil {

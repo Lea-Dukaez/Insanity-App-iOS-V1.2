@@ -37,7 +37,6 @@ class PodiumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Podium View Did Load")
         
         topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
         topOneLabel.text = ""
@@ -56,7 +55,6 @@ class PodiumViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("Podium View will appear")
         recupMaxValues()
     }
     
@@ -93,9 +91,13 @@ class PodiumViewController: UIViewController {
                         for doc in snapshotDocuments {
                             let data = doc.data()
                             let userID = doc.documentID
-                            if let maxValues = data[K.FStore.maxField] as? [Double], let avatar = data[K.FStore.avatarField] as? String, let pseudo = data[K.FStore.pseudoField] as? String {
-                                let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
-                                self.dataPodium.append(podiumCompetitor)
+                            if let maxValues = data[K.FStore.maxField] as? [Double], let avatar = data[K.FStore.avatarField] as? String, let pseudo = data[K.FStore.pseudoField] as? String, let friends = data[K.FStore.friendsField] as? [String] {
+                                // get only data for current user and friends
+                                if (userID == self.currentUserID) || friends.filter( { $0.contains(self.currentUserID) } ).isEmpty == false {
+                                    let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
+                                    self.dataPodium.append(podiumCompetitor)
+                                    print(self.dataPodium)
+                                }
                             } // end if let get data
                         } // end for loop
                     } // end if let snapshotdocuments

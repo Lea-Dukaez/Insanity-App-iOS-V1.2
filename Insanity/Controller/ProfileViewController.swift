@@ -82,8 +82,8 @@ class ProfileViewController: UIViewController {
     func loadUsers() {
 
         if dataUsers.isEmpty {
-            let currentUserRef = db.collection(K.FStore.collectionUsersName)
-            currentUserRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
+            let allUsersRef = db.collection(K.FStore.collectionUsersName)
+            allUsersRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
                 .getDocuments { (querySnapshot, error) in
                     if let err = error {
                         print("Error getting documents: \(err)")
@@ -138,7 +138,6 @@ class ProfileViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueHomeToAccount {
             let accountView = segue.destination as! AccountViewController
-            print("segue from Profile /Home to Account")
             accountView.pseudo = pseudoCurrentUser
             accountView.avatarImage = avatarCurrentUser
             accountView.userID = currentUserID
@@ -146,7 +145,6 @@ class ProfileViewController: UIViewController {
         }
         if segue.identifier == K.segueGoToAddFriends {
             let addFriendsView = segue.destination as! AddFriendsTableViewController
-            print("segue from Profile /Home to Add Friends")
             addFriendsView.currentUserID = currentUserID
             addFriendsView.dataUsers = dataUsers
             addFriendsView.addFriendDelegate = self
