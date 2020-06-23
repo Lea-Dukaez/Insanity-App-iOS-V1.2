@@ -10,9 +10,13 @@ import UIKit
 
 class AddFriendCell: UITableViewCell {
 
+    var userID = ""
+    
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var pseudolabel: UILabel!
-    
+    @IBOutlet weak var addButton: UIButton!
+    var user: ((String?) -> Void)? = nil
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,6 +30,8 @@ class AddFriendCell: UITableViewCell {
     
     
     @IBAction func addPressed(_ sender: UIButton) {
+        if let addPressed = self.user {
+            addPressed(userID)
+         }
     }
-    
 }

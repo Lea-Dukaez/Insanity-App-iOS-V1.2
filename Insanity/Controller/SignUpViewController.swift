@@ -89,6 +89,7 @@ class SignUpViewController: UIViewController {
         // Add a new document in Firestore for new user
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).setData([
             K.FStore.maxField: [Double](),
+            K.FStore.friendsField: [String](),
             K.FStore.pseudoField: pseudoDefault,
             K.FStore.avatarField: avatarDefault
         ]) { error in

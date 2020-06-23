@@ -31,7 +31,7 @@ struct K {
     struct userCell {
         static let userCellIdentifier = "myReusableCell"
         static let userCellNibName = "UserCell"
-        static let addFriendCellIdentifier = "reuseAddFriend"
+        static let addFriendCellIdentifier = "reuseAddFriend" 
         static let addFriendCellNibName = "AddFriendCell"
         static let noOpponentAvatar = "noOpponentAvatar"
         static let usersAvatar = ["MalekAvatar", "LeaAvatar", "MathAvatar", "LouxAvatar"]
@@ -57,6 +57,7 @@ struct K {
         static let collectionTestName = "workoutTests"
         static let dateField = "date"
         static let idField = "id"
+        static let friendsField = "friends"
         static let testField = "testResults"
         static let collectionUsersName = "users"
         static let nameField = "name"

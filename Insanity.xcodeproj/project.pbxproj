@@ -30,6 +30,7 @@
 		DB989B3B2452F740009F2C6F /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB989B3A2452F740009F2C6F /* ProgressViewController.swift */; };
 		DBA637CF249BADA2008E92CA /* AddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA637CD249BADA2008E92CA /* AddFriendCell.swift */; };
 		DBA637D0249BADA2008E92CA /* AddFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBA637CE249BADA2008E92CA /* AddFriendCell.xib */; };
+		DBA637D2249C7E32008E92CA /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA637D1249C7E32008E92CA /* Friend.swift */; };
 		DBD793262452265D009358F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793252452265D009358F8 /* AppDelegate.swift */; };
 		DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793272452265D009358F8 /* SceneDelegate.swift */; };
 		DBD7932A2452265D009358F8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793292452265D009358F8 /* ProfileViewController.swift */; };
@@ -64,6 +65,7 @@
 		DB989B3A2452F740009F2C6F /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		DBA637CD249BADA2008E92CA /* AddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCell.swift; sourceTree = "<group>"; };
 		DBA637CE249BADA2008E92CA /* AddFriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFriendCell.xib; sourceTree = "<group>"; };
+		DBA637D1249C7E32008E92CA /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		DBD793222452265D009358F8 /* Insanity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Insanity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD793252452265D009358F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBD793272452265D009358F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				DB69838F24543DCE00B84087 /* Workout.swift */,
 				DB97C560246BF221008348E1 /* User.swift */,
 				DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */,
+				DBA637D1249C7E32008E92CA /* Friend.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				DB989B392452F730009F2C6F /* TestViewController.swift in Sources */,
 				DB97C559246A815C008348E1 /* SignUpViewController.swift in Sources */,
 				DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */,
+				DBA637D2249C7E32008E92CA /* Friend.swift in Sources */,
 				DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */,
 				DB69838D24543B0C00B84087 /* WorkoutCell.swift in Sources */,
 				DB97C55724693C44008348E1 /* LoginViewController.swift in Sources */,
@@ -470,13 +474,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MU9Q6F5GDR;
+				DEVELOPMENT_TEAM = U4MJCZ5RFJ;
 				INFOPLIST_FILE = Insanity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.malfouf.Insanity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lea-dk.Insanity";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -489,13 +493,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = MU9Q6F5GDR;
+				DEVELOPMENT_TEAM = U4MJCZ5RFJ;
 				INFOPLIST_FILE = Insanity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.malfouf.Insanity;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.lea-dk.Insanity";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
