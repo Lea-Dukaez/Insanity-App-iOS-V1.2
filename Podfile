@@ -1,7 +1,6 @@
 platform :ios, '13.0'
 
 target 'Insanity' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for Insanity
@@ -12,5 +11,7 @@ target 'Insanity' do
   # Pod for Cloud Firestore
   pod 'Firebase/Firestore'
   
-
+  # Pod for Charts / Graph
+  pod 'Charts'
+  
 end
