@@ -967,10 +967,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="B3j-0h-hdS">
-                                <rect key="frame" x="0.0" y="10" width="414" height="644"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53S-76-BCi">
                                 <rect key="frame" x="40" y="684" width="334" height="45"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -984,16 +980,44 @@
                                     <action selector="addTestPressed:" destination="0R8-ZT-1QA" eventType="touchUpInside" id="fug-sx-SeC"/>
                                 </connections>
                             </button>
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="STN-OI-1Mi">
+                                <rect key="frame" x="3" y="50" width="408" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3hO-y0-hDn"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="Switch Kicks"/>
+                                    <segment title="Power Jacks"/>
+                                    <segment title="Power Knees"/>
+                                    <segment title="Power Jump"/>
+                                    <segment title="Global Jump"/>
+                                    <segment title="Suicide Jump"/>
+                                    <segment title="Push-Up Jack"/>
+                                    <segment title="Low Plank Oblique"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="brn-UE-z9E"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y54-26-QBy" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="50" y="150" width="314" height="200"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Ip0-bG-OD1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="B3j-0h-hdS" firstAttribute="trailing" secondItem="glq-rp-bN8" secondAttribute="trailing" id="3R6-FW-KiE"/>
-                            <constraint firstItem="B3j-0h-hdS" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="I0r-UV-dN7"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="Y54-26-QBy" secondAttribute="trailing" constant="50" id="4uI-7q-atX"/>
+                            <constraint firstItem="Y54-26-QBy" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="50" id="61V-Qt-fJ7"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="STN-OI-1Mi" secondAttribute="trailing" constant="3" id="9jZ-1Q-cXz"/>
+                            <constraint firstItem="STN-OI-1Mi" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="50" id="COf-ov-lhs"/>
+                            <constraint firstItem="Y54-26-QBy" firstAttribute="top" secondItem="STN-OI-1Mi" secondAttribute="bottom" constant="50" id="CSu-It-91F"/>
                             <constraint firstItem="53S-76-BCi" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="40" id="PES-Zi-6mx"/>
-                            <constraint firstItem="53S-76-BCi" firstAttribute="top" secondItem="B3j-0h-hdS" secondAttribute="bottom" constant="30" id="STH-Va-wrp"/>
-                            <constraint firstItem="B3j-0h-hdS" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="10" id="Ssf-5k-cVt"/>
                             <constraint firstItem="VRV-1k-e7D" firstAttribute="centerX" secondItem="Gak-lA-93W" secondAttribute="centerX" id="Thd-78-wqz"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="53S-76-BCi" secondAttribute="bottom" constant="30" id="Ump-Na-jxT"/>
+                            <constraint firstItem="STN-OI-1Mi" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="3" id="YFp-Ms-9SL"/>
                             <constraint firstAttribute="trailing" secondItem="VRV-1k-e7D" secondAttribute="trailing" id="Ytj-ou-Spd"/>
                             <constraint firstItem="VRV-1k-e7D" firstAttribute="centerY" secondItem="Gak-lA-93W" secondAttribute="centerY" id="bJm-KP-Dhh"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="53S-76-BCi" secondAttribute="trailing" constant="40" id="qJA-Lb-ED6"/>
@@ -1005,14 +1029,15 @@
                     <navigationItem key="navigationItem" id="WrI-O4-BLw"/>
                     <connections>
                         <outlet property="addTestButton" destination="53S-76-BCi" id="Pxi-pN-ZAt"/>
+                        <outlet property="barChart" destination="Y54-26-QBy" id="tTQ-sp-4mI"/>
                         <outlet property="msgLabel" destination="VRV-1k-e7D" id="d1C-xX-zKM"/>
-                        <outlet property="tableView" destination="B3j-0h-hdS" id="BDy-3U-APd"/>
+                        <outlet property="segmentedControl" destination="STN-OI-1Mi" id="jyF-LO-bep"/>
                         <segue destination="TnM-Vq-Ygn" kind="show" identifier="goToTest" id="amr-TI-1n0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4s-48-Zbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3867" y="1821"/>
+            <point key="canvasLocation" x="3866.666666666667" y="1820.7589285714284"/>
         </scene>
         <!--Feed-->
         <scene sceneID="Ad6-3n-5fN">

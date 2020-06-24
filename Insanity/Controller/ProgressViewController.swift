@@ -8,12 +8,23 @@
 
 import UIKit
 import Firebase
+import Charts
 
 class ProgressViewController: UIViewController {
         
     let db = Firestore.firestore()
     
     var dataWorkoutTest: [Workout] = []
+
+    let allWorkOutResults: [Workout] = [
+        Workout(userID: "1", workOutResult: [56, 48, 25, 68, 12, 40, 15, 59])
+//        Workout(userID: "1", workOutResult: [59, 42, 28, 83, 13, 45, 17, 70]),
+//        Workout(userID: "1", workOutResult: [60, 53, 31, 73, 15, 67, 21, 71]),
+//        Workout(userID: "1", workOutResult: [60, 59, 29, 80, 17, 66, 23, 80])
+    ]
+    
+    let months = ["Mar", "Apr", "May", "Jun", "Jul"]
+
         
     var userName = ""
     var avatarImg = ""
@@ -22,6 +33,8 @@ class ProgressViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var barChart: BarChartView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,46 +43,126 @@ class ProgressViewController: UIViewController {
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
+        
+        barChartUpdate(workOutNb: segmentedControl.selectedSegmentIndex)
 
-        loadWorkoutData()
+
+//        loadWorkoutData()
+    }
+    
+    func barChartUpdate(workOutNb: Int) {
+        var min: Double = 0
+        var max: Double = 100
+
+        var barChartEntry = [ChartDataEntry]()
+        for i in 0..<allWorkOutResults.count {
+            let value = BarChartDataEntry(x: Double(i+1), y: allWorkOutResults[i].workOutResult[workOutNb])
+            barChartEntry.append(value)
+
+            if i == 0 {
+                min = allWorkOutResults[i].workOutResult[workOutNb]
+                max = allWorkOutResults[i].workOutResult[workOutNb]
+            } else {
+                if allWorkOutResults[i].workOutResult[workOutNb] < min {
+                    min = allWorkOutResults[i].workOutResult[workOutNb]
+                } else if allWorkOutResults[i].workOutResult[workOutNb] > max {
+                    max = allWorkOutResults[i].workOutResult[workOutNb]
+                }
+            }
+        }
+
+        
+        let dataSet = BarChartDataSet(entries: barChartEntry)
+        let data = BarChartData(dataSets: [dataSet])
+        
+        switch allWorkOutResults.count {
+        case 1:
+            data.barWidth = Double(0.07)
+        case 2:
+            data.barWidth = Double(0.15)
+        case 3:
+            data.barWidth = Double(0.20)
+        case 4:
+            data.barWidth = Double(0.25)
+        case 5:
+            data.barWidth = Double(0.30)
+        default:
+            data.barWidth = Double(0.25)
+        }
+
+        barChart.legend.enabled = false
+
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
+        barChart.xAxis.granularity = 1
+        barChart.xAxis.labelPosition = XAxis.LabelPosition.bottom
+        barChart.xAxis.drawAxisLineEnabled = false
+        barChart.xAxis.drawGridLinesEnabled = false
+        
+        barChart.leftAxis.drawLabelsEnabled = false
+        barChart.leftAxis.drawAxisLineEnabled = false
+        barChart.leftAxis.drawGridLinesEnabled = false
+        barChart.leftAxis.axisMinimum = min - 5
+        barChart.leftAxis.axisMaximum = max + 5
+        
+        
+
+        barChart.rightAxis.removeAllLimitLines()
+        barChart.rightAxis.drawZeroLineEnabled = false
+        barChart.leftAxis.zeroLineWidth = 0
+        barChart.rightAxis.drawTopYLabelEntryEnabled = false
+        barChart.rightAxis.drawAxisLineEnabled = false
+        barChart.rightAxis.drawGridLinesEnabled = false
+        barChart.rightAxis.drawLabelsEnabled = false
+        barChart.rightAxis.drawLimitLinesBehindDataEnabled = false
+
+        barChart.animate(yAxisDuration: 1.0, easingOption: .linear)
+        
+        barChart.data = data
+    }
+    
+    @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
+        let index = segmentedControl.selectedSegmentIndex
+        barChartUpdate(workOutNb: index)
     }
     
 
-    func loadWorkoutData() {
-        dataWorkoutTest = []
-        
-        db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
-            .whereField(K.FStore.idField, isEqualTo: self.uid)
-            .getDocuments { (querySnapshot, error) in
-            if let err = error {
-                print("Error getting documents: \(err)")
-            } else {
-                if querySnapshot!.isEmpty {
-                    self.showMsg()
-                } else {
-                    self.dismissMsg()
-                    // documents exist in Firestore
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
-                            let data = doc.data()
-                            if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
-                                let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
-                                self.dataWorkoutTest.append(newWorkout)
-                                
-                                // when data is collected, create the tableview
-                                DispatchQueue.main.async {
-                                    self.tableView.dataSource = self
-                                    self.tableView.register(UINib(nibName: K.workout.workoutCellNibName, bundle: nil), forCellReuseIdentifier: K.workout.workoutCellIdentifier)
-                                    self.tableView.reloadData()
-                                } // fin dispatchQueue
-                            }
-                        }
-                    } // fin if let snapshotDoc
-                }
-            } // fin else no error ...so access data possible
-        } // fin getDocument
-    } // fonction loadData()
-    
+//
+//
+//    func loadWorkoutData() {
+//        dataWorkoutTest = []
+//
+//        db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
+//            .whereField(K.FStore.idField, isEqualTo: self.uid)
+//            .getDocuments { (querySnapshot, error) in
+//            if let err = error {
+//                print("Error getting documents: \(err)")
+//            } else {
+//                if querySnapshot!.isEmpty {
+//                    self.showMsg()
+//                } else {
+//                    self.dismissMsg()
+//                    // documents exist in Firestore
+//                    if let snapshotDocuments = querySnapshot?.documents {
+//                        for doc in snapshotDocuments {
+//                            let data = doc.data()
+//                            if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
+//                                let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
+//                                self.dataWorkoutTest.append(newWorkout)
+//
+//                                // when data is collected, create the tableview
+//                                DispatchQueue.main.async {
+//                                    self.tableView.dataSource = self
+//                                    self.tableView.register(UINib(nibName: K.workout.workoutCellNibName, bundle: nil), forCellReuseIdentifier: K.workout.workoutCellIdentifier)
+//                                    self.tableView.reloadData()
+//                                } // fin dispatchQueue
+//                            }
+//                        }
+//                    } // fin if let snapshotDoc
+//                }
+//            } // fin else no error ...so access data possible
+//        } // fin getDocument
+//    } // fonction loadData()
+//
     
     func Percent(old: Double, new: Double, cellForPercent: WorkoutCell) -> String {
         let percent: Double = ((new - old) / old) * 100
@@ -117,130 +210,3 @@ class ProgressViewController: UIViewController {
     
     
 }
-
-// MARK: - UITableViewDataSource
-
-extension ProgressViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return K.workout.workoutMove.count + 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.workout.workoutCellIdentifier, for: indexPath) as! WorkoutCell
-        
-        let cellTestLabelArray = [cell.test1Label, cell.test2Label, cell.test3Label, cell.test4Label, cell.test5Label]
-        
-//        let nbWorkoutTest = dataWorkoutTest.count
-        
-        switch dataWorkoutTest.count {
-        case 1:
-            if indexPath.row == 0 {
-                cell.workoutMoveLabel.text = ""
-                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-            } else {
-                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-            }
-            for index in 1...4 {
-                cellTestLabelArray[index]?.text = ""
-            }
-        case 2:
-            if indexPath.row == 0 {
-                cell.workoutMoveLabel.text = ""
-                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-            } else {
-                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-            }
-            for index in 2...4 {
-                cellTestLabelArray[index]?.text = ""
-            }
-        case 3:
-            if indexPath.row == 0 {
-                cell.workoutMoveLabel.text = ""
-                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
-            } else {
-                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
-            }
-            for index in 3...4 {
-                cellTestLabelArray[index]?.text = ""
-            }
-        case 4:
-            if indexPath.row == 0 {
-                cell.workoutMoveLabel.text = ""
-                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
-                cell.test4Label.text = dateString(timeStampDate: dataWorkoutTest[3].date)
-                cell.test5Label.text = ""
-            } else {
-                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
-                cell.test4Label.text = String(format: "%.0f", dataWorkoutTest[3].workOutResult[indexPath.row-1])
-                cell.test5Label.text = ""
-            }
-        default:
-            if indexPath.row == 0 {
-                cell.workoutMoveLabel.text = ""
-                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-                cell.test3Label.text = dateString(timeStampDate: dataWorkoutTest[2].date)
-                cell.test4Label.text = dateString(timeStampDate: dataWorkoutTest[3].date)
-                cell.test5Label.text = dateString(timeStampDate: dataWorkoutTest[4].date)
-            } else {
-                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-                cell.test3Label.text = String(format: "%.0f", dataWorkoutTest[2].workOutResult[indexPath.row-1])
-                cell.test4Label.text = String(format: "%.0f", dataWorkoutTest[3].workOutResult[indexPath.row-1])
-                cell.test5Label.text = String(format: "%.0f", dataWorkoutTest[4].workOutResult[indexPath.row-1])
-            }
-        }
-        
-//        // cas particulier seulement : 1 test fait par le user
-//        if dataWorkoutTest.count == 1 {
-//            if indexPath.row == 0 {
-//                cell.workoutMoveLabel.text = ""
-//                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-//                cell.test2Label.text = "N/A"
-//                cell.test3Label.text = "N/A"
-//                cell.test4Label.text = "N/A"
-//                cell.test5Label.text = "N/A"
-//            } else {
-//                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-//                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-//                cell.test2Label.text = "N/A"
-//                cell.test3Label.text = "N/A"
-//                cell.test4Label.text = "N/A"
-//                cell.test5Label.text = "N/A"
-//                cell.test2Label.textColor = UIColor(named: K.BrandColor.greenBrandColor)
-//                cell.test5Label.textColor = UIColor(named: K.BrandColor.greenBrandColor)
-//            }
-//        } else {
-//            if indexPath.row == 0 {
-//                cell.workoutMoveLabel.text = ""
-//                cell.test1Label.text = dateString(timeStampDate: dataWorkoutTest[1].date)
-//                cell.test2Label.text = dateString(timeStampDate: dataWorkoutTest[0].date)
-//                cell.test5Label.text = "%"
-//            } else {
-//                cell.workoutMoveLabel.text = K.workout.workoutMove[indexPath.row-1]
-//                cell.test1Label.text = String(format: "%.0f", dataWorkoutTest[1].workOutResult[indexPath.row-1])
-//                cell.test2Label.text = String(format: "%.0f", dataWorkoutTest[0].workOutResult[indexPath.row-1])
-//                cell.test5Label.text = Percent(old: dataWorkoutTest[1].workOutResult[indexPath.row-1], new: dataWorkoutTest[0].workOutResult[indexPath.row-1], cellForPercent: cell)
-//            }
-//        }
-
-        return cell
-    }
-}
- 

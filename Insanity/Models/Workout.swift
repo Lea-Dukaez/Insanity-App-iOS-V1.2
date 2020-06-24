@@ -12,5 +12,5 @@ import Firebase
 struct Workout {
     let userID: String
     let workOutResult: [Double]
-    let date: Timestamp
+//    let date: Timestamp
 }
