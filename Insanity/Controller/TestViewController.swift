@@ -15,18 +15,14 @@ class TestViewController: UIViewController {
     let db = Firestore.firestore()
     var currentUserId = ""
     
-    var userName = ""
-    var avatarImg = ""
-    
+    var workoutDate = Date()
     var listWorkoutTest = [Double]()
     var textFieldArray = [UITextField]()
     
     let alert = UIAlertController(title: "Incomplete", message: "Please fill all the exercises", preferredStyle: UIAlertController.Style.alert)
     let forbiddenNumber = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
 
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var userLabel: UILabel!
-    
+    @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var validateButton: UIButton!
     
     @IBOutlet weak var SKTextField: UITextField!
@@ -43,9 +39,10 @@ class TestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
-        userImage.image = UIImage(named: avatarImg)
-        userLabel.text = userName
+        
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
+//        self.dischargeDateTextField.inputView = datePicker
     
         textFieldArray = [SKTextField, PJKTextField, PKTextField, PJTextField, JSQTextField, SJTextField, PUJKTextField, PMCTextField]
 
@@ -55,6 +52,19 @@ class TestViewController: UIViewController {
             textField.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(doneButtonClicked))
         }
     }
+    
+    @objc func updateDateField(sender: UIDatePicker) {
+        workoutDate = sender.date
+        print(sender.date)
+//        dischargeDateTextField?.text = formatDateForDisplay(date: sender.date)
+    }
+
+//    // Formats the date chosen with the date picker.
+//    fileprivate func formatDateForDisplay(date: Date) -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd MMM yyyy"
+//        return formatter.string(from: date)
+//    }
     
     
     @IBAction func validatePressed(_ sender: UIButton) {
@@ -68,7 +78,7 @@ class TestViewController: UIViewController {
             self.db.collection(K.FStore.collectionTestName).addDocument(data: [
                 K.FStore.idField: self.currentUserId,
                 K.FStore.testField: self.listWorkoutTest,
-                K.FStore.dateField: Timestamp(date: Date())
+                K.FStore.dateField: Timestamp(date: workoutDate)
             ]) { error in
                 if let err = error {
                     print("Error adding document: \(err)")

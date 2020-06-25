@@ -17,10 +17,10 @@ class ProgressViewController: UIViewController {
     var dataWorkoutTest: [Workout] = []
 
     let allWorkOutResults: [Workout] = [
-        Workout(userID: "1", workOutResult: [56, 48, 25, 68, 12, 40, 15, 59])
-//        Workout(userID: "1", workOutResult: [59, 42, 28, 83, 13, 45, 17, 70]),
-//        Workout(userID: "1", workOutResult: [60, 53, 31, 73, 15, 67, 21, 71]),
-//        Workout(userID: "1", workOutResult: [60, 59, 29, 80, 17, 66, 23, 80])
+        Workout(userID: "1", workOutResult: [56, 48, 25, 68, 12, 40, 15, 59]),
+        Workout(userID: "1", workOutResult: [59, 42, 28, 83, 13, 45, 17, 70]),
+        Workout(userID: "1", workOutResult: [60, 53, 31, 73, 15, 67, 21, 71]),
+        Workout(userID: "1", workOutResult: [60, 59, 29, 80, 17, 66, 23, 80])
     ]
     
     let months = ["Mar", "Apr", "May", "Jun", "Jul"]
@@ -80,20 +80,24 @@ class ProgressViewController: UIViewController {
         
         switch allWorkOutResults.count {
         case 1:
-            data.barWidth = Double(0.07)
+            data.barWidth = Double(0.08)
         case 2:
-            data.barWidth = Double(0.15)
+            data.barWidth = Double(0.16)
         case 3:
-            data.barWidth = Double(0.20)
+            data.barWidth = Double(0.24)
         case 4:
-            data.barWidth = Double(0.25)
+            data.barWidth = Double(0.32)
         case 5:
-            data.barWidth = Double(0.30)
+            data.barWidth = Double(0.40)
         default:
-            data.barWidth = Double(0.25)
+            data.barWidth = Double(0.24)
         }
 
+
+        dataSet.barShadowColor = UIColor(named: "barShadowColor")!
+        
         barChart.legend.enabled = false
+        barChart.drawBarShadowEnabled = true
 
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values:months)
         barChart.xAxis.granularity = 1
@@ -212,8 +216,6 @@ class ProgressViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueResultsToTest {
             let testView = segue.destination as! TestViewController
-            testView.userName = userName
-            testView.avatarImg = avatarImg
             testView.currentUserId = uid
         }
     }

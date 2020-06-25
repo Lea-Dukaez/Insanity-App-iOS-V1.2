@@ -50,7 +50,7 @@ struct K {
         static let first = "Well done ! You surpass them all. As Ayrton Senna said : 'I am not designed to come second or third. I am designed to win.'"
         static let second = "Very good score but not good enough to reach for the first place !"
         static let third = "At least you reach the podium ! Good job"
-        static let notOnPodium = "Sorry you miss the podium. But the best reward is improving your results. isn't it?"
+        static let notOnPodium = "Sorry you miss the podium. But the best reward is improving your results. isn't it? Your best score for this exercice is: "
     }
     
     struct FStore {
