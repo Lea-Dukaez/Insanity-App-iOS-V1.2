@@ -33,7 +33,8 @@ class ProgressViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var segment1: UISegmentedControl!
+    @IBOutlet weak var segment2: UISegmentedControl!
     @IBOutlet weak var barChart: BarChartView!
     
     override func viewDidLoad() {
@@ -44,8 +45,10 @@ class ProgressViewController: UIViewController {
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
         
-        barChartUpdate(workOutNb: segmentedControl.selectedSegmentIndex)
+        segment1.selectedSegmentIndex = 0
+        segment2.selectedSegmentIndex = -1
 
+        barChartUpdate(workOutNb: segment1.selectedSegmentIndex)
 
 //        loadWorkoutData()
     }
@@ -115,13 +118,20 @@ class ProgressViewController: UIViewController {
         barChart.rightAxis.drawLabelsEnabled = false
         barChart.rightAxis.drawLimitLinesBehindDataEnabled = false
 
-        barChart.animate(yAxisDuration: 1.0, easingOption: .linear)
+        barChart.animate(yAxisDuration: 0.5, easingOption: .linear)
         
         barChart.data = data
     }
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
-        let index = segmentedControl.selectedSegmentIndex
+        var index = 0
+        if sender == segment1 {
+            index = segment1.selectedSegmentIndex
+            segment2.selectedSegmentIndex = -1
+        } else if sender == segment2 {
+            index = segment2.selectedSegmentIndex
+            segment1.selectedSegmentIndex = -1
+        }
         barChartUpdate(workOutNb: index)
     }
     
