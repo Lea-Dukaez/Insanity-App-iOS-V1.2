@@ -103,21 +103,17 @@ class SignUpViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueSignUpToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-            let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
-            destinationVC.currentUserID = userID
             
-            let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
-//            progressView.userName = pseudoCurrentUser
-//            progressView.avatarImg = avatar
+            let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
             progressView.uid = userID
 
-            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
+            let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
             podiumView.currentUserID = userID
             
-            let homeView = tabCtrl.viewControllers![3] as! ProfileViewController
-            homeView.currentUserID = userID
-            homeView.pseudoCurrentUser = pseudoCurrentUser
-            homeView.avatarCurrentUser = avatar
+            let profileView = tabCtrl.viewControllers![2] as! ProfileViewController
+            profileView.currentUserID = userID
+            profileView.pseudoCurrentUser = pseudoCurrentUser
+            profileView.avatarCurrentUser = avatar
         }
     }
     

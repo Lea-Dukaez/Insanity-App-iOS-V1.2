@@ -36,17 +36,15 @@ class WelcomeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueWelcomeToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-            let destinationVC = tabCtrl.viewControllers![0] as! FeedViewController
-            destinationVC.currentUserID = currentUserID
             
-            let progressView = tabCtrl.viewControllers![1] as! ProgressViewController
+            let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
             progressView.uid = currentUserID
             
-            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
+            let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
             podiumView.currentUserID = currentUserID
             
-            let homeView = tabCtrl.viewControllers![3] as! ProfileViewController
-            homeView.currentUserID = currentUserID
+            let profileView = tabCtrl.viewControllers![2] as! ProfileViewController
+            profileView.currentUserID = currentUserID
         }
     }
         

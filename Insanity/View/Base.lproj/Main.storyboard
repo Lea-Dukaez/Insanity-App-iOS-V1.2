@@ -657,7 +657,7 @@
             <objects>
                 <viewController id="KnX-AH-uGq" customClass="ResetViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qAQ-ku-yI8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-3m-3Aw">
@@ -1045,35 +1045,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4s-48-Zbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3866.666666666667" y="1820.7589285714284"/>
-        </scene>
-        <!--Feed-->
-        <scene sceneID="Ad6-3n-5fN">
-            <objects>
-                <viewController id="YWP-mJ-lBE" customClass="FeedViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AeM-54-q3i">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Feed for the moment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPL-AW-DPF">
-                                <rect key="frame" x="113.5" y="410.5" width="187" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="yPL-AW-DPF" firstAttribute="centerY" secondItem="AeM-54-q3i" secondAttribute="centerY" id="266-ub-GHI"/>
-                            <constraint firstItem="yPL-AW-DPF" firstAttribute="centerX" secondItem="AeM-54-q3i" secondAttribute="centerX" id="lAD-tO-ARi"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="dMh-bG-btg"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Feed" image="iconFeed" id="lc7-Tm-25E"/>
-                    <navigationItem key="navigationItem" id="oEz-vd-XlP"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DrE-Hc-8Aj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3867" y="202"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="nPV-eI-Tll">
@@ -1608,7 +1579,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="YWP-mJ-lBE" kind="relationship" relationship="viewControllers" id="BcB-5O-Ow4"/>
                         <segue destination="0R8-ZT-1QA" kind="relationship" relationship="viewControllers" id="bfZ-oB-nfQ"/>
                         <segue destination="22Z-vv-aaw" kind="relationship" relationship="viewControllers" id="Vyk-BP-OsL"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="opm-Ka-rnN"/>
@@ -1620,7 +1590,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zyE-TI-gkT"/>
+        <segue reference="smS-6T-gca"/>
         <segue reference="tSc-Tn-2qc"/>
         <segue reference="ffr-XT-wBd"/>
     </inferredMetricsTieBreakers>
@@ -1633,7 +1603,6 @@
         <image name="avatar9" width="528" height="560"/>
         <image name="iconActivity" width="30" height="30"/>
         <image name="iconEdit" width="30" height="30"/>
-        <image name="iconFeed" width="30" height="30"/>
         <image name="iconProfile" width="30" height="30"/>
         <image name="iconTrophy" width="30" height="30"/>
         <image name="podium" width="1000" height="1000"/>
