@@ -37,7 +37,17 @@ class PodiumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        workoutPickerView.dataSource = self
+        workoutPickerView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        recupMaxValues()
+        defaultPodiumValue()
+    }
+
+    func defaultPodiumValue() {
+        self.workoutPickerView.selectRow(0, inComponent: 0, animated: false)
         topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
         topOneLabel.text = ""
         topOnePseudoLabel.text = "N/A"
@@ -49,30 +59,7 @@ class PodiumViewController: UIViewController {
         topThreePseudoLabel.text = "N/A"
         scoreNotOnPodiumLabel.text = ""
         textNotOnPodiumLabel.text = ""
-
-        workoutPickerView.dataSource = self
-        workoutPickerView.delegate = self
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        recupMaxValues()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        self.workoutPickerView.selectRow(0, inComponent: 0, animated: false)
-        topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
-        topOneLabel.text = "X"
-        topOnePseudoLabel.text = "N/A"
-        topTwoImage.image = UIImage(named: K.userCell.noOpponentAvatar)
-        topTwoLabel.text = "X"
-        topTwoPseudoLabel.text = "N/A"
-        topThreeImage.image = UIImage(named: K.userCell.noOpponentAvatar)
-        topThreeLabel.text = "X"
-        topThreePseudoLabel.text = "N/A"
-        scoreNotOnPodiumLabel.text = ""
-        textNotOnPodiumLabel.text = ""
-    }
-
     
     
     func recupMaxValues() {

@@ -17,12 +17,14 @@ class ProgressViewController: UIViewController {
     
     var allWorkOutResults: [Workout] = []
     var dateLabels: [String] = []
+    var maxValue: Double = 0
+    var minValue: Double = 0
+
     
     var userName = ""
     var avatarImg = ""
     var uid = ""
 
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
     @IBOutlet weak var segment1: UISegmentedControl!
@@ -116,6 +118,9 @@ class ProgressViewController: UIViewController {
         return dateString
     }
     
+    func getMinMax() {
+        // modify min and max 
+    }
     
     // MARK: - Bar Chart renderer
     
