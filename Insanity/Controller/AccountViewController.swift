@@ -29,7 +29,7 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Account View Did Load")
+        
         pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Change your pseudonyme", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         currentUserImage.image = UIImage(named: avatarImage)
@@ -42,7 +42,9 @@ class AccountViewController: UIViewController {
     }
 
     @IBAction func closePressed(_ sender: UIButton) {
-        saveProfile()
+        self.accountDelegate?.sendDataBackToProfileVC(pseudo: pseudo, avatar: avatarImage)
+        self.pseudoTextField.text = ""
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func validatePressed(_ sender: UIButton) {
@@ -56,19 +58,8 @@ class AccountViewController: UIViewController {
         changePseudoAndImage()
         self.accountDelegate?.sendDataBackToProfileVC(pseudo: pseudo, avatar: avatarImage)
         self.navigationController?.popViewController(animated: true)
-//        self.dismiss(animated: true, completion: nil)
-//        performSegue(withIdentifier: K.segueAccountToProfile, sender: self)
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == K.segueAccountToProfile {
-//            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-//            let homeView = tabCtrl.viewControllers![3] as! HomeViewController
-//            homeView.pseudoCurrentUser = pseudo
-//            homeView.avatarCurrentUser = avatarImage
-//            homeView.currentUserID = userID
-//        }
-//    }
+
     
     func changePseudoAndImage() {
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([
@@ -78,10 +69,7 @@ class AccountViewController: UIViewController {
             if let err = error {
                 print("Error adding document: \(err)")
             } else {
-                print("Document added!")
                 self.pseudoTextField.text = ""
-//                self.avatarImage = ""
-//                self.pseudo = ""
             }
         }
     }

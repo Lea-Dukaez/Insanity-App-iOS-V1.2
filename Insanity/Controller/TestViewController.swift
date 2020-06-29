@@ -42,7 +42,6 @@ class TestViewController: UIViewController {
         
         datePicker.datePickerMode = .date
         datePicker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
-//        self.dischargeDateTextField.inputView = datePicker
     
         textFieldArray = [SKTextField, PJKTextField, PKTextField, PJTextField, JSQTextField, SJTextField, PUJKTextField, PMCTextField]
 
@@ -55,17 +54,7 @@ class TestViewController: UIViewController {
     
     @objc func updateDateField(sender: UIDatePicker) {
         workoutDate = sender.date
-        print(sender.date)
-//        dischargeDateTextField?.text = formatDateForDisplay(date: sender.date)
     }
-
-//    // Formats the date chosen with the date picker.
-//    fileprivate func formatDateForDisplay(date: Date) -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "dd MMM yyyy"
-//        return formatter.string(from: date)
-//    }
-    
     
     @IBAction func validatePressed(_ sender: UIButton) {
         

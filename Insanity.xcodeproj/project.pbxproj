@@ -30,6 +30,8 @@
 		DBA637CF249BADA2008E92CA /* AddFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA637CD249BADA2008E92CA /* AddFriendCell.swift */; };
 		DBA637D0249BADA2008E92CA /* AddFriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DBA637CE249BADA2008E92CA /* AddFriendCell.xib */; };
 		DBA637D2249C7E32008E92CA /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA637D1249C7E32008E92CA /* Friend.swift */; };
+		DBCA76E124AA1DE9005D1FD2 /* ChartBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCA76E024AA1DE9005D1FD2 /* ChartBrain.swift */; };
+		DBCA76E324AA22A5005D1FD2 /* FriendActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */; };
 		DBD793262452265D009358F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793252452265D009358F8 /* AppDelegate.swift */; };
 		DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793272452265D009358F8 /* SceneDelegate.swift */; };
 		DBD7932A2452265D009358F8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD793292452265D009358F8 /* ProfileViewController.swift */; };
@@ -64,6 +66,8 @@
 		DBA637CD249BADA2008E92CA /* AddFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCell.swift; sourceTree = "<group>"; };
 		DBA637CE249BADA2008E92CA /* AddFriendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFriendCell.xib; sourceTree = "<group>"; };
 		DBA637D1249C7E32008E92CA /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		DBCA76E024AA1DE9005D1FD2 /* ChartBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBrain.swift; sourceTree = "<group>"; };
+		DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendActivityViewController.swift; sourceTree = "<group>"; };
 		DBD793222452265D009358F8 /* Insanity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Insanity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBD793252452265D009358F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBD793272452265D009358F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 				DB97C560246BF221008348E1 /* User.swift */,
 				DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */,
 				DBA637D1249C7E32008E92CA /* Friend.swift */,
+				DBCA76E024AA1DE9005D1FD2 /* ChartBrain.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -145,6 +150,7 @@
 				DBD793292452265D009358F8 /* ProfileViewController.swift */,
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */,
+				DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -304,9 +310,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB989B372452F085009F2C6F /* Constants.swift in Sources */,
+				DBCA76E124AA1DE9005D1FD2 /* ChartBrain.swift in Sources */,
 				DBD7932A2452265D009358F8 /* ProfileViewController.swift in Sources */,
 				DB1F3E812499084C00F76EE1 /* AddFriendsTableViewController.swift in Sources */,
 				DB97C55D246AC4D0008348E1 /* AccountViewController.swift in Sources */,
+				DBCA76E324AA22A5005D1FD2 /* FriendActivityViewController.swift in Sources */,
 				DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */,
 				DB97C561246BF221008348E1 /* User.swift in Sources */,
 				DB989B342452EE74009F2C6F /* UserCell.swift in Sources */,

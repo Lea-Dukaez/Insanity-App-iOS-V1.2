@@ -1,8 +1,8 @@
 //
-//  ProgressViewController.swift
+//  FriendActivityViewController.swift
 //  Insanity
 //
-//  Created by Léa on 24/04/2020.
+//  Created by Léa on 29/06/2020.
 //  Copyright © 2020 Lea Dukaez. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import Charts
 
-class ProgressViewController: UIViewController {
+class FriendActivityViewController: UIViewController {
     
     let db = Firestore.firestore()
     var dataWorkoutTest: [Workout] = []
@@ -20,30 +20,38 @@ class ProgressViewController: UIViewController {
     var maxValue: Double = 0
     var minValue: Double = 0
 
-    var uid = ""
-
-    @IBOutlet weak var msgLabel: UILabel!
-    @IBOutlet weak var addTestButton: UIButton!
+    var friendAvatar = ""
+    var friendPseudo = ""
+    var friendID = ""
+    
+    @IBOutlet weak var friendImage: UIImageView!
+    @IBOutlet weak var friendPseudoLabel: UILabel!
+    
+    @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var segment1: UISegmentedControl!
     @IBOutlet weak var segment2: UISegmentedControl!
     @IBOutlet weak var barChart: BarChartView!
     
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    
+    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        chartBrain = ChartBrain(barChart: barChart)
         
-        addTestButton.backgroundColor = .clear
-        addTestButton.layer.borderWidth = 1
-        addTestButton.layer.borderColor = UIColor.label.cgColor
+        friendImage.image = UIImage(named: friendAvatar)
+        friendPseudoLabel.text = friendPseudo
+        
+        chartBrain = ChartBrain(barChart: barChart)
         
         segment1.selectedSegmentIndex = 0
         segment2.selectedSegmentIndex = -1
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 
         loadWorkoutData()
+
     }
-    
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         var index = 0
@@ -62,9 +70,10 @@ class ProgressViewController: UIViewController {
 
     func loadWorkoutData() {
         dataWorkoutTest = []
+        print("loadWorkoutData for friend : \(friendPseudo) => \(friendID)")
 
         db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
-            .whereField(K.FStore.idField, isEqualTo: self.uid)
+            .whereField(K.FStore.idField, isEqualTo: self.friendID)
             .getDocuments { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
@@ -83,6 +92,8 @@ class ProgressViewController: UIViewController {
                                 self.chartBrain?.allWorkOutResults.append(newWorkout)
                                 let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                                 self.chartBrain?.dateLabels.append(workOutDate)
+                                
+                                print(self.chartBrain?.allWorkOutResults)
 
                                 // when data is collected, generate barChart
                                 DispatchQueue.main.async {
@@ -99,11 +110,11 @@ class ProgressViewController: UIViewController {
     
     // Func for Alert if No data recorder
     func showMsg() {
-        msgLabel.textColor = .label
+        noDataLabel.textColor = .label
     }
     
     func dismissMsg() {
-        msgLabel.textColor = .clear
+        noDataLabel.textColor = .clear
     }
     
     // Func to format the Date of workout Results
@@ -115,40 +126,5 @@ class ProgressViewController: UIViewController {
         
         return dateString
     }
-    
-    
-    func getMinMax() {
-        // modify min and max
-    }
 
-    
-    func Percent(old: Double, new: Double, cellForPercent: WorkoutCell) -> String {
-        let percent: Double = ((new - old) / old) * 100
-        let percentString = String(format: "%.0f", percent)
-        
-        if percent>=0 {
-            cellForPercent.test5Label.textColor = .green
-            return "+"+percentString+"%"
-        } else {
-            cellForPercent.test5Label.textColor = .red
-            return percentString+"%"
-        }
-    }
-    
-    
-
-    
-    // MARK: - Add Result Section
-    
-    @IBAction func addTestPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueResultsToTest, sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueResultsToTest {
-            let testView = segue.destination as! TestViewController
-            testView.currentUserId = uid
-        }
-    }
-    
 }

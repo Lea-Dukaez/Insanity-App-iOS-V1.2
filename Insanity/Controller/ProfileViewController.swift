@@ -16,9 +16,9 @@ class ProfileViewController: UIViewController {
     var avatarCurrentUser : String = ""
     var currentUserID = ""
     
-    var pseudo = ""
-    var avatar = ""
-    var uid = ""
+    var friendPseudo = ""
+    var friendAvatar = ""
+    var friendID = ""
     
     var dataUsers: [User] = []
     let db = Firestore.firestore()
@@ -143,11 +143,17 @@ class ProfileViewController: UIViewController {
             accountView.userID = currentUserID
             accountView.accountDelegate = self
         }
-        if segue.identifier == K.segueGoToAddFriends {
+        else if segue.identifier == K.segueGoToAddFriends {
             let addFriendsView = segue.destination as! AddFriendsTableViewController
             addFriendsView.currentUserID = currentUserID
             addFriendsView.dataUsers = dataUsers
             addFriendsView.addFriendDelegate = self
+        }
+        else if segue.identifier == K.segueGoToFriendActivity {
+            let friendActivityView = segue.destination as! FriendActivityViewController
+            friendActivityView.friendID = friendID
+            friendActivityView.friendAvatar = friendAvatar
+            friendActivityView.friendPseudo = friendPseudo
         }
     }
 
@@ -172,12 +178,13 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(dataUsers[indexPath.row].id)
-        print(dataUsers[indexPath.row].pseudo)
-//        avatar = dataUsers[indexPath.row].avatar
-//        pseudo = dataUsers[indexPath.row].pseudo
-//        uid = dataUsers[indexPath.row].id
-//        performSegue(withIdentifier: K.segueToProgress, sender: self)
+        friendAvatar = dataUsers[indexPath.row].avatar
+        friendPseudo = dataUsers[indexPath.row].pseudo
+        friendID = dataUsers[indexPath.row].id
+        print(friendAvatar)
+        print(friendPseudo)
+        print(friendID)
+        performSegue(withIdentifier: K.segueGoToFriendActivity, sender: self)
     }
     
 }
