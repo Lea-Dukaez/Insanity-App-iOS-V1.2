@@ -38,7 +38,7 @@ class WelcomeViewController: UIViewController {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
             
             let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
-            progressView.uid = currentUserID
+            progressView.currentUserID = currentUserID
             
             let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
             podiumView.currentUserID = currentUserID

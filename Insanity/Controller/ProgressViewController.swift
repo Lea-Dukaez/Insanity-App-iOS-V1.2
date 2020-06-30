@@ -16,11 +16,16 @@ class ProgressViewController: UIViewController {
     var dataWorkoutTest: [Workout] = []
     
     var chartBrain: ChartBrain?
+    var dataBrain = DataBrain()
     
-    var maxValues: [Double] = []
+    var currentUserID: String = "" {
+        didSet {
+            dataBrain.currentUserID = self.currentUserID
+            dataBrain.recupUserMax(uid: currentUserID)
+        }
+    }
+    
     var firstValues: [Double] = []
-
-    var uid = ""
 
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var percentLabel: UILabel!
@@ -58,6 +63,19 @@ class ProgressViewController: UIViewController {
         }
 
         chartBrain?.barChartUpdate(workOutSelected: index)
+        updateProgressForWorkout(workOutSelected: index)
+    }
+    
+    func updateProgressForWorkout(workOutSelected: Int) {
+        let maxVal = dataBrain.currentUserMaxValues[workOutSelected]
+        let first = firstValues[workOutSelected]
+        let percent: Double = ((maxVal - first) / first) * 100
+        let percentString = String(format: "%.0f", percent)
+        
+        let text = "Best progression for \(K.workout.workoutMove[workOutSelected]) since your first fit test"
+        
+        percentLabel.text = "+"+percentString+"%"
+        progressLabel.text = text
     }
     
     // MARK: - Get Data from DB
@@ -66,7 +84,7 @@ class ProgressViewController: UIViewController {
         dataWorkoutTest = []
 
         db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
-            .whereField(K.FStore.idField, isEqualTo: self.uid)
+            .whereField(K.FStore.idField, isEqualTo: self.currentUserID)
             .getDocuments { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
@@ -93,7 +111,9 @@ class ProgressViewController: UIViewController {
 
                                 // when data is collected, generate barChart
                                 DispatchQueue.main.async {
-                                    self.chartBrain?.barChartUpdate(workOutSelected: self.segment1.selectedSegmentIndex)
+                                    let index = self.segment1.selectedSegmentIndex
+                                    self.updateProgressForWorkout(workOutSelected: index)
+                                    self.chartBrain?.barChartUpdate(workOutSelected: index)
                                 }
                             }
                         }
@@ -124,25 +144,6 @@ class ProgressViewController: UIViewController {
     }
     
     
-    func getMinMax() {
-        // modify min and max
-    }
-
-    
-    func Percent(old: Double, new: Double, cellForPercent: WorkoutCell) -> String {
-        let percent: Double = ((new - old) / old) * 100
-        let percentString = String(format: "%.0f", percent)
-        
-        if percent>=0 {
-            cellForPercent.test5Label.textColor = .green
-            return "+"+percentString+"%"
-        } else {
-            cellForPercent.test5Label.textColor = .red
-            return percentString+"%"
-        }
-    }
-    
-    
 
     
     // MARK: - Add Result Section
@@ -154,7 +155,7 @@ class ProgressViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueResultsToTest {
             let testView = segue.destination as! TestViewController
-            testView.currentUserId = uid
+            testView.currentUserId = currentUserID
         }
     }
     

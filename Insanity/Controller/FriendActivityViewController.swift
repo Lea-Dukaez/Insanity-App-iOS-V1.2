@@ -16,17 +16,24 @@ class FriendActivityViewController: UIViewController {
     var dataWorkoutTest: [Workout] = []
     
     var chartBrain: ChartBrain?
+    var dataBrain = DataBrain()
     
-    var maxValue: Double = 0
-    var minValue: Double = 0
-
     var friendAvatar = ""
     var friendPseudo = ""
-    var friendID = ""
+    var friendID: String = "" {
+        didSet {
+            dataBrain.recupUserMax(uid: friendID)
+        }
+    }
+    
+    var firstValues: [Double] = []
+
     
     @IBOutlet weak var friendImage: UIImageView!
     @IBOutlet weak var friendPseudoLabel: UILabel!
     
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var noDataLabel: UILabel!
     @IBOutlet weak var segment1: UISegmentedControl!
     @IBOutlet weak var segment2: UISegmentedControl!
@@ -64,13 +71,25 @@ class FriendActivityViewController: UIViewController {
         }
 
         chartBrain?.barChartUpdate(workOutSelected: index)
+        updateProgressForWorkout(workOutSelected: index)
+    }
+    
+    func updateProgressForWorkout(workOutSelected: Int) {
+        let maxVal = dataBrain.userMaxValues[workOutSelected]
+        let first = firstValues[workOutSelected]
+        let percent: Double = ((maxVal - first) / first) * 100
+        let percentString = String(format: "%.0f", percent)
+        
+        let text = "Best progression for \(K.workout.workoutMove[workOutSelected]) since the first fit test"
+        
+        percentLabel.text = "+"+percentString+"%"
+        progressLabel.text = text
     }
     
     // MARK: - Get Data from DB
 
     func loadWorkoutData() {
         dataWorkoutTest = []
-        print("loadWorkoutData for friend : \(friendPseudo) => \(friendID)")
 
         db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
             .whereField(K.FStore.idField, isEqualTo: self.friendID)
@@ -84,20 +103,25 @@ class FriendActivityViewController: UIViewController {
                     self.dismissMsg()
                     // documents exist in Firestore
                     if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
+                        for (index, doc) in snapshotDocuments.enumerated() {
                             let data = doc.data()
                             if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
+                                
+                                // get the first fit test for the progression
+                                if index == 0 {
+                                    self.firstValues = testResult
+                                }
                                 
                                 let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
                                 self.chartBrain?.allWorkOutResults.append(newWorkout)
                                 let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                                 self.chartBrain?.dateLabels.append(workOutDate)
                                 
-                                print(self.chartBrain?.allWorkOutResults)
-
                                 // when data is collected, generate barChart
                                 DispatchQueue.main.async {
-                                    self.chartBrain?.barChartUpdate(workOutSelected: self.segment1.selectedSegmentIndex)
+                                    let index = self.segment1.selectedSegmentIndex
+                                    self.updateProgressForWorkout(workOutSelected: index)
+                                    self.chartBrain?.barChartUpdate(workOutSelected: index)
                                 }
                             }
                         }

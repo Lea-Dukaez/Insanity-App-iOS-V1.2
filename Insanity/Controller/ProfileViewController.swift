@@ -181,9 +181,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         friendAvatar = dataUsers[indexPath.row].avatar
         friendPseudo = dataUsers[indexPath.row].pseudo
         friendID = dataUsers[indexPath.row].id
-        print(friendAvatar)
-        print(friendPseudo)
-        print(friendID)
         performSegue(withIdentifier: K.segueGoToFriendActivity, sender: self)
     }
     

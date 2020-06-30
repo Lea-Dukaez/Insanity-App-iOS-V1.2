@@ -955,50 +955,93 @@
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Uhx-f6-bq7">
-                                <rect key="frame" x="10" y="100" width="355" height="92"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="w9z-Vp-XkK">
+                                <rect key="frame" x="10" y="100" width="355" height="537"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-b8-Z5f">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="41"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Uhx-f6-bq7" userLabel="Segment Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="92"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tsW-b8-Z5f">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="u8v-E6-Ume"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Switch Kicks"/>
+                                                    <segment title="Power Jacks"/>
+                                                    <segment title="Power Knees"/>
+                                                    <segment title="Power Jump"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="X7c-Os-dG6" eventType="valueChanged" id="Iq0-5Y-m6b"/>
+                                                    <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="VvE-X0-G21"/>
+                                                </connections>
+                                            </segmentedControl>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="js8-xp-Zda">
+                                                <rect key="frame" x="0.0" y="52" width="355" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="0Jy-Ru-m2b"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Global Jump"/>
+                                                    <segment title="Suicide Jump"/>
+                                                    <segment title="Push-Up Jack"/>
+                                                    <segment title="Low-Plank Oblique"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="X7c-Os-dG6" eventType="valueChanged" id="fLa-jk-wkE"/>
+                                                    <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="gP9-7r-lWT"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PhR-sh-ifO" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="30" y="125" width="295" height="200"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="u8v-E6-Ume"/>
+                                            <constraint firstAttribute="height" constant="200" id="aG5-Oh-xds"/>
                                         </constraints>
-                                        <segments>
-                                            <segment title="Switch Kicks"/>
-                                            <segment title="Power Jacks"/>
-                                            <segment title="Power Knees"/>
-                                            <segment title="Power Jump"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="segmentedControlPressed:" destination="X7c-Os-dG6" eventType="valueChanged" id="Iq0-5Y-m6b"/>
-                                            <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="VvE-X0-G21"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="js8-xp-Zda">
-                                        <rect key="frame" x="0.0" y="52" width="355" height="41"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zbE-IF-3Cc">
+                                        <rect key="frame" x="30" y="358" width="295" height="179"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Syz-ay-6Ia">
+                                                <rect key="frame" x="0.0" y="5" width="295" height="169"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best progression for switch kicks since your first fit test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbO-V7-f8x">
+                                                        <rect key="frame" x="0.0" y="69" width="210" height="31.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RP6-50-vQF">
+                                                        <rect key="frame" x="215" y="72.5" width="80" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="BzD-zn-ZPD"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                                        <color key="textColor" name="BrandOrangeColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="0Jy-Ru-m2b"/>
+                                            <constraint firstItem="Syz-ay-6Ia" firstAttribute="top" secondItem="zbE-IF-3Cc" secondAttribute="top" constant="5" id="1cf-aV-mBZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="Syz-ay-6Ia" secondAttribute="bottom" constant="5" id="FTZ-XB-LuR"/>
+                                            <constraint firstAttribute="trailing" secondItem="Syz-ay-6Ia" secondAttribute="trailing" id="ctR-Hz-kUs"/>
+                                            <constraint firstItem="Syz-ay-6Ia" firstAttribute="leading" secondItem="zbE-IF-3Cc" secondAttribute="leading" id="eak-h7-UWp"/>
                                         </constraints>
-                                        <segments>
-                                            <segment title="Global Jump"/>
-                                            <segment title="Suicide Jump"/>
-                                            <segment title="Push-Up Jack"/>
-                                            <segment title="Low-Plank Oblique"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="segmentedControlPressed:" destination="X7c-Os-dG6" eventType="valueChanged" id="fLa-jk-wkE"/>
-                                            <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="gP9-7r-lWT"/>
-                                        </connections>
-                                    </segmentedControl>
+                                    </view>
                                 </subviews>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PhR-sh-ifO" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="40" y="222" width="295" height="200"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="aG5-Oh-xds"/>
+                                    <constraint firstAttribute="trailing" secondItem="zbE-IF-3Cc" secondAttribute="trailing" constant="30" id="dgm-0I-ujN"/>
+                                    <constraint firstItem="zbE-IF-3Cc" firstAttribute="leading" secondItem="w9z-Vp-XkK" secondAttribute="leading" constant="30" id="jvx-eu-aP7"/>
+                                    <constraint firstItem="PhR-sh-ifO" firstAttribute="leading" secondItem="w9z-Vp-XkK" secondAttribute="leading" constant="30" id="md7-v2-3GI"/>
+                                    <constraint firstAttribute="trailing" secondItem="PhR-sh-ifO" secondAttribute="trailing" constant="30" id="vGB-Bb-kVA"/>
                                 </constraints>
-                            </view>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7zs-As-9bz" userLabel="UserView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                 <subviews>
@@ -1029,18 +1072,16 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Uhx-f6-bq7" firstAttribute="leading" secondItem="Ncg-Ja-G4e" secondAttribute="leading" constant="10" id="0qO-9Q-IX7"/>
+                            <constraint firstAttribute="bottom" secondItem="w9z-Vp-XkK" secondAttribute="bottom" constant="10" id="1lH-ZO-FV1"/>
                             <constraint firstItem="Ncg-Ja-G4e" firstAttribute="trailing" secondItem="vel-Ra-waj" secondAttribute="trailing" id="4G8-Ng-iad"/>
-                            <constraint firstItem="Uhx-f6-bq7" firstAttribute="top" secondItem="7zs-As-9bz" secondAttribute="bottom" constant="20" id="JGY-jf-nXI"/>
+                            <constraint firstItem="w9z-Vp-XkK" firstAttribute="top" secondItem="7zs-As-9bz" secondAttribute="bottom" constant="20" id="6Dc-1U-F7P"/>
+                            <constraint firstAttribute="trailing" secondItem="w9z-Vp-XkK" secondAttribute="trailing" constant="10" id="9j9-fB-GC6"/>
                             <constraint firstItem="7zs-As-9bz" firstAttribute="top" secondItem="Ncg-Ja-G4e" secondAttribute="top" id="NMg-lD-lF0"/>
                             <constraint firstItem="Ncg-Ja-G4e" firstAttribute="trailing" secondItem="7zs-As-9bz" secondAttribute="trailing" id="QCu-Jb-aOB"/>
-                            <constraint firstItem="Ncg-Ja-G4e" firstAttribute="trailing" secondItem="PhR-sh-ifO" secondAttribute="trailing" constant="40" id="aBL-sc-0sD"/>
-                            <constraint firstItem="PhR-sh-ifO" firstAttribute="leading" secondItem="Ncg-Ja-G4e" secondAttribute="leading" constant="40" id="fXm-iH-XIb"/>
+                            <constraint firstItem="w9z-Vp-XkK" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" constant="10" id="e5W-rb-JFB"/>
                             <constraint firstItem="vel-Ra-waj" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" id="n5I-9h-Rwz"/>
                             <constraint firstItem="vel-Ra-waj" firstAttribute="centerY" secondItem="rVg-0N-3HU" secondAttribute="centerY" id="nXx-IA-I1t"/>
                             <constraint firstItem="7zs-As-9bz" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" id="rOA-7l-SDI"/>
-                            <constraint firstAttribute="trailing" secondItem="Uhx-f6-bq7" secondAttribute="trailing" constant="10" id="sKc-QQ-phn"/>
-                            <constraint firstItem="PhR-sh-ifO" firstAttribute="top" secondItem="Uhx-f6-bq7" secondAttribute="bottom" constant="30" id="zMG-IR-JU0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ncg-Ja-G4e"/>
                     </view>
@@ -1050,6 +1091,8 @@
                         <outlet property="friendImage" destination="o9A-WG-5Pr" id="bEy-A1-6Rg"/>
                         <outlet property="friendPseudoLabel" destination="jn8-jO-pVe" id="bjR-cG-oxW"/>
                         <outlet property="noDataLabel" destination="vel-Ra-waj" id="syr-ts-ZzC"/>
+                        <outlet property="percentLabel" destination="RP6-50-vQF" id="Opg-N6-FhA"/>
+                        <outlet property="progressLabel" destination="ZbO-V7-f8x" id="2hu-6r-iW3"/>
                         <outlet property="segment1" destination="tsW-b8-Z5f" id="Cul-rn-diw"/>
                         <outlet property="segment2" destination="js8-xp-Zda" id="Gcm-hm-P0P"/>
                     </connections>
@@ -1130,20 +1173,23 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WS3-Sn-psw">
-                                        <rect key="frame" x="0.0" y="358" width="355" height="120"/>
+                                        <rect key="frame" x="30" y="358" width="295" height="120"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tvr-HZ-mnF">
-                                                <rect key="frame" x="10" y="5" width="335" height="110"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tvr-HZ-mnF">
+                                                <rect key="frame" x="0.0" y="5" width="295" height="110"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best progression for switch kicks since your first fit test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-dd-o7J">
-                                                        <rect key="frame" x="0.0" y="26.5" width="167.5" height="57.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best progression for switch kicks since your first fit test" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-dd-o7J">
+                                                        <rect key="frame" x="0.0" y="39.5" width="210" height="31.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qut-mV-zlW">
-                                                        <rect key="frame" x="167.5" y="39" width="167.5" height="32.5"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="27"/>
+                                                        <rect key="frame" x="215" y="43" width="80" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="lVQ-dz-cwC"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                         <color key="textColor" name="BrandOrangeColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -1152,13 +1198,19 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstItem="tvr-HZ-mnF" firstAttribute="leading" secondItem="WS3-Sn-psw" secondAttribute="leading" constant="10" id="2gB-HU-kur"/>
-                                            <constraint firstAttribute="trailing" secondItem="tvr-HZ-mnF" secondAttribute="trailing" constant="10" id="MyG-6S-Ufm"/>
+                                            <constraint firstItem="tvr-HZ-mnF" firstAttribute="leading" secondItem="WS3-Sn-psw" secondAttribute="leading" id="2gB-HU-kur"/>
+                                            <constraint firstAttribute="trailing" secondItem="tvr-HZ-mnF" secondAttribute="trailing" id="MyG-6S-Ufm"/>
                                             <constraint firstItem="tvr-HZ-mnF" firstAttribute="top" secondItem="WS3-Sn-psw" secondAttribute="top" constant="5" id="S5X-xy-PSl"/>
                                             <constraint firstAttribute="bottom" secondItem="tvr-HZ-mnF" secondAttribute="bottom" constant="5" id="lPj-eb-UET"/>
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="WS3-Sn-psw" firstAttribute="leading" secondItem="GpL-i3-Fmc" secondAttribute="leading" constant="30" id="566-0v-uEy"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y54-26-QBy" secondAttribute="trailing" constant="30" id="FlW-kE-WKE"/>
+                                    <constraint firstItem="Y54-26-QBy" firstAttribute="leading" secondItem="GpL-i3-Fmc" secondAttribute="leading" constant="30" id="N8a-Vw-4TD"/>
+                                    <constraint firstAttribute="trailing" secondItem="WS3-Sn-psw" secondAttribute="trailing" constant="30" id="u7G-fq-mEl"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

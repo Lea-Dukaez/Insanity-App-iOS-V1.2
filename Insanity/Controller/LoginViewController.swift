@@ -77,7 +77,7 @@ class LoginViewController: UIViewController {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
    
             let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
-            progressView.uid = userID
+            progressView.currentUserID = userID
 
             let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
             podiumView.currentUserID = userID
