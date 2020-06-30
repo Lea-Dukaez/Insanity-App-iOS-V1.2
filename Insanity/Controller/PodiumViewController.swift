@@ -48,15 +48,15 @@ class PodiumViewController: UIViewController {
 
     func defaultPodiumValue() {
         self.workoutPickerView.selectRow(0, inComponent: 0, animated: false)
-        topOneImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topOneImage.image = UIImage()
         topOneLabel.text = ""
-        topOnePseudoLabel.text = "N/A"
-        topTwoImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topOnePseudoLabel.text = ""
+        topTwoImage.image = UIImage()
         topTwoLabel.text = ""
-        topTwoPseudoLabel.text = "N/A"
-        topThreeImage.image = UIImage(named: K.userCell.noOpponentAvatar)
+        topTwoPseudoLabel.text = ""
+        topThreeImage.image = UIImage()
         topThreeLabel.text = ""
-        topThreePseudoLabel.text = "N/A"
+        topThreePseudoLabel.text = ""
         scoreNotOnPodiumLabel.text = ""
         textNotOnPodiumLabel.text = ""
     }
@@ -263,8 +263,9 @@ extension PodiumViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-
-        if row != 0 {
+        if row == 0 {
+            defaultPodiumValue()
+        } else {
             updatePodium(sportRow: row-1)
         }
     }

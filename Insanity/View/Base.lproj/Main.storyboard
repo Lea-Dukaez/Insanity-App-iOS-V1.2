@@ -1084,63 +1084,95 @@
                                     <action selector="addTestPressed:" destination="0R8-ZT-1QA" eventType="touchUpInside" id="fug-sx-SeC"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Zdc-0l-A7o">
-                                <rect key="frame" x="10" y="50" width="355" height="92"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="GpL-i3-Fmc">
+                                <rect key="frame" x="10" y="30" width="355" height="478"/>
                                 <subviews>
-                                    <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="STN-OI-1Mi">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="41"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Zdc-0l-A7o" userLabel="Segment Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="92"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="STN-OI-1Mi">
+                                                <rect key="frame" x="0.0" y="0.0" width="355" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="3hO-y0-hDn"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Switch Kicks"/>
+                                                    <segment title="Power Jacks"/>
+                                                    <segment title="Power Knees"/>
+                                                    <segment title="Power Jump"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="brn-UE-z9E"/>
+                                                </connections>
+                                            </segmentedControl>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="evY-rq-8MT">
+                                                <rect key="frame" x="0.0" y="52" width="355" height="41"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="C9i-zi-TVv"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Global Jump"/>
+                                                    <segment title="Suicide Jump"/>
+                                                    <segment title="Push-Up Jack"/>
+                                                    <segment title="Low-Plank Oblique"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="CVH-d3-6aK"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y54-26-QBy" customClass="BarChartView" customModule="Charts">
+                                        <rect key="frame" x="30" y="125" width="295" height="200"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="3hO-y0-hDn"/>
+                                            <constraint firstAttribute="height" constant="200" id="Ip0-bG-OD1"/>
                                         </constraints>
-                                        <segments>
-                                            <segment title="Switch Kicks"/>
-                                            <segment title="Power Jacks"/>
-                                            <segment title="Power Knees"/>
-                                            <segment title="Power Jump"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="brn-UE-z9E"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="evY-rq-8MT">
-                                        <rect key="frame" x="0.0" y="52" width="355" height="41"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WS3-Sn-psw">
+                                        <rect key="frame" x="0.0" y="358" width="355" height="120"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tvr-HZ-mnF">
+                                                <rect key="frame" x="10" y="5" width="335" height="110"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Best progression for switch kicks since your first fit test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-dd-o7J">
+                                                        <rect key="frame" x="0.0" y="26.5" width="167.5" height="57.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qut-mV-zlW">
+                                                        <rect key="frame" x="167.5" y="39" width="167.5" height="32.5"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="27"/>
+                                                        <color key="textColor" name="BrandOrangeColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="C9i-zi-TVv"/>
+                                            <constraint firstItem="tvr-HZ-mnF" firstAttribute="leading" secondItem="WS3-Sn-psw" secondAttribute="leading" constant="10" id="2gB-HU-kur"/>
+                                            <constraint firstAttribute="trailing" secondItem="tvr-HZ-mnF" secondAttribute="trailing" constant="10" id="MyG-6S-Ufm"/>
+                                            <constraint firstItem="tvr-HZ-mnF" firstAttribute="top" secondItem="WS3-Sn-psw" secondAttribute="top" constant="5" id="S5X-xy-PSl"/>
+                                            <constraint firstAttribute="bottom" secondItem="tvr-HZ-mnF" secondAttribute="bottom" constant="5" id="lPj-eb-UET"/>
                                         </constraints>
-                                        <segments>
-                                            <segment title="Global Jump"/>
-                                            <segment title="Suicide Jump"/>
-                                            <segment title="Push-Up Jack"/>
-                                            <segment title="Low-Plank Oblique"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="segmentedControlPressed:" destination="0R8-ZT-1QA" eventType="valueChanged" id="CVH-d3-6aK"/>
-                                        </connections>
-                                    </segmentedControl>
+                                    </view>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y54-26-QBy" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="40" y="172" width="295" height="200"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="Ip0-bG-OD1"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="Y54-26-QBy" secondAttribute="trailing" constant="40" id="4uI-7q-atX"/>
-                            <constraint firstItem="Y54-26-QBy" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="40" id="61V-Qt-fJ7"/>
-                            <constraint firstItem="Y54-26-QBy" firstAttribute="top" secondItem="Zdc-0l-A7o" secondAttribute="bottom" constant="30" id="Ach-76-Ojb"/>
-                            <constraint firstAttribute="trailing" secondItem="Zdc-0l-A7o" secondAttribute="trailing" constant="10" id="H5I-uJ-anZ"/>
+                            <constraint firstAttribute="trailing" secondItem="GpL-i3-Fmc" secondAttribute="trailing" constant="10" id="65j-ua-dKy"/>
+                            <constraint firstItem="GpL-i3-Fmc" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="30" id="Acn-TW-Dz4"/>
+                            <constraint firstItem="GpL-i3-Fmc" firstAttribute="leading" secondItem="Gak-lA-93W" secondAttribute="leading" constant="10" id="OHb-iM-40X"/>
                             <constraint firstItem="53S-76-BCi" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="40" id="PES-Zi-6mx"/>
                             <constraint firstItem="VRV-1k-e7D" firstAttribute="centerX" secondItem="Gak-lA-93W" secondAttribute="centerX" id="Thd-78-wqz"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="53S-76-BCi" secondAttribute="bottom" constant="30" id="Ump-Na-jxT"/>
                             <constraint firstAttribute="trailing" secondItem="VRV-1k-e7D" secondAttribute="trailing" id="Ytj-ou-Spd"/>
                             <constraint firstItem="VRV-1k-e7D" firstAttribute="centerY" secondItem="Gak-lA-93W" secondAttribute="centerY" id="bJm-KP-Dhh"/>
-                            <constraint firstItem="Zdc-0l-A7o" firstAttribute="leading" secondItem="Gak-lA-93W" secondAttribute="leading" constant="10" id="kvv-Av-9vS"/>
+                            <constraint firstItem="53S-76-BCi" firstAttribute="top" secondItem="GpL-i3-Fmc" secondAttribute="bottom" constant="20" id="nUm-z9-f7g"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="53S-76-BCi" secondAttribute="trailing" constant="40" id="qJA-Lb-ED6"/>
-                            <constraint firstItem="Zdc-0l-A7o" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="50" id="xMS-YR-8x1"/>
                             <constraint firstItem="VRV-1k-e7D" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="yWi-yA-A6B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="glq-rp-bN8"/>
@@ -1151,6 +1183,8 @@
                         <outlet property="addTestButton" destination="53S-76-BCi" id="Pxi-pN-ZAt"/>
                         <outlet property="barChart" destination="Y54-26-QBy" id="tTQ-sp-4mI"/>
                         <outlet property="msgLabel" destination="VRV-1k-e7D" id="d1C-xX-zKM"/>
+                        <outlet property="percentLabel" destination="Qut-mV-zlW" id="0Q2-Xk-B9s"/>
+                        <outlet property="progressLabel" destination="nMV-dd-o7J" id="VWF-L0-pEY"/>
                         <outlet property="segment1" destination="STN-OI-1Mi" id="jyF-LO-bep"/>
                         <outlet property="segment2" destination="evY-rq-8MT" id="kwx-CG-r8w"/>
                         <segue destination="TnM-Vq-Ygn" kind="show" identifier="goToTest" id="amr-TI-1n0"/>
@@ -1158,7 +1192,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4s-48-Zbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3866.666666666667" y="1820.7589285714284"/>
+            <point key="canvasLocation" x="3893.5999999999999" y="1820.2398800599701"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="nPV-eI-Tll">
@@ -1427,7 +1461,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cA8-j9-9hm" userLabel="PodiumView">
                                         <rect key="frame" x="0.0" y="0.0" width="295" height="270"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="podium" translatesAutoresizingMaskIntoConstraints="NO" id="cPa-KJ-6jg">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="orangePodium" translatesAutoresizingMaskIntoConstraints="NO" id="cPa-KJ-6jg">
                                                 <rect key="frame" x="0.0" y="0.0" width="295" height="270"/>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar1" translatesAutoresizingMaskIntoConstraints="NO" id="jDn-OG-MHG">
@@ -1517,16 +1551,16 @@
                                             <constraint firstAttribute="trailing" secondItem="SLT-PL-MoA" secondAttribute="trailing" id="HTD-xu-NsE"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="oqV-9E-fdW">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="oqV-9E-fdW">
                                         <rect key="frame" x="0.0" y="381.5" width="295" height="106.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not yet on the Podium. Your best score for these exercice is : " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x6D-Ie-ZPq">
-                                                <rect key="frame" x="8.5" y="0.0" width="278.5" height="0.0"/>
+                                                <rect key="frame" x="8.5" y="0.0" width="278.5" height="4"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="36" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8x1-O1-ZO9">
-                                                <rect key="frame" x="138.5" y="15" width="18.5" height="0.0"/>
+                                                <rect key="frame" x="138.5" y="17" width="18.5" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1724,11 +1758,11 @@
         <image name="iconEdit" width="30" height="30"/>
         <image name="iconProfile" width="30" height="30"/>
         <image name="iconTrophy" width="30" height="30"/>
-        <image name="podium" width="1000" height="1000"/>
+        <image name="orangePodium" width="1000" height="1000"/>
         <image name="textfield" width="298" height="93"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BrandOrangeColor">
-            <color red="0.95300000905990601" green="0.65100002288818359" blue="0.51399999856948853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.95294117647058818" green="0.65098039215686276" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

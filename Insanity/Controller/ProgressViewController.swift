@@ -17,11 +17,13 @@ class ProgressViewController: UIViewController {
     
     var chartBrain: ChartBrain?
     
-    var maxValue: Double = 0
-    var minValue: Double = 0
+    var maxValues: [Double] = []
+    var firstValues: [Double] = []
 
     var uid = ""
 
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
     @IBOutlet weak var segment1: UISegmentedControl!
@@ -75,9 +77,14 @@ class ProgressViewController: UIViewController {
                     self.dismissMsg()
                     // documents exist in Firestore
                     if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
+                        for (index, doc) in snapshotDocuments.enumerated() {
                             let data = doc.data()
                             if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
+                                
+                                // get the first fit test for the progression
+                                if index == 0 {
+                                    self.firstValues = testResult
+                                }
                                 
                                 let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
                                 self.chartBrain?.allWorkOutResults.append(newWorkout)
