@@ -8,10 +8,12 @@
 
 import UIKit
 import FirebaseAuth
+import Firebase
 
 class LoginViewController: UIViewController {
 
     var userID = ""
+    let db = Firestore.firestore()
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -76,13 +78,17 @@ class LoginViewController: UIViewController {
         if segue.identifier == K.segueLoginToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
    
-            let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
-            progressView.currentUserID = userID
-
-            let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
+            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
+            calendarView.currentUserID = userID
+            
+            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
+            activityView.currentUserID = userID
+            
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID
             
-            let profileView = tabCtrl.viewControllers![2] as! ProfileViewController
+            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
             profileView.currentUserID = userID
         }
     }

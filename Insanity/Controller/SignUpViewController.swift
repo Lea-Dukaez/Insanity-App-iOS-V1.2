@@ -18,7 +18,6 @@ class SignUpViewController: UIViewController {
     var avatar = ""
     var userID = ""
 
-
     @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -86,10 +85,13 @@ class SignUpViewController: UIViewController {
     }
 
     func createUserInfo(pseudoDefault: String, avatarDefault: String) {
+        let calendar: [Bool] = Array(repeating: false, count: 72)
+        
         // Add a new document in Firestore for new user
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).setData([
             K.FStore.maxField: [Double](),
             K.FStore.friendsField: [String](),
+            K.FStore.calendarField:calendar,
             K.FStore.pseudoField: pseudoDefault,
             K.FStore.avatarField: avatarDefault
         ]) { error in
@@ -97,20 +99,23 @@ class SignUpViewController: UIViewController {
                 print("Error adding document: \(err)")
             }
         }
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueSignUpToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
             
-            let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
-            progressView.currentUserID = userID
-
-            let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
+            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
+            calendarView.currentUserID = userID
+            
+            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
+            activityView.currentUserID = userID
+            
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID
             
-            let profileView = tabCtrl.viewControllers![2] as! ProfileViewController
+            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
             profileView.currentUserID = userID
             profileView.pseudoCurrentUser = pseudoCurrentUser
             profileView.avatarCurrentUser = avatar

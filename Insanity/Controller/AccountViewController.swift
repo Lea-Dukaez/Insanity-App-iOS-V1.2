@@ -100,7 +100,6 @@ extension AccountViewController:  UICollectionViewDataSource {
 extension AccountViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         avatarImage = K.avatarImages[indexPath.item]
-        
     }
 
 }

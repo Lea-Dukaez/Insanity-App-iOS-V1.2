@@ -40,6 +40,9 @@
 		DBD82ACF2493CC7300BF37E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DBD82ACE2493CC7200BF37E9 /* Assets.xcassets */; };
 		DBDE225A2455B1A500D961E0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */; };
 		DBF15F6324AB19CB004EF1D6 /* DataBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF15F6224AB19CB004EF1D6 /* DataBrain.swift */; };
+		DBF15F6724AC681D004EF1D6 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF15F6624AC681D004EF1D6 /* CalendarCollectionViewCell.swift */; };
+		DBF15F6924AC7A85004EF1D6 /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF15F6824AC7A85004EF1D6 /* ColumnFlowLayout.swift */; };
+		DBF15F6B24ACDFFF004EF1D6 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF15F6A24ACDFFE004EF1D6 /* CalendarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +82,9 @@
 		DBD82ACE2493CC7200BF37E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBF15F6224AB19CB004EF1D6 /* DataBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBrain.swift; sourceTree = "<group>"; };
+		DBF15F6624AC681D004EF1D6 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		DBF15F6824AC7A85004EF1D6 /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
+		DBF15F6A24ACDFFE004EF1D6 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		FBD0E847B193FD1255230848 /* Pods_Insanity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Insanity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -135,6 +141,8 @@
 				DB97C55E246AF891008348E1 /* AvatarCollectionViewCell.swift */,
 				DBA637CD249BADA2008E92CA /* AddFriendCell.swift */,
 				DBA637CE249BADA2008E92CA /* AddFriendCell.xib */,
+				DBF15F6624AC681D004EF1D6 /* CalendarCollectionViewCell.swift */,
+				DBF15F6824AC7A85004EF1D6 /* ColumnFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -147,13 +155,14 @@
 				DB97C55624693C44008348E1 /* LoginViewController.swift */,
 				DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */,
 				DB5469762496B94F0007AC71 /* ResetViewController.swift */,
-				DB4454F8245B186D008D4398 /* PodiumViewController.swift */,
 				DB989B3A2452F740009F2C6F /* ProgressViewController.swift */,
 				DB989B382452F730009F2C6F /* TestViewController.swift */,
+				DB4454F8245B186D008D4398 /* PodiumViewController.swift */,
 				DBD793292452265D009358F8 /* ProfileViewController.swift */,
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */,
 				DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */,
+				DBF15F6A24ACDFFE004EF1D6 /* CalendarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -313,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB989B372452F085009F2C6F /* Constants.swift in Sources */,
+				DBF15F6924AC7A85004EF1D6 /* ColumnFlowLayout.swift in Sources */,
 				DBF15F6324AB19CB004EF1D6 /* DataBrain.swift in Sources */,
 				DBCA76E124AA1DE9005D1FD2 /* ChartBrain.swift in Sources */,
 				DBD7932A2452265D009358F8 /* ProfileViewController.swift in Sources */,
@@ -333,8 +343,10 @@
 				DB989B392452F730009F2C6F /* TestViewController.swift in Sources */,
 				DB97C559246A815C008348E1 /* SignUpViewController.swift in Sources */,
 				DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */,
+				DBF15F6B24ACDFFF004EF1D6 /* CalendarViewController.swift in Sources */,
 				DBA637D2249C7E32008E92CA /* Friend.swift in Sources */,
 				DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */,
+				DBF15F6724AC681D004EF1D6 /* CalendarCollectionViewCell.swift in Sources */,
 				DB69838D24543B0C00B84087 /* WorkoutCell.swift in Sources */,
 				DB97C55724693C44008348E1 /* LoginViewController.swift in Sources */,
 			);

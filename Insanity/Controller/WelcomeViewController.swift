@@ -37,13 +37,17 @@ class WelcomeViewController: UIViewController {
         if segue.identifier == K.segueWelcomeToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
             
-            let progressView = tabCtrl.viewControllers![0] as! ProgressViewController
-            progressView.currentUserID = currentUserID
+            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
+            calendarView.currentUserID = currentUserID
             
-            let podiumView = tabCtrl.viewControllers![1] as! PodiumViewController
+            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
+            activityView.currentUserID = currentUserID
+            
+            
+            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = currentUserID
             
-            let profileView = tabCtrl.viewControllers![2] as! ProfileViewController
+            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
             profileView.currentUserID = currentUserID
         }
     }
