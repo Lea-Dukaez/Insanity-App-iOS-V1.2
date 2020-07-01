@@ -39,7 +39,6 @@ struct K {
     }
     
     
-    
     struct workout {
         static let workoutMove = ["Switch Kicks", "Power Jack", "Power Knees", "Power Jump", "Global Jump", "Suicide Jump", "Push-Up Jack", "Low Plank Oblique" ]
         static let workoutCellIdentifier = "workoutMoveCell"

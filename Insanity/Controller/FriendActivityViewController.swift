@@ -20,11 +20,7 @@ class FriendActivityViewController: UIViewController {
     
     var friendAvatar = ""
     var friendPseudo = ""
-    var friendID: String = "" {
-        didSet {
-            dataBrain.recupUserMax(uid: friendID)
-        }
-    }
+    var friendID: String = ""
     
     var firstValues: [Double] = []
 
@@ -56,8 +52,8 @@ class FriendActivityViewController: UIViewController {
         segment2.selectedSegmentIndex = -1
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 
+        dataBrain.recupUserMax(uid: friendID)
         loadWorkoutData()
-
     }
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
@@ -75,6 +71,8 @@ class FriendActivityViewController: UIViewController {
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
+        print(workOutSelected)
+        print()
         let maxVal = dataBrain.userMaxValues[workOutSelected]
         let first = firstValues[workOutSelected]
         let percent: Double = ((maxVal - first) / first) * 100
