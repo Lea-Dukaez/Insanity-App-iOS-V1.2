@@ -111,7 +111,6 @@ class SignUpViewController: UIViewController {
             let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
             activityView.currentUserID = userID
             
-            
             let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID
             

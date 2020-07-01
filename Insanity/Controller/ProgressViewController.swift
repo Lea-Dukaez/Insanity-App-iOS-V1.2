@@ -78,7 +78,7 @@ class ProgressViewController: UIViewController {
         progressLabel.text = text
     }
     
-    // MARK: - Get Data from DB
+    // MARK: - Section DataBase Interactions
 
     func loadWorkoutData() {
         dataWorkoutTest = []
@@ -143,8 +143,6 @@ class ProgressViewController: UIViewController {
         return dateString
     }
     
-    
-
     
     // MARK: - Add Result Section
     

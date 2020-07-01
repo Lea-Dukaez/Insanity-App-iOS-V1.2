@@ -38,7 +38,6 @@ class AccountViewController: UIViewController {
         pseudoTextField.delegate = self
         collectionView.dataSource = self
         collectionView.delegate = self
-        
     }
 
     @IBAction func closePressed(_ sender: UIButton) {

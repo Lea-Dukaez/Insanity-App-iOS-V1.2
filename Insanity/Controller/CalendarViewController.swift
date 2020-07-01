@@ -95,7 +95,6 @@ class CalendarViewController: UIViewController {
 
 extension CalendarViewController:  UICollectionViewDataSource {
 
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return workOutCalendar.count + 8
     }
@@ -103,7 +102,6 @@ extension CalendarViewController:  UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
 
-        
         switch indexPath.item {
         case 0:
             cell.calendarCellLabel.text = days[indexPath.item]
@@ -137,7 +135,7 @@ extension CalendarViewController:  UICollectionViewDataSource {
 extension CalendarViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-                
+
         if indexPath.item > 8 && ![8,16,24,32,40,48,56,64,72].contains(indexPath.item) {
             let index = indexPath.item-8
             newCalendar[index] = newCalendar[index] == false ? true : false
@@ -147,5 +145,5 @@ extension CalendarViewController: UICollectionViewDelegate {
             selectedCell.contentView.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
         }
     }
-
+    
 }

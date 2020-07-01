@@ -54,7 +54,7 @@ class AddFriendsTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Table view data source
+    // MARK: - TableView DataSource
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return matchingUsersArray.count
@@ -101,6 +101,8 @@ class AddFriendsTableViewController: UITableViewController {
         
         return cell
     }
+    
+    // MARK: - Section DataBase Interactions
     
     func updateFriendsCurrentUser() {
         let currentUserRef = db.collection(K.FStore.collectionUsersName).document(currentUserID)
@@ -171,34 +173,33 @@ class AddFriendsTableViewController: UITableViewController {
         self.db.collection(K.FStore.collectionUsersName)
             .getDocuments { (querySnapshot, error) in
                 if let err = error {
-                    print("Error getting documents: \(err)")
+                print("Error getting documents: \(err)")
                 } else {
-                    // documents exist in Firestore
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
-                            let data = doc.data()
-                             if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                                if doc.documentID != self.currentUserID {
-                                    let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
-                                    self.allUsersArray.append(newUser)
-                                }
-                             }
-                        }
-                    } // fin if let snapshotDoc
-                } // fin else no error ...so access data possible
-            } // fin getDocument
+                // documents exist in Firestore
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                         if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                            if doc.documentID != self.currentUserID {
+                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                                self.allUsersArray.append(newUser)
+                            }
+                         }
+                    }
+                }
+            }
+        }
     }
 
-    
-
 }
+
+// MARK: - Section UISearchBarDelegate
 
 extension AddFriendsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         matchingUsersArray = allUsersArray.filter( { $0.pseudo.contains(searchBar.text!) } )
-
         tableView.reloadData()
     }
+    
 }

@@ -60,6 +60,8 @@ class ProfileViewController: UIViewController {
         self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
     }
     
+    // MARK: - Section DataBase Interactions
+    
     func getCurrentUser() {
         self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
             .getDocument { (document, error) in
@@ -80,35 +82,36 @@ class ProfileViewController: UIViewController {
     
     
     func loadUsers() {
-
         if dataUsers.isEmpty {
             let allUsersRef = db.collection(K.FStore.collectionUsersName)
             allUsersRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
                 .getDocuments { (querySnapshot, error) in
                     if let err = error {
-                        print("Error getting documents: \(err)")
+                    print("Error getting documents: \(err)")
+                        
                     } else {
-                        // documents exist in Firestore
-                        if let snapshotDocuments = querySnapshot?.documents {
-                            for doc in snapshotDocuments {
-                                let data = doc.data()
-                                 if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                                    let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
-                                    self.dataUsers.append(newUser)
-                                    
-                                    DispatchQueue.main.async {
-                                        self.tableView.reloadData()
-                                        self.competitorsLabel.text = "FRIENDS:"
-                                        self.competitorsLabel.textAlignment = .left
-                                    }
-                                 }
-                            }
-                        } // fin if let snapshotDoc
-                    } // fin else no error ...so access data possible
-                } // fin getDocument
+                    // documents exist in Firestore
+                    if let snapshotDocuments = querySnapshot?.documents {
+                        for doc in snapshotDocuments {
+                            let data = doc.data()
+                             if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                                self.dataUsers.append(newUser)
+                                
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
+                                    self.competitorsLabel.text = "FRIENDS:"
+                                    self.competitorsLabel.textAlignment = .left
+                                }
+                             }
+                        }
+                    }
+                }
+            }
         }
     }
-
+    
+    // MARK: - Section Buttons Action
     
     @IBAction func accountPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueHomeToAccount, sender: self)
@@ -156,8 +159,6 @@ class ProfileViewController: UIViewController {
             friendActivityView.friendPseudo = friendPseudo
         }
     }
-
-    
     
 }
 
@@ -186,6 +187,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+// MARK: - Section Delegates - Protocoles
 
 extension ProfileViewController: accountViewDelegate {
     func sendDataBackToProfileVC(pseudo: String, avatar: String) {

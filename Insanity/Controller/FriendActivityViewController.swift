@@ -24,7 +24,6 @@ class FriendActivityViewController: UIViewController {
     
     var firstValues: [Double] = []
 
-    
     @IBOutlet weak var friendImage: UIImageView!
     @IBOutlet weak var friendPseudoLabel: UILabel!
     
@@ -36,7 +35,6 @@ class FriendActivityViewController: UIViewController {
     @IBOutlet weak var barChart: BarChartView!
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
-    
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     
@@ -84,7 +82,7 @@ class FriendActivityViewController: UIViewController {
         progressLabel.text = text
     }
     
-    // MARK: - Get Data from DB
+    // MARK: - Section DataBase Interactions
 
     func loadWorkoutData() {
         dataWorkoutTest = []
