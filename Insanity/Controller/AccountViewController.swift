@@ -46,6 +46,9 @@ class AccountViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func termsButtonPressed(_ sender: UIButton) {
+    }
+    
     @IBAction func validatePressed(_ sender: UIButton) {
         saveProfile()
     }

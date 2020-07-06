@@ -48,8 +48,8 @@ class ProfileViewController: UIViewController {
         
         getCurrentUser()
         
-        self.competitorsLabel.text = "No Friends to compete with yet !"
-        self.competitorsLabel.textAlignment = .center
+//        self.competitorsLabel.text = "No Friends to compete with yet !"
+//        self.competitorsLabel.textAlignment = .center
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -104,8 +104,8 @@ class ProfileViewController: UIViewController {
                                 
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    self.competitorsLabel.text = "FRIENDS:"
-                                    self.competitorsLabel.textAlignment = .left
+//                                    self.competitorsLabel.text = "FRIENDS:"
+//                                    self.competitorsLabel.textAlignment = .left
                                 }
                              }
                         }

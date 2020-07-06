@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FRHyperLabel
 
 class SignUpViewController: UIViewController {
 
@@ -21,7 +22,10 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var termsOfUseLabel: FRHyperLabel!
+    @IBOutlet weak var goToLogInLabel: FRHyperLabel!
     
+
     let alertEmpty = UIAlertController(title: "Error", message: "email/password can't be empty", preferredStyle: UIAlertController.Style.alert)
 
     override func viewDidLoad() {
@@ -32,18 +36,22 @@ class SignUpViewController: UIViewController {
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-    }
 
-    @IBAction func signUpPressed(_ sender: UIButton) {
+        handleTermsOfUse()
+        handleGoToLogIn()
         
+    }
+    
+    
+    @IBAction func signUpPressed(_ sender: UIButton) {
         let textFieldArray = [pseudoTextField, emailTextField, passwordTextField]
         let allHaveText = textFieldArray.allSatisfy { $0!.text?.isEmpty == false }
-        
+
         if !allHaveText {
             showAlert(for: alertEmpty)
         } else {
             if let pseudo = self.pseudoTextField.text, let email = self.emailTextField.text, let password = self.passwordTextField.text {
-                
+
                 Auth.auth().createUser(withEmail: email, password: password) { (dataResult, error) in
                     if let err = error {
                         let errorMsg = "\(err.localizedDescription)"
@@ -51,7 +59,7 @@ class SignUpViewController: UIViewController {
                         self.showAlert(for: alertError)
                         return
                     }
-  
+
                     if let uid = dataResult?.user.uid {
                         self.userID = uid
                         // keep UID for avoid login again after closing the app
@@ -69,9 +77,56 @@ class SignUpViewController: UIViewController {
                     print("user sign up !")
                 }
             }
-            
+
         }
     }
+    
+    @IBAction func closePressed(_ sender: UIButton) {
+        self.navigationController!.popToRootViewController(animated: true)
+    }
+    
+    // MARK: - HyperLink handler Methods
+    
+    func handleTermsOfUse() {
+        termsOfUseLabel.numberOfLines = 0
+        
+        let string = "By creating an account, you agree to Insanity Progress Tracking's Terms of Use."
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
+        
+        termsOfUseLabel.attributedText = NSAttributedString(string: string, attributes: attributes)
+        
+        let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
+            
+            let controller = UIAlertController(title: "Terms Of Use", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+            controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+
+            self.present(controller, animated: true, completion: nil)
+        }
+
+        termsOfUseLabel.setLinkForSubstring("Terms of Use", withLinkHandler: handler)
+
+    }
+    
+    func handleGoToLogIn() {
+        goToLogInLabel.numberOfLines = 0
+        
+        let string = "Already a member ? Log In."
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
+        
+        goToLogInLabel.attributedText = NSAttributedString(string: string, attributes: attributes)
+        
+        let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
+            
+            self.performSegue(withIdentifier: K.segueSignUpToLogIn, sender: self)
+            
+        }
+        
+        goToLogInLabel.setLinkForSubstring("Log In", withLinkHandler: handler)
+        
+    }
+    
     
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {
@@ -104,16 +159,16 @@ class SignUpViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == K.segueSignUpToHome {
             let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-            
+
             let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
             calendarView.currentUserID = userID
-            
+
             let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
             activityView.currentUserID = userID
-            
+
             let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
             podiumView.currentUserID = userID
-            
+
             let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
             profileView.currentUserID = userID
             profileView.pseudoCurrentUser = pseudoCurrentUser
@@ -121,9 +176,6 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    
-    @IBAction func closePressed(_ sender: UIButton) {
-        self.navigationController!.popToRootViewController(animated: true)
-    }
+
 }
 

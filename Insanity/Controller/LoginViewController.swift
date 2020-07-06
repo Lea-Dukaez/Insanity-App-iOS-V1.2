@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FRHyperLabel
 
 class LoginViewController: UIViewController {
 
@@ -17,6 +18,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var goToSignUpLabel: FRHyperLabel!
     
     let alertEmpty = UIAlertController(title: "Error", message: "email/password can't be empty", preferredStyle: UIAlertController.Style.alert)
     
@@ -26,6 +28,26 @@ class LoginViewController: UIViewController {
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        handleGoToSignUp()
+    }
+    
+    func handleGoToSignUp() {
+        goToSignUpLabel.numberOfLines = 0
+        
+        let string = "Not a member yet ? Sign Up."
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
+        
+        goToSignUpLabel.attributedText = NSAttributedString(string: string, attributes: attributes)
+        
+        let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
+            
+            self.performSegue(withIdentifier: K.segueLogInToSignUp, sender: self)
+            
+        }
+        
+        goToSignUpLabel.setLinkForSubstring("Sign Up", withLinkHandler: handler)
+        
     }
     
     @IBAction func loginPressed(_ sender: UIButton) {
