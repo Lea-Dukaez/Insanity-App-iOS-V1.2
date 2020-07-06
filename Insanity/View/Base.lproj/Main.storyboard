@@ -356,7 +356,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hGx-Dw-6Xp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4812" y="-1574"/>
+            <point key="canvasLocation" x="4492" y="-1876"/>
+        </scene>
+        <!--Followers Table View Controller-->
+        <scene sceneID="Kct-jR-cfP">
+            <objects>
+                <tableViewController id="jy5-ZN-rMQ" customClass="FollowersTableViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JBu-0e-YTP">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="jy5-ZN-rMQ" id="1ts-HG-5kg"/>
+                            <outlet property="delegate" destination="jy5-ZN-rMQ" id="NW3-Gt-hWB"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="mAt-mA-JwI"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6bD-vK-j9N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5692" y="-1469"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="egk-jY-tiC">
@@ -802,13 +821,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LH0-G3-zyu">
-                                <rect key="frame" x="335" y="49" width="30" height="30"/>
+                                <rect key="frame" x="345" y="49" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="BQG-qC-dcb"/>
-                                    <constraint firstAttribute="height" constant="30" id="MTu-yE-RYq"/>
+                                    <constraint firstAttribute="width" constant="25" id="BQG-qC-dcb"/>
+                                    <constraint firstAttribute="height" constant="25" id="MTu-yE-RYq"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="iconEdit">
+                                <state key="normal" image="gear" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default" weight="regular"/>
                                 </state>
                                 <connections>
@@ -818,41 +838,73 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXg-x9-nFP" userLabel="FirendsView">
                                 <rect key="frame" x="0.0" y="194" width="375" height="364"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Firends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yn3-mR-omH">
-                                        <rect key="frame" x="40" y="10" width="295" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8Z-l3-tt0">
-                                        <rect key="frame" x="50" y="48" width="275" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="MUe-xy-kE0"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <state key="normal" title="Add friends">
-                                            <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addFriendsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yB9-t1-QQv"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="bPH-T7-QMP">
+                                        <rect key="frame" x="20" y="10" width="335" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Vp1-E5-Fkz">
+                                                <rect key="frame" x="0.0" y="0.0" width="65" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="65" id="Io4-tT-hfn"/>
+                                                </constraints>
+                                                <state key="normal">
+                                                    <string key="title">5
+Following</string>
+                                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="-25" translatesAutoresizingMaskIntoConstraints="NO" id="R6s-jN-xjf" userLabel="Follower Stack View">
+                                                <rect key="frame" x="100" y="0.0" width="53" height="40"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2.square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2np-QZ-yZT">
+                                                        <rect key="frame" x="0.0" y="1" width="13" height="17.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="13" id="OT7-n5-5ee"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="LRW-A8-gYX">
+                                                        <rect key="frame" x="-12" y="0.0" width="65" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="65" id="Qtc-z9-LLz"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                                        <state key="normal" title="2 Follower">
+                                                            <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="followerPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LAR-i0-Px9"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8Z-l3-tt0">
+                                                <rect key="frame" x="188" y="0.0" width="147" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="MUe-xy-kE0"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <state key="normal" title="Add friends">
+                                                    <color key="titleColor" name="BrandOrangeColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="addFriendsPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yB9-t1-QQv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8Kc-aO-1DP">
-                                        <rect key="frame" x="0.0" y="108" width="375" height="256"/>
+                                        <rect key="frame" x="0.0" y="70" width="375" height="294"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="y8Z-l3-tt0" firstAttribute="leading" secondItem="lXg-x9-nFP" secondAttribute="leading" constant="50" id="5JJ-ad-Gjg"/>
-                                    <constraint firstItem="Yn3-mR-omH" firstAttribute="leading" secondItem="lXg-x9-nFP" secondAttribute="leading" constant="40" id="Jfd-tX-Ve6"/>
-                                    <constraint firstItem="8Kc-aO-1DP" firstAttribute="top" secondItem="y8Z-l3-tt0" secondAttribute="bottom" constant="20" id="KQs-zK-94S"/>
+                                    <constraint firstItem="bPH-T7-QMP" firstAttribute="leading" secondItem="lXg-x9-nFP" secondAttribute="leading" constant="20" id="J90-d8-RCz"/>
+                                    <constraint firstAttribute="trailing" secondItem="bPH-T7-QMP" secondAttribute="trailing" constant="20" id="Rd9-fK-ihc"/>
+                                    <constraint firstItem="bPH-T7-QMP" firstAttribute="top" secondItem="lXg-x9-nFP" secondAttribute="top" constant="10" id="RoJ-Ry-V8M"/>
                                     <constraint firstAttribute="bottom" secondItem="8Kc-aO-1DP" secondAttribute="bottom" id="WMX-hv-VDH"/>
-                                    <constraint firstItem="Yn3-mR-omH" firstAttribute="top" secondItem="lXg-x9-nFP" secondAttribute="top" constant="10" id="d45-7S-vIB"/>
                                     <constraint firstItem="8Kc-aO-1DP" firstAttribute="leading" secondItem="lXg-x9-nFP" secondAttribute="leading" id="hXi-nu-nXw"/>
-                                    <constraint firstItem="y8Z-l3-tt0" firstAttribute="top" secondItem="Yn3-mR-omH" secondAttribute="bottom" constant="20" id="kWn-HA-at7"/>
                                     <constraint firstAttribute="trailing" secondItem="8Kc-aO-1DP" secondAttribute="trailing" id="lDf-co-KeX"/>
-                                    <constraint firstAttribute="trailing" secondItem="y8Z-l3-tt0" secondAttribute="trailing" constant="50" id="ozb-hc-gwO"/>
-                                    <constraint firstAttribute="trailing" secondItem="Yn3-mR-omH" secondAttribute="trailing" constant="40" id="ps7-0n-tjj"/>
+                                    <constraint firstItem="8Kc-aO-1DP" firstAttribute="top" secondItem="bPH-T7-QMP" secondAttribute="bottom" constant="20" id="rjN-1M-auN"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2K-Sk-HW6">
@@ -883,7 +935,7 @@
                             <constraint firstItem="yr2-de-P96" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qoY-Q2-KSN"/>
                             <constraint firstItem="e2K-Sk-HW6" firstAttribute="top" secondItem="lXg-x9-nFP" secondAttribute="bottom" constant="10" id="r1I-Me-rge"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e2K-Sk-HW6" secondAttribute="trailing" constant="50" id="sfU-LU-23T"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LH0-G3-zyu" secondAttribute="trailing" constant="10" id="vlJ-ga-4qx"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LH0-G3-zyu" secondAttribute="trailing" constant="5" id="vlJ-ga-4qx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -891,14 +943,17 @@
                     <navigationItem key="navigationItem" id="6xT-i4-bd1"/>
                     <connections>
                         <outlet property="addFriendsButton" destination="y8Z-l3-tt0" id="5OA-rv-rNY"/>
-                        <outlet property="competitorsLabel" destination="Yn3-mR-omH" id="YNq-8A-e3B"/>
                         <outlet property="currentUserImage" destination="eWV-4o-Nen" id="FC3-47-sA9"/>
                         <outlet property="currentUserLabel" destination="RRz-lc-7YH" id="eKK-aU-PV3"/>
+                        <outlet property="followerButton" destination="LRW-A8-gYX" id="mzc-FC-3hg"/>
+                        <outlet property="followerToApproveImage" destination="2np-QZ-yZT" id="MT2-bs-T9l"/>
+                        <outlet property="followingButton" destination="Vp1-E5-Fkz" id="rwE-UJ-ldU"/>
                         <outlet property="logOutButton" destination="e2K-Sk-HW6" id="une-Yq-N2V"/>
                         <outlet property="tableView" destination="8Kc-aO-1DP" id="QG8-fv-ILR"/>
                         <segue destination="K1O-XM-4Xn" kind="show" identifier="goToAccount" id="Dbg-Cf-b3X"/>
                         <segue destination="hxp-Dq-Kx6" kind="show" identifier="goToAddFriends" id="eLN-oP-4rR"/>
                         <segue destination="X7c-Os-dG6" kind="show" identifier="goToFriendActivity" id="Jp1-YO-2qG"/>
+                        <segue destination="jy5-ZN-rMQ" kind="show" identifier="goToFollowers" id="jI6-A7-KrO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -918,16 +973,6 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="kCY-Sc-ifv">
-                                <rect key="frame" x="0.0" y="72" width="375" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kCY-Sc-ifv" id="Ume-OR-m60">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="hxp-Dq-Kx6" id="bGn-pb-2HJ"/>
                             <outlet property="delegate" destination="hxp-Dq-Kx6" id="YjR-bd-PGz"/>
@@ -940,7 +985,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ff-Gm-biY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5561" y="-1116"/>
+            <point key="canvasLocation" x="5726" y="-623"/>
         </scene>
         <!--Friend Activity View Controller-->
         <scene sceneID="h2K-hO-OkQ">
@@ -1099,7 +1144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVX-3q-ZqO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4812" y="-286"/>
+            <point key="canvasLocation" x="4921" y="-65"/>
         </scene>
         <!--Activity-->
         <scene sceneID="DZB-qt-MRf">
@@ -1244,7 +1289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p4s-48-Zbe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3893.5999999999999" y="1820.2398800599701"/>
+            <point key="canvasLocation" x="3898" y="2232"/>
         </scene>
         <!--Test View Controller-->
         <scene sceneID="nPV-eI-Tll">
@@ -1497,7 +1542,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kd1-Uo-hr4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2786" y="1821"/>
+            <point key="canvasLocation" x="2564" y="2233"/>
         </scene>
         <!--Podium-->
         <scene sceneID="Di4-Sa-O3q">
@@ -1666,7 +1711,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JoA-gI-ZqV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4812" y="1501"/>
+            <point key="canvasLocation" x="4345" y="1433"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="S07-b6-zkX">
@@ -1855,7 +1900,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GeM-C0-oUC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4812" y="521.28935532233891"/>
+            <point key="canvasLocation" x="4345" y="617"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -1865,15 +1910,16 @@
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="BrandOrangeColor"/>
     <resources>
+        <image name="2.square.fill" catalog="system" width="128" height="114"/>
         <image name="INSANITY-LOGO" width="1024" height="1024"/>
         <image name="avatar1" width="528" height="560"/>
         <image name="avatar10" width="528" height="560"/>
         <image name="avatar13" width="528" height="560"/>
         <image name="avatar14" width="528" height="560"/>
         <image name="avatar9" width="528" height="560"/>
+        <image name="gear" catalog="system" width="128" height="119"/>
         <image name="iconActivity" width="30" height="30"/>
         <image name="iconCalendar" width="30" height="30"/>
-        <image name="iconEdit" width="30" height="30"/>
         <image name="iconProfile" width="30" height="30"/>
         <image name="iconTrophy" width="30" height="30"/>
         <image name="orangePodium" width="1000" height="1000"/>

@@ -23,13 +23,17 @@ class ProfileViewController: UIViewController {
     var dataUsers: [User] = []
     let db = Firestore.firestore()
     
-    @IBOutlet weak var competitorsLabel: UILabel!
+//    @IBOutlet weak var competitorsLabel: UILabel!
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addFriendsButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!    
-
+    @IBOutlet weak var followerToApproveImage: UIImageView!
+    @IBOutlet weak var followerButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -134,6 +138,8 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    @IBAction func followerPressed(_ sender: UIButton) {
+    }
     @IBAction func addFriendsPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueGoToAddFriends, sender: self)
     }
