@@ -148,6 +148,7 @@ class SignUpViewController: UIViewController {
             K.FStore.friendsField: [String](),
             K.FStore.calendarField:calendar,
             K.FStore.pseudoField: pseudoDefault,
+            K.FStore.nameSearchField: pseudoDefault.lowercased(),
             K.FStore.avatarField: avatarDefault
         ]) { error in
             if let err = error {

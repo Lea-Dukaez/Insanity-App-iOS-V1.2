@@ -10,6 +10,7 @@ import Foundation
 
 struct User: Equatable {
     let pseudo: String
+    let nameSearch: String
     let avatar: String
     let id: String
 }

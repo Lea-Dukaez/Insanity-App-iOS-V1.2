@@ -46,8 +46,9 @@ class AccountViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func termsButtonPressed(_ sender: UIButton) {
+    @IBAction func termsOfUsePressed(_ sender: UIButton) {
     }
+    
     
     @IBAction func validatePressed(_ sender: UIButton) {
         saveProfile()
@@ -66,7 +67,8 @@ class AccountViewController: UIViewController {
     func changePseudoAndImage() {
         self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([
             K.FStore.pseudoField: self.pseudo,
-            K.FStore.avatarField: self.avatarImage,
+            K.FStore.nameSearchField: self.pseudo.lowercased(),
+            K.FStore.avatarField: self.avatarImage
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")

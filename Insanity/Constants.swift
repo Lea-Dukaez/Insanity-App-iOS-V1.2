@@ -38,8 +38,6 @@ struct K {
         static let addFriendCellIdentifier = "reuseAddFriend" 
         static let addFriendCellNibName = "AddFriendCell"
         static let noOpponentAvatar = "noOpponentAvatar"
-        static let usersAvatar = ["MalekAvatar", "LeaAvatar", "MathAvatar", "LouxAvatar"]
-        static let usersLabel = ["Malfouf, le Nul", "Lea, fit Courgette", "Mathou, super Blonde", "Loux, nihon Kyojin"]
     }
     
     
@@ -74,12 +72,16 @@ struct K {
         static let calendarField = "calendar"
         static let testField = "testResults"
         static let collectionUsersName = "users"
-        static let nameField = "name"
+        static let nameSearchField = "nameSearch"
         static let pseudoField = "pseudo"
         static let maxField  = "max"
         static let avatarField = "avatar"
-        static let users = ["Malek", "Lea", "Math", "Loux"]
-        
+        static let collectionRelationshipsName = "relationships"
+        static let statusField = "status"
+        static let friendIDField = "friendID"
+        static let userIDField = "userID"
+        static let statusWaitingApproval = "waitingApproval"
+        static let statusFollowing = "following"
     }
     
 

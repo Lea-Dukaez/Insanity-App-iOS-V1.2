@@ -37,8 +37,6 @@ class AddFriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        getUsers()
         
         searchBar.delegate = self
         self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
@@ -167,10 +165,12 @@ class AddFriendsTableViewController: UITableViewController {
     }
     
 
-    func getUsers() {
+    func getUsers(for searchWord: String) {
         allUsersArray = []
 
         self.db.collection(K.FStore.collectionUsersName)
+            .whereField(K.FStore.nameSearchField, isGreaterThanOrEqualTo: searchWord)
+            .limit(to: 10)
             .getDocuments { (querySnapshot, error) in
                 if let err = error {
                 print("Error getting documents: \(err)")
@@ -179,10 +179,16 @@ class AddFriendsTableViewController: UITableViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                         if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                        if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String, let nameSearch = data[K.FStore.nameSearchField] as? String {
                             if doc.documentID != self.currentUserID {
-                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                                
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID)
                                 self.allUsersArray.append(newUser)
+                                
+                                DispatchQueue.main.async {
+                                    self.matchingUsersArray = self.allUsersArray.filter( { $0.nameSearch.contains(searchWord) } )
+                                    self.tableView.reloadData()
+                                }
                             }
                          }
                     }
@@ -198,8 +204,8 @@ class AddFriendsTableViewController: UITableViewController {
 extension AddFriendsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        matchingUsersArray = allUsersArray.filter( { $0.pseudo.contains(searchBar.text!) } )
-        tableView.reloadData()
+        let searchWord = searchBar.text!.lowercased()
+        getUsers(for: searchWord)
     }
     
 }

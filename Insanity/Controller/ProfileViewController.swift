@@ -23,7 +23,6 @@ class ProfileViewController: UIViewController {
     var dataUsers: [User] = []
     let db = Firestore.firestore()
     
-//    @IBOutlet weak var competitorsLabel: UILabel!
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -41,15 +40,14 @@ class ProfileViewController: UIViewController {
 
         addFriendsButton.backgroundColor = .clear
         addFriendsButton.layer.borderWidth = 1
-        addFriendsButton.layer.borderColor = UIColor.label.cgColor
+        addFriendsButton.layer.borderColor = UIColor(named: K.BrandColor.orangeBrancColor)?.cgColor
+        addFriendsButton.layer.cornerRadius = 3
         logOutButton.backgroundColor = .clear
         logOutButton.layer.borderWidth = 1
+        logOutButton.layer.cornerRadius = 3
         logOutButton.layer.borderColor = UIColor.label.cgColor
         
         getCurrentUser()
-        
-//        self.competitorsLabel.text = "No Friends to compete with yet !"
-//        self.competitorsLabel.textAlignment = .center
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -98,8 +96,8 @@ class ProfileViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for doc in snapshotDocuments {
                             let data = doc.data()
-                             if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                            if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String, let nameSearch = data[K.FStore.nameSearchField] as? String {
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID)
                                 self.dataUsers.append(newUser)
                                 
                                 DispatchQueue.main.async {

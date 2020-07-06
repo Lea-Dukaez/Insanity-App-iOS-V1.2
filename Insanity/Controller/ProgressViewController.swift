@@ -43,6 +43,7 @@ class ProgressViewController: UIViewController {
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
+        addTestButton.layer.cornerRadius = 3
         
         segment1.selectedSegmentIndex = 0
         segment2.selectedSegmentIndex = -1
