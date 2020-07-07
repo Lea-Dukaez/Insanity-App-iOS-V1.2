@@ -87,8 +87,8 @@ class FriendActivityViewController: UIViewController {
     func loadWorkoutData() {
         dataWorkoutTest = []
 
-        db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
-            .whereField(K.FStore.idField, isEqualTo: self.friendID)
+        db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
+            .whereField(K.FStore.WorkoutTests.idField, isEqualTo: self.friendID)
             .getDocuments { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
@@ -101,7 +101,9 @@ class FriendActivityViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for (index, doc) in snapshotDocuments.enumerated() {
                             let data = doc.data()
-                            if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
+                            if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
+                                let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
+                                let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
                                 
                                 // get the first fit test for the progression
                                 if index == 0 {

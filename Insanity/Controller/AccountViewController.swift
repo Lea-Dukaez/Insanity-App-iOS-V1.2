@@ -65,10 +65,10 @@ class AccountViewController: UIViewController {
 
     
     func changePseudoAndImage() {
-        self.db.collection(K.FStore.collectionUsersName).document(self.userID).updateData([
-            K.FStore.pseudoField: self.pseudo,
-            K.FStore.nameSearchField: self.pseudo.lowercased(),
-            K.FStore.avatarField: self.avatarImage
+        self.db.collection(K.FStore.Users.collectionUsersName).document(self.userID).updateData([
+            K.FStore.Users.pseudoField: self.pseudo,
+            K.FStore.Users.nameSearchField: self.pseudo.lowercased(),
+            K.FStore.Users.avatarField: self.avatarImage
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")

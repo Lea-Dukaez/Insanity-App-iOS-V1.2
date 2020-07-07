@@ -70,10 +70,10 @@ class AddFriendsTableViewController: UITableViewController {
         
         if self.dataUsers.filter( { $0.id.contains(userID) } ).isEmpty == false {
             // case user is already added as "friends"
-            cell.addButton.setTitle("Remove", for: .normal)
-            cell.addButton.backgroundColor = .red
+            cell.addButton.setTitle("Unfollow", for: .normal)
+            cell.addButton.backgroundColor = UIColor(named: K.BrandColor.orangeBrancColor)
         } else {
-            cell.addButton.setTitle("Add", for: .normal)
+            cell.addButton.setTitle("Follow", for: .normal)
             cell.addButton.backgroundColor = .label
         }
 
@@ -81,9 +81,9 @@ class AddFriendsTableViewController: UITableViewController {
             
             let userAdded = self.allUsersArray.filter( { $0.id.contains(userIDAdded!) } )
             
-            if cell.addButton.titleLabel?.text == "Add" {
-                self.dataUsers.append(userAdded[0])
-                self.updateOtherUsersFriends(userID: userIDAdded!, added: true)
+            if cell.addButton.titleLabel?.text == "Follow" {
+//                self.dataUsers.append(userAdded[0])
+//                self.updateOtherUsersFriends(userID: userIDAdded!, added: true)
             } else {
                 if let index = self.dataUsers.firstIndex(of: userAdded[0]) {
                     let removedFriend = self.dataUsers.remove(at: index)
@@ -91,9 +91,9 @@ class AddFriendsTableViewController: UITableViewController {
                         self.friendsIDArray.remove(at: indexRemoved)
                     }
                 }
-                self.updateOtherUsersFriends(userID: userIDAdded!, added: false)
+//                self.updateOtherUsersFriends(userID: userIDAdded!, added: false)
             }
-            self.updateFriendsCurrentUser()
+//            self.updateFriendsCurrentUser()
             self.tableView.reloadData()
         }
         
@@ -102,74 +102,135 @@ class AddFriendsTableViewController: UITableViewController {
     
     // MARK: - Section DataBase Interactions
     
-    func updateFriendsCurrentUser() {
-        let currentUserRef = db.collection(K.FStore.collectionUsersName).document(currentUserID)
-        
-        currentUserRef.updateData([
-            K.FStore.friendsField : friendsIDArray
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
+    func updateRelationship(friendID: String) {
+        db.collection(K.FStore.Relationships.collectionRelationshipsName).addDocument(data: [
+            K.FStore.Relationships.userIDField: self.currentUserID,
+            K.FStore.Relationships.friendIDField: friendID,
+            K.FStore.Relationships.statusField: K.FStore.Relationships.statusWaitingApproval
+        ]) { error in
+            if let err = error {
+                print("Error adding document: \(err)")
             } else {
-                print("Document successfully updated")
+                print("Relationship document added")
             }
         }
-        self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers)
-    }
-    
-    func updateOtherUsersFriends(userID: String, added: Bool) {
         
-        let otherUsersRef = db.collection(K.FStore.collectionUsersName).document(userID)
-
-        db.runTransaction({ (transaction, errorPointer) -> Any? in
-            let otherUserDocument: DocumentSnapshot
-            do {
-                try otherUserDocument = transaction.getDocument(otherUsersRef)
-            } catch let fetchError as NSError {
-                errorPointer?.pointee = fetchError
-                return nil
-            }
-
-            guard var oldFriends = otherUserDocument.data()?[K.FStore.friendsField] as? [String] else {
-                let error = NSError(
-                    domain: "AppErrorDomain",
-                    code: -1,
-                    userInfo: [
-                        NSLocalizedDescriptionKey: "Unable to retrieve friends from snapshot \(otherUsersRef)"
-                    ]
-                )
-                errorPointer?.pointee = error
-                return nil
-            }
-
-            var newFriends : [String] = []
-            if added {
-                oldFriends.append(self.currentUserID)
-                newFriends = oldFriends
-                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
-            } else {
-                if let indexToRemove = oldFriends.firstIndex(of: self.currentUserID) {
-                    oldFriends.remove(at: indexToRemove)
-                    newFriends = oldFriends
-                }
-                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
-            }
-            return nil
-        }) { (object, error) in
-            if let error = error {
-                print("Transaction failed: \(error)")
-            } else {
-                print("Transaction successfully committed!")
-            }
-        }
+//        let otherUsersRef = db.collection(K.FStore.collectionUsersName).document(userID)
+//
+//        db.runTransaction({ (transaction, errorPointer) -> Any? in
+//            let otherUserDocument: DocumentSnapshot
+//            do {
+//                try otherUserDocument = transaction.getDocument(otherUsersRef)
+//            } catch let fetchError as NSError {
+//                errorPointer?.pointee = fetchError
+//                return nil
+//            }
+//
+//            guard var oldFriends = otherUserDocument.data()?[K.FStore.friendsField] as? [String] else {
+//                let error = NSError(
+//                    domain: "AppErrorDomain",
+//                    code: -1,
+//                    userInfo: [
+//                        NSLocalizedDescriptionKey: "Unable to retrieve friends from snapshot \(otherUsersRef)"
+//                    ]
+//                )
+//                errorPointer?.pointee = error
+//                return nil
+//            }
+//
+//            var newFriends : [String] = []
+//            if added {
+//                oldFriends.append(self.currentUserID)
+//                newFriends = oldFriends
+//                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
+//            } else {
+//                if let indexToRemove = oldFriends.firstIndex(of: self.currentUserID) {
+//                    oldFriends.remove(at: indexToRemove)
+//                    newFriends = oldFriends
+//                }
+//                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
+//            }
+//            return nil
+//        }) { (object, error) in
+//            if let error = error {
+//                print("Transaction failed: \(error)")
+//            } else {
+//                print("Transaction successfully committed!")
+//            }
+//        }
+        
     }
     
+    
+//    func updateFriendsCurrentUser() {
+//        let currentUserRef = db.collection(K.FStore.collectionUsersName).document(currentUserID)
+//
+//        currentUserRef.updateData([
+//            K.FStore.friendsField : friendsIDArray
+//        ]) { err in
+//            if let err = err {
+//                print("Error updating document: \(err)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
+//        self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers)
+//    }
 
-    func getUsers(for searchWord: String) {
+    
+//    func updateOtherUsersFriends(userID: String, added: Bool) {
+//
+//        let otherUsersRef = db.collection(K.FStore.collectionUsersName).document(userID)
+//
+//        db.runTransaction({ (transaction, errorPointer) -> Any? in
+//            let otherUserDocument: DocumentSnapshot
+//            do {
+//                try otherUserDocument = transaction.getDocument(otherUsersRef)
+//            } catch let fetchError as NSError {
+//                errorPointer?.pointee = fetchError
+//                return nil
+//            }
+//
+//            guard var oldFriends = otherUserDocument.data()?[K.FStore.friendsField] as? [String] else {
+//                let error = NSError(
+//                    domain: "AppErrorDomain",
+//                    code: -1,
+//                    userInfo: [
+//                        NSLocalizedDescriptionKey: "Unable to retrieve friends from snapshot \(otherUsersRef)"
+//                    ]
+//                )
+//                errorPointer?.pointee = error
+//                return nil
+//            }
+//
+//            var newFriends : [String] = []
+//            if added {
+//                oldFriends.append(self.currentUserID)
+//                newFriends = oldFriends
+//                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
+//            } else {
+//                if let indexToRemove = oldFriends.firstIndex(of: self.currentUserID) {
+//                    oldFriends.remove(at: indexToRemove)
+//                    newFriends = oldFriends
+//                }
+//                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
+//            }
+//            return nil
+//        }) { (object, error) in
+//            if let error = error {
+//                print("Transaction failed: \(error)")
+//            } else {
+//                print("Transaction successfully committed!")
+//            }
+//        }
+//    }
+    
+
+    func searchForFriends(for searchWord: String) {
         allUsersArray = []
 
-        self.db.collection(K.FStore.collectionUsersName)
-            .whereField(K.FStore.nameSearchField, isGreaterThanOrEqualTo: searchWord)
+        self.db.collection(K.FStore.Users.collectionUsersName)
+            .whereField(K.FStore.Users.nameSearchField, isGreaterThanOrEqualTo: searchWord)
             .limit(to: 10)
             .getDocuments { (querySnapshot, error) in
                 if let err = error {
@@ -179,7 +240,7 @@ class AddFriendsTableViewController: UITableViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                        if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String, let nameSearch = data[K.FStore.nameSearchField] as? String {
+                        if let pseudo = data[K.FStore.Users.pseudoField] as? String, let avatar = data[K.FStore.Users.avatarField] as? String, let nameSearch = data[K.FStore.Users.nameSearchField] as? String {
                             if doc.documentID != self.currentUserID {
                                 
                                 let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID)
@@ -196,7 +257,6 @@ class AddFriendsTableViewController: UITableViewController {
             }
         }
     }
-
 }
 
 // MARK: - Section UISearchBarDelegate
@@ -205,7 +265,7 @@ extension AddFriendsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let searchWord = searchBar.text!.lowercased()
-        getUsers(for: searchWord)
+        searchForFriends(for: searchWord)
     }
     
 }

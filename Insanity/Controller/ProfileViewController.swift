@@ -65,11 +65,13 @@ class ProfileViewController: UIViewController {
     // MARK: - Section DataBase Interactions
     
     func getCurrentUser() {
-        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
+        self.db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
             .getDocument { (document, error) in
             if let doc = document {
                 if let data = doc.data() {
-                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                    if let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                        let avatar = data[K.FStore.Users.avatarField] as? String {
+                        
                         self.pseudoCurrentUser = pseudo
                         self.avatarCurrentUser = avatar
                         DispatchQueue.main.async {
@@ -85,8 +87,8 @@ class ProfileViewController: UIViewController {
     
     func loadUsers() {
         if dataUsers.isEmpty {
-            let allUsersRef = db.collection(K.FStore.collectionUsersName)
-            allUsersRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
+            let allUsersRef = db.collection(K.FStore.Users.collectionUsersName)
+            allUsersRef.whereField(K.FStore.Users.friendsField, arrayContains: currentUserID)
                 .getDocuments { (querySnapshot, error) in
                     if let err = error {
                     print("Error getting documents: \(err)")
@@ -96,7 +98,10 @@ class ProfileViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for doc in snapshotDocuments {
                             let data = doc.data()
-                            if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String, let nameSearch = data[K.FStore.nameSearchField] as? String {
+                            if let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                                let avatar = data[K.FStore.Users.avatarField] as? String,
+                                let nameSearch = data[K.FStore.Users.nameSearchField] as? String {
+                                
                                 let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID)
                                 self.dataUsers.append(newUser)
                                 
@@ -138,6 +143,7 @@ class ProfileViewController: UIViewController {
     
     @IBAction func followerPressed(_ sender: UIButton) {
     }
+    
     @IBAction func addFriendsPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueGoToAddFriends, sender: self)
     }

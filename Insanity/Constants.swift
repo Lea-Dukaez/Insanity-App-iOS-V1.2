@@ -65,23 +65,35 @@ struct K {
     }
     
     struct FStore {
-        static let collectionTestName = "workoutTests"
-        static let dateField = "date"
-        static let idField = "id"
-        static let friendsField = "friends"
-        static let calendarField = "calendar"
-        static let testField = "testResults"
-        static let collectionUsersName = "users"
-        static let nameSearchField = "nameSearch"
-        static let pseudoField = "pseudo"
-        static let maxField  = "max"
-        static let avatarField = "avatar"
-        static let collectionRelationshipsName = "relationships"
-        static let statusField = "status"
-        static let friendIDField = "friendID"
-        static let userIDField = "userID"
-        static let statusWaitingApproval = "waitingApproval"
-        static let statusFollowing = "following"
+        struct Users {
+            static let collectionUsersName = "users"
+            static let nameSearchField = "nameSearch"
+            static let pseudoField = "pseudo"
+            static let maxField  = "max"
+            static let avatarField = "avatar"
+            static let calendarField = "calendar"
+            static let friendsField = "friends"
+        }
+        struct WorkoutTests {
+            static let collectionTestName = "workoutTests"
+            static let dateField = "date"
+            static let idField = "id"
+            static let testField = "testResults"
+        }
+        struct Relationships {
+            static let collectionRelationshipsName = "relationships"
+            static let statusField = "status"
+            static let friendIDField = "friendID"
+            static let userIDField = "userID"
+            static let statusWaitingApproval = "waitingApproval"
+            static let statusFollowing = "following"
+        }
+        
+        
+        
+        
+        
+        
     }
     
 

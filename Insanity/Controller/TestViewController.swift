@@ -64,10 +64,10 @@ class TestViewController: UIViewController {
                 listWorkoutTest.append(Double(textField.text!)!)
             }
             // Add a new document in Firestore for currentUser
-            self.db.collection(K.FStore.collectionTestName).addDocument(data: [
-                K.FStore.idField: self.currentUserId,
-                K.FStore.testField: self.listWorkoutTest,
-                K.FStore.dateField: Timestamp(date: workoutDate)
+            self.db.collection(K.FStore.WorkoutTests.collectionTestName).addDocument(data: [
+                K.FStore.WorkoutTests.idField: self.currentUserId,
+                K.FStore.WorkoutTests.testField: self.listWorkoutTest,
+                K.FStore.WorkoutTests.dateField: Timestamp(date: workoutDate)
             ]) { error in
                 if let err = error {
                     print("Error adding document: \(err)")
@@ -111,7 +111,7 @@ class TestViewController: UIViewController {
     func majMax(listTest: [Double]) {
         var newMaxValues: [Double] = []
         
-        let userRef = db.collection(K.FStore.collectionUsersName).document(currentUserId)
+        let userRef = db.collection(K.FStore.Users.collectionUsersName).document(currentUserId)
         db.runTransaction({ (transaction, errorPointer) -> Any? in
             let userDocument: DocumentSnapshot
             do {
@@ -121,7 +121,7 @@ class TestViewController: UIViewController {
                 return nil
             }
             
-            guard let oldMaxValues = userDocument.data()?[K.FStore.maxField] as? [Double] else {
+            guard let oldMaxValues = userDocument.data()?[K.FStore.Users.maxField] as? [Double] else {
                 let error = NSError(
                     domain: "AppErrorDomain",
                     code: -1,
@@ -135,13 +135,13 @@ class TestViewController: UIViewController {
             
             // if it is the first time the user do the test
             if oldMaxValues.isEmpty {
-                transaction.updateData([K.FStore.maxField: listTest], forDocument: userRef)
+                transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
                 return nil
             } else {
                 for index in 0..<oldMaxValues.count {
                     newMaxValues.append(max(listTest[index], oldMaxValues[index]))
                 }
-                transaction.updateData([K.FStore.maxField: newMaxValues], forDocument: userRef)
+                transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
                 return nil
             }
             

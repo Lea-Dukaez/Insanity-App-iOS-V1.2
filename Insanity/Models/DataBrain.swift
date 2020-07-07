@@ -19,7 +19,7 @@ class DataBrain {
     func recupPodiumMaxValues() {
         dataPodium = []
 
-        db.collection(K.FStore.collectionUsersName)
+        db.collection(K.FStore.Users.collectionUsersName)
             .addSnapshotListener { (querySnapshot, error) in
                 if let err = error {
                     print("Error retrieving document: \(err)")
@@ -32,7 +32,11 @@ class DataBrain {
                         for doc in snapshotDocuments {
                             let data = doc.data()
                             let userID = doc.documentID
-                            if let maxValues = data[K.FStore.maxField] as? [Double], let avatar = data[K.FStore.avatarField] as? String, let pseudo = data[K.FStore.pseudoField] as? String, let friends = data[K.FStore.friendsField] as? [String] {
+                            if let maxValues = data[K.FStore.Users.maxField] as? [Double],
+                                let avatar = data[K.FStore.Users.avatarField] as? String,
+                                let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                                let friends = data[K.FStore.Users.friendsField] as? [String] {
+                                
                                 // get only data for current user and friends
                                 if (userID == self.currentUserID) || friends.filter( { $0.contains(self.currentUserID) } ).isEmpty == false {
                                     let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
@@ -47,7 +51,7 @@ class DataBrain {
     
     
     func recupUserMax(uid: String) {
-        db.collection(K.FStore.collectionUsersName).document(uid)
+        db.collection(K.FStore.Users.collectionUsersName).document(uid)
             .getDocument { (document, error) in
                 if let err = error {
                     print("Error retrieving document: \(err)")
@@ -55,7 +59,7 @@ class DataBrain {
                 } else {
                     if let doc = document, doc.exists {
                         if let data = doc.data() {
-                            if let maxValues = data[K.FStore.maxField] as? [Double] {
+                            if let maxValues = data[K.FStore.Users.maxField] as? [Double] {
                                 if uid == self.currentUserID {
                                     self.currentUserMaxValues = maxValues
                                 } else {

@@ -143,13 +143,13 @@ class SignUpViewController: UIViewController {
         let calendar: [Bool] = Array(repeating: false, count: 72)
         
         // Add a new document in Firestore for new user
-        self.db.collection(K.FStore.collectionUsersName).document(self.userID).setData([
-            K.FStore.maxField: [Double](),
-            K.FStore.friendsField: [String](),
-            K.FStore.calendarField:calendar,
-            K.FStore.pseudoField: pseudoDefault,
-            K.FStore.nameSearchField: pseudoDefault.lowercased(),
-            K.FStore.avatarField: avatarDefault
+        self.db.collection(K.FStore.Users.collectionUsersName).document(self.userID).setData([
+            K.FStore.Users.maxField: [Double](),
+            K.FStore.Users.friendsField: [String](),
+            K.FStore.Users.calendarField:calendar,
+            K.FStore.Users.pseudoField: pseudoDefault,
+            K.FStore.Users.nameSearchField: pseudoDefault.lowercased(),
+            K.FStore.Users.avatarField: avatarDefault
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")

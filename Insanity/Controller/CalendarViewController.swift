@@ -57,7 +57,7 @@ class CalendarViewController: UIViewController {
     }
 
     func loadCalendar() {
-        db.collection(K.FStore.collectionUsersName).document(currentUserID)
+        db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
             .getDocument { (document, error) in
                if let err = error {
                    print("Error retrieving document: \(err)")
@@ -65,7 +65,7 @@ class CalendarViewController: UIViewController {
                } else {
                    if let doc = document, doc.exists {
                        if let data = doc.data() {
-                        if let calendarDoneValue = data[K.FStore.calendarField] as? [Bool] {
+                        if let calendarDoneValue = data[K.FStore.Users.calendarField] as? [Bool] {
                             self.newCalendar = calendarDoneValue
                             DispatchQueue.main.async {
                                 self.collectionView.dataSource = self
@@ -80,8 +80,8 @@ class CalendarViewController: UIViewController {
     }
 
     func updateCalendar() {
-        self.db.collection(K.FStore.collectionUsersName).document(self.currentUserID).updateData([
-            K.FStore.calendarField: newCalendar
+        self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
+            K.FStore.Users.calendarField: newCalendar
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")
