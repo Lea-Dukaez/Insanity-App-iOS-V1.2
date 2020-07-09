@@ -11,6 +11,7 @@ import UIKit
 class AddFriendCell: UITableViewCell {
 
     var userID = ""
+    var userStatus = ""
     
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var pseudolabel: UILabel!
@@ -20,6 +21,7 @@ class AddFriendCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        addButton.titleLabel?.numberOfLines = 0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

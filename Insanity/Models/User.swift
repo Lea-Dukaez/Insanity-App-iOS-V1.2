@@ -13,4 +13,5 @@ struct User: Equatable {
     let nameSearch: String
     let avatar: String
     let id: String
+    var status: String = "null"
 }

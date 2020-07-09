@@ -72,7 +72,7 @@ struct K {
             static let maxField  = "max"
             static let avatarField = "avatar"
             static let calendarField = "calendar"
-            static let friendsField = "friends"
+            static let followedUsersField = "followedUsers"
         }
         struct WorkoutTests {
             static let collectionTestName = "workoutTests"

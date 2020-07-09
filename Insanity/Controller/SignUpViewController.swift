@@ -145,7 +145,7 @@ class SignUpViewController: UIViewController {
         // Add a new document in Firestore for new user
         self.db.collection(K.FStore.Users.collectionUsersName).document(self.userID).setData([
             K.FStore.Users.maxField: [Double](),
-            K.FStore.Users.friendsField: [String](),
+            K.FStore.Users.followedUsersField: [String:String](),
             K.FStore.Users.calendarField:calendar,
             K.FStore.Users.pseudoField: pseudoDefault,
             K.FStore.Users.nameSearchField: pseudoDefault.lowercased(),

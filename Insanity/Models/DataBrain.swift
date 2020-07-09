@@ -35,10 +35,10 @@ class DataBrain {
                             if let maxValues = data[K.FStore.Users.maxField] as? [Double],
                                 let avatar = data[K.FStore.Users.avatarField] as? String,
                                 let pseudo = data[K.FStore.Users.pseudoField] as? String,
-                                let friends = data[K.FStore.Users.friendsField] as? [String] {
+                                let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String] {
                                 
                                 // get only data for current user and friends
-                                if (userID == self.currentUserID) || friends.filter( { $0.contains(self.currentUserID) } ).isEmpty == false {
+                                if (userID == self.currentUserID) || followedUsers[userID] == K.FStore.Relationships.statusFollowing {
                                     let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
                                     self.dataPodium.append(podiumCompetitor)
                                 }
