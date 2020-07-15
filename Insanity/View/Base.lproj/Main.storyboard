@@ -818,9 +818,7 @@
                                                     <constraint firstAttribute="width" constant="65" id="Io4-tT-hfn"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal">
-                                                    <string key="title">5
-Following</string>
+                                                <state key="normal" title="1 Following">
                                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                             </button>

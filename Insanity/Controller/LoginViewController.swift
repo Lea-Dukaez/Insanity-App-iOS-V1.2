@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
             podiumView.currentUserID = userID
             
             let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
-            profileView.currentUserID = userID
+            profileView.currentUserID = userID 
         }
     }
     

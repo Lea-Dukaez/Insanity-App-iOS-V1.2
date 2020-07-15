@@ -89,16 +89,6 @@ struct K {
             static let statusFollowing = "following"
         }
         
-        
-        
-        
-        
-        
     }
-    
-
-        
-
-
 
 }

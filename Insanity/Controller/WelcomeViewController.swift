@@ -12,6 +12,7 @@ import Firebase
 
 class WelcomeViewController: UIViewController {
     
+    var dataBrain = DataBrain()
     var currentUserID = ""
         
     @IBOutlet weak var logInButton: UIButton!
@@ -26,6 +27,14 @@ class WelcomeViewController: UIViewController {
             currentUserID = UserDefaults.standard.object(forKey: "USER_KEY_UID") as! String
             
             self.performSegue(withIdentifier: K.segueWelcomeToHome, sender: self)
+
+//            dataBrain.currentUserID = currentUserID
+//            dataBrain.getCurrentUser()
+//            print(dataBrain.currentUserID)
+//            DispatchQueue.main.async {
+//                self.performSegue(withIdentifier: K.segueWelcomeToHome, sender: self)
+//            }
+            
         }
         
         logInButton.backgroundColor = .clear

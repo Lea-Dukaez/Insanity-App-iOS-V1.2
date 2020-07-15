@@ -11,10 +11,35 @@ import Firebase
 
 class DataBrain {
     let db = Firestore.firestore()
+    
     var currentUserID: String = ""
     var dataPodium: [PodiumCompetitor] = []
     var currentUserMaxValues: [Double] = []
     var userMaxValues: [Double] = []
+    var avatarCurrentUser: String = ""
+    var pseudoCurrentUser: String = ""
+    var dataFollowedUsers: [String:String] = [:]
+
+    func getCurrentUser() {
+        print("DataBrain getCurrentUser called")
+        self.db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
+            .getDocument { (document, error) in
+            if let doc = document {
+                if let data = doc.data() {
+                    if let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                        let avatar = data[K.FStore.Users.avatarField] as? String,
+                        let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String] {
+
+                        self.dataFollowedUsers = followedUsers
+                        print(self.dataFollowedUsers)
+                        self.pseudoCurrentUser = pseudo
+                        self.avatarCurrentUser = avatar
+
+                    }
+                }
+            }
+        }
+    }
     
     func recupPodiumMaxValues() {
         dataPodium = []
