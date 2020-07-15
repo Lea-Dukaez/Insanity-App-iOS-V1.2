@@ -25,7 +25,7 @@ class FollowersTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table View DataSource
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -120,6 +120,7 @@ class FollowersTableViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
+    // MARK: - Section DataBase Interactions
     
     func updateFollower(userID: String, accepted: Bool) {
 

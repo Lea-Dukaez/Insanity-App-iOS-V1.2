@@ -77,13 +77,13 @@ class PodiumViewController: UIViewController {
 
         switch dataPodiumFiltered.count {
         case 1:
-            // case only 1 array Max not empty => Data for 1 user
+            // case only 1 array Max not empty => Data for 1 user => The Current User
             let index = dataBrain.dataPodium.indices.filter { dataBrain.dataPodium[$0].max == dataPodiumFiltered[0].max } // return array with 1 element
             topOneImage.image = UIImage(named: dataBrain.dataPodium[index[0]].avatar)
             topOneLabel.text = String(format: "%.0f", dataBrain.dataPodium[index[0]].max[sportRow])
             topOnePseudoLabel.text = dataBrain.dataPodium[index[0]].pseudo
             if dataBrain.dataPodium[index[0]].userID == currentUserID {
-                commentLabel = K.podium.first
+                commentLabel = "Well done for your score. But you have no competitors... Start following friends to compare yourself with them and challenge yourself !"
                 commentScore = ""
             }
         case 2:
