@@ -355,7 +355,7 @@
             </objects>
             <point key="canvasLocation" x="4492" y="-1876"/>
         </scene>
-        <!--Followers Table View Controller-->
+        <!--Followers-->
         <scene sceneID="Kct-jR-cfP">
             <objects>
                 <tableViewController id="jy5-ZN-rMQ" customClass="FollowersTableViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
@@ -368,7 +368,7 @@
                             <outlet property="delegate" destination="jy5-ZN-rMQ" id="NW3-Gt-hWB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="mAt-mA-JwI"/>
+                    <navigationItem key="navigationItem" title="Followers" id="mAt-mA-JwI"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6bD-vK-j9N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -930,7 +930,7 @@
             </objects>
             <point key="canvasLocation" x="3702" y="-892"/>
         </scene>
-        <!--Add Friends Table View Controller-->
+        <!--Add Friends-->
         <scene sceneID="2rF-Gs-bmP">
             <objects>
                 <tableViewController id="hxp-Dq-Kx6" customClass="AddFriendsTableViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
@@ -948,7 +948,7 @@
                             <outlet property="delegate" destination="hxp-Dq-Kx6" id="YjR-bd-PGz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="9Dt-I5-H0L"/>
+                    <navigationItem key="navigationItem" title="Add Friends" id="9Dt-I5-H0L"/>
                     <connections>
                         <outlet property="searchBar" destination="hgC-6K-cov" id="7Gf-0u-dyh"/>
                     </connections>
@@ -1772,6 +1772,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8fl-Fw-aKe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" name="BrandOrangeColor"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

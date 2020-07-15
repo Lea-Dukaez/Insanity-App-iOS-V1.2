@@ -32,21 +32,11 @@ class AddFriendsTableViewController: UITableViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-        print("AddFriendsTableViewController viewWillAppear called")
-
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = true
-        print("AddFriendsTableViewController viewWillDisappear called")
-        
-    }
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("AddFriendsTableViewController viewDidLoad called")
         
         searchBar.delegate = self
         self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
@@ -80,22 +70,20 @@ class AddFriendsTableViewController: UITableViewController {
         cell.pseudolabel.text = matchingUsersArray[indexPath.row].pseudo
         cell.userID = userID
         cell.userStatus = matchingUsersArray[indexPath.row].status
+        cell.addButton.titleLabel?.textAlignment = .center
         
         if self.dataUsers.filter( { $0.id.contains(userID) } ).isEmpty == false {
             // case user is already added as "friends"
             if self.dataUsers.filter( { $0.id.contains(userID) } )[0].status == K.FStore.Relationships.statusWaitingApproval {
-//                print(cell.userStatus)
                 cell.userStatus = K.FStore.Relationships.statusWaitingApproval
                 cell.addButton.setTitle("Waiting Approval", for: .normal)
                 cell.addButton.backgroundColor = UIColor.systemGray
             } else {
-//                print(cell.userStatus)
                 cell.userStatus = K.FStore.Relationships.statusFollowing
                 cell.addButton.setTitle("Unfollow", for: .normal)
                 cell.addButton.backgroundColor = UIColor(named: K.BrandColor.orangeBrancColor)
             }
         } else {
-//            print(cell.userStatus)
             cell.addButton.setTitle("Follow", for: .normal)
             cell.addButton.backgroundColor = .label
         }

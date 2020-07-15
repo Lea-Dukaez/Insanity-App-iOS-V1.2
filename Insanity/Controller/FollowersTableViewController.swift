@@ -7,84 +7,109 @@
 //
 
 import UIKit
+import Firebase
 
 class FollowersTableViewController: UITableViewController {
+    
+    let db = Firestore.firestore()
+    var followerUsers: [User] = []
+    
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
+        self.tableView.tableFooterView = UIView()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if followerUsers.count != 0 {
+            return followerUsers.count
+        } else {
+            return 1
+        }
     }
 
-    /*
+ 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: K.userCell.addFriendCellIdentifier, for: indexPath) as! AddFriendCell
 
-        // Configure the cell...
+        if followerUsers.count != 0 {
+            
+            cell.avatarImage.image = UIImage(named: followerUsers[indexPath.row].avatar)
+            cell.pseudolabel.text = followerUsers[indexPath.row].pseudo
+            cell.userID = followerUsers[indexPath.row].id
+            cell.userStatus = followerUsers[indexPath.row].status
+            cell.addButton.titleLabel?.textAlignment = .center
 
+            if followerUsers[indexPath.row].status == K.FStore.Relationships.statusWaitingApproval {
+                cell.addButton.setTitle("Waiting Approval", for: .normal)
+                cell.addButton.backgroundColor = UIColor.systemGray
+            } else {
+                cell.addButton.setTitle("Delete", for: .normal)
+            }
+            
+            
+        } else {
+            cell.avatarImage.image = UIImage()
+            cell.pseudolabel.text = "No follower yet"
+        }
+        
+        // implement the button action for cell
+        cell.user = { userIDAdded in
+            
+            if cell.addButton.titleLabel?.text == "Waiting Approval" {
+                // case: approve or not follower request
+                print("click to approve or refuse request")
+                
+//                userAdded.status = K.FStore.Relationships.statusWaitingApproval
+//                cell.userStatus = K.FStore.Relationships.statusWaitingApproval
+//                self.dataUsers.append(userAdded)
+//                self.friendsIDArray[userIDAdded!] = userAdded.status
+                
+                
+            }
+            else {
+                print("click to Delete from follower")
+                // case: End following relationship OR case: cancel add/follow action
+//                if let index = self.dataUsers.firstIndex(of: userAdded) {
+//                    let removedFriend = self.dataUsers.remove(at: index)
+//
+//
+//                    self.friendsIDArray[removedFriend.id] = nil
+//                }
+            }
+//
+//            self.updatefollowedUsersOfCurrentUser()
+//            self.tableView.reloadData()
+        }
+
+        
         return cell
     }
-    */
+    
+//    func updatefollowedUsersOfSelectedUser() {
+//        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
+//
+//        currentUserRef.updateData([
+//            K.FStore.Users.followedUsersField : friendsIDArray
+//        ]) { err in
+//            if let err = err {
+//                print("Error updating document: \(err)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
+//        self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers, friendsIDArray: friendsIDArray)
+//        
+//    }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
 }

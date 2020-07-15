@@ -150,8 +150,6 @@ class ProfileViewController: UIViewController {
     }
     
     func getFollower() {
-        print("ProfileViewController getFollower called")
-    
         db.collection(K.FStore.Users.collectionUsersName)
             .addSnapshotListener { (querySnapshot, error) in
             if let err = error {
@@ -220,6 +218,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func followerPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: K.segueGoToFollowers, sender: self)
     }
     
     @IBAction func addFriendsPressed(_ sender: UIButton) {
@@ -246,6 +245,10 @@ class ProfileViewController: UIViewController {
             friendActivityView.friendID = friendID
             friendActivityView.friendAvatar = friendAvatar
             friendActivityView.friendPseudo = friendPseudo
+        }
+        else if segue.identifier == K.segueGoToFollowers {
+            let followersView = segue.destination as! FollowersTableViewController
+            followersView.followerUsers = followerUsers
         }
     }
     
