@@ -49,7 +49,7 @@ class CalendarViewController: UIViewController {
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
         
-//        loadCalendar()
+        loadCalendar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

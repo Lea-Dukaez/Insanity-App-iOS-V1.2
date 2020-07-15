@@ -84,6 +84,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))

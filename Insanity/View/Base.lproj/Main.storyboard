@@ -818,7 +818,7 @@
                                                     <constraint firstAttribute="width" constant="65" id="Io4-tT-hfn"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="1 Following">
+                                                <state key="normal">
                                                     <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 </state>
                                             </button>
@@ -832,12 +832,12 @@
                                                         </constraints>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="LRW-A8-gYX">
-                                                        <rect key="frame" x="-10" y="0.0" width="65" height="40"/>
+                                                        <rect key="frame" x="-10" y="0.0" width="65" height="28"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="65" id="Qtc-z9-LLz"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                                        <state key="normal" title="2 Follower">
+                                                        <state key="normal">
                                                             <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
@@ -920,10 +920,10 @@
                         <outlet property="followingButton" destination="Vp1-E5-Fkz" id="rwE-UJ-ldU"/>
                         <outlet property="logOutButton" destination="e2K-Sk-HW6" id="une-Yq-N2V"/>
                         <outlet property="tableView" destination="8Kc-aO-1DP" id="QG8-fv-ILR"/>
-                        <segue destination="K1O-XM-4Xn" kind="show" identifier="goToAccount" id="Dbg-Cf-b3X"/>
                         <segue destination="hxp-Dq-Kx6" kind="show" identifier="goToAddFriends" id="eLN-oP-4rR"/>
                         <segue destination="X7c-Os-dG6" kind="show" identifier="goToFriendActivity" id="Jp1-YO-2qG"/>
                         <segue destination="jy5-ZN-rMQ" kind="show" identifier="goToFollowers" id="jI6-A7-KrO"/>
+                        <segue destination="K1O-XM-4Xn" kind="show" identifier="goToAccount" id="deW-t7-8it"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
