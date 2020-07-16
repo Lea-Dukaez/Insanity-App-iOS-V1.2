@@ -8,14 +8,20 @@
 
 import UIKit
 import FirebaseAuth
+import FRHyperLabel
+import FRHyperLabel
 
 class NewPasswordViewController: UIViewController {
 
     var userEmail = ""
+    
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var goToLogInLabel: FRHyperLabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        handleGoToLogIn()
     }
     
 
@@ -55,6 +61,24 @@ class NewPasswordViewController: UIViewController {
     
     @objc func dismissAlert() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func handleGoToLogIn() {
+        goToLogInLabel.numberOfLines = 0
+        
+        let string = "Or return to Log In."
+        let attributes = [NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)]
+        
+        goToLogInLabel.attributedText = NSAttributedString(string: string, attributes: attributes)
+        
+        let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
+            
+            self.performSegue(withIdentifier: K.segueResetGoBackToLogIn, sender: self)
+            
+        }
+        
+        goToLogInLabel.setLinkForSubstring("Log In", withLinkHandler: handler)
+        
     }
     
     @IBAction func closePressed(_ sender: UIButton) {

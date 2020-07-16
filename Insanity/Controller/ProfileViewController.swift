@@ -11,9 +11,7 @@ import FirebaseAuth
 import Firebase
 
 class ProfileViewController: UIViewController {
-    
-    var pseudoCurrentUser : String = ""
-    var avatarCurrentUser : String = ""
+        
     var currentUserID = ""
     
     var friendPseudo = ""
@@ -21,87 +19,87 @@ class ProfileViewController: UIViewController {
     var friendID = ""
     
     var dataUsers: [User] = []
+    var followerUsers: [User] = []
+    
     let db = Firestore.firestore()
     
-    @IBOutlet weak var competitorsLabel: UILabel!
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addFriendsButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!    
-
+    @IBOutlet weak var followerToApproveImage: UIImageView!
+    @IBOutlet weak var followerButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        print("ProfileViewController viewDidLoad")
+        
         self.navigationItem.setHidesBackButton(true, animated: true);
 
+        followingButton.titleLabel?.numberOfLines = 0
+        followingButton.isEnabled = false
+        
         addFriendsButton.backgroundColor = .clear
         addFriendsButton.layer.borderWidth = 1
-        addFriendsButton.layer.borderColor = UIColor.label.cgColor
+        addFriendsButton.layer.borderColor = UIColor(named: K.BrandColor.orangeBrancColor)?.cgColor
+        addFriendsButton.layer.cornerRadius = 3
+        
         logOutButton.backgroundColor = .clear
         logOutButton.layer.borderWidth = 1
+        logOutButton.layer.cornerRadius = 3
         logOutButton.layer.borderColor = UIColor.label.cgColor
         
-        getCurrentUser()
+        currentUserID = DataBrain.sharedInstance.currentUserID
         
-        self.competitorsLabel.text = "No Friends to compete with yet !"
-        self.competitorsLabel.textAlignment = .center
+        let nbFollowing = DataBrain.sharedInstance.dataFollowedUsers.allKeys(forValue: K.FStore.Relationships.statusFollowing)
+        followingButton.setTitle("\(nbFollowing.count)\nFollowing", for: .normal)
+        
+        loadUsers()
+
+        getFollower()
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(UINib(nibName: K.userCell.userCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.userCellIdentifier)
         self.tableView.tableFooterView = UIView()
         
-        loadUsers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.currentUserLabel.text = self.pseudoCurrentUser
-        self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
+        self.currentUserLabel.text = DataBrain.sharedInstance.pseudoCurrentUser
+        self.currentUserImage.image = UIImage(named: DataBrain.sharedInstance.avatarCurrentUser)
     }
     
     // MARK: - Section DataBase Interactions
     
-    func getCurrentUser() {
-        self.db.collection(K.FStore.collectionUsersName).document(currentUserID)
-            .getDocument { (document, error) in
-            if let doc = document {
-                if let data = doc.data() {
-                    if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                        self.pseudoCurrentUser = pseudo
-                        self.avatarCurrentUser = avatar
-                        DispatchQueue.main.async {
-                            self.currentUserLabel.text = self.pseudoCurrentUser
-                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    
     func loadUsers() {
-        if dataUsers.isEmpty {
-            let allUsersRef = db.collection(K.FStore.collectionUsersName)
-            allUsersRef.whereField(K.FStore.friendsField, arrayContains: currentUserID)
-                .getDocuments { (querySnapshot, error) in
-                    if let err = error {
-                    print("Error getting documents: \(err)")
-                        
-                    } else {
-                    // documents exist in Firestore
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for doc in snapshotDocuments {
+        db.collection(K.FStore.Users.collectionUsersName)
+            .addSnapshotListener { (querySnapshot, error) in
+                if let err = error {
+                print("Error getting documents: \(err)")
+
+                } else {
+                // documents exist in Firestore
+                self.dataUsers = []
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        // get Followed Users
+                        if DataBrain.sharedInstance.dataFollowedUsers.keys.contains(doc.documentID) {
+                            
                             let data = doc.data()
-                             if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
-                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                            
+                            if let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                                let avatar = data[K.FStore.Users.avatarField] as? String,
+                                let nameSearch = data[K.FStore.Users.nameSearchField] as? String {
+
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID, status: DataBrain.sharedInstance.dataFollowedUsers[doc.documentID]!)
                                 self.dataUsers.append(newUser)
-                                
+
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    self.competitorsLabel.text = "FRIENDS:"
-                                    self.competitorsLabel.textAlignment = .left
                                 }
                              }
                         }
@@ -110,6 +108,52 @@ class ProfileViewController: UIViewController {
             }
         }
     }
+    
+    func getFollower() {
+        db.collection(K.FStore.Users.collectionUsersName)
+            .addSnapshotListener { (querySnapshot, error) in
+            if let err = error {
+                print("Error retrieving document: \(err)")
+                return
+            }
+             else {
+                self.followerUsers = []
+                
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        let data = doc.data()
+                        let userID = doc.documentID
+
+                        // get Followers
+                        if let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String],
+                            let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                            let avatar = data[K.FStore.Users.avatarField] as? String,
+                            let nameSearch = data[K.FStore.Users.nameSearchField] as? String
+                        {
+                            if (userID != self.currentUserID) && (followedUsers[self.currentUserID] != nil) {
+                                
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID, status: followedUsers[self.currentUserID]!)
+                                self.followerUsers.append(newUser)
+                            }
+                       }
+                        
+                        DispatchQueue.main.async {
+                            let nbFollower: [User] = self.followerUsers.filter( { $0.status.contains(K.FStore.Relationships.statusFollowing) } )
+                            let nbFollowerToApprove: [User] = self.followerUsers.filter( { $0.status.contains(K.FStore.Relationships.statusWaitingApproval) } )
+
+                            self.followerButton.setTitle("\(nbFollower.count)\nFollower", for: .normal)
+                            if nbFollowerToApprove.count == 0 {
+                                self.followerToApproveImage.image = UIImage()
+                            } else {
+                                self.followerToApproveImage.image = UIImage(systemName: "\(nbFollowerToApprove.count).square.fill")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Section Buttons Action
     
@@ -127,11 +171,19 @@ class ProfileViewController: UIViewController {
         }
         if Auth.auth().currentUser == nil {
             // Remove User Session from device
+            DataBrain.sharedInstance.isLoggedIn = false
             UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
             UserDefaults.standard.synchronize()
-        print("user logged out")
-        self.navigationController!.popToRootViewController(animated: true)
+            print("user logged out")
+            DispatchQueue.main.async {
+                self.navigationController!.popToRootViewController(animated: true)
+            }
+        
         }
+    }
+    
+    @IBAction func followerPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: K.segueGoToFollowers, sender: self)
     }
     
     @IBAction func addFriendsPressed(_ sender: UIButton) {
@@ -139,24 +191,23 @@ class ProfileViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueHomeToAccount {
-            let accountView = segue.destination as! AccountViewController
-            accountView.pseudo = pseudoCurrentUser
-            accountView.avatarImage = avatarCurrentUser
-            accountView.userID = currentUserID
-            accountView.accountDelegate = self
-        }
-        else if segue.identifier == K.segueGoToAddFriends {
+        if segue.identifier == K.segueGoToAddFriends {
             let addFriendsView = segue.destination as! AddFriendsTableViewController
-            addFriendsView.currentUserID = currentUserID
+            addFriendsView.currentUserID = currentUserID // dataBrain.currentUserID
             addFriendsView.dataUsers = dataUsers
             addFriendsView.addFriendDelegate = self
+//            addFriendsView.friendsIDArray = dataFollowedUsers
         }
         else if segue.identifier == K.segueGoToFriendActivity {
             let friendActivityView = segue.destination as! FriendActivityViewController
             friendActivityView.friendID = friendID
             friendActivityView.friendAvatar = friendAvatar
             friendActivityView.friendPseudo = friendPseudo
+        }
+        else if segue.identifier == K.segueGoToFollowers {
+            let followersView = segue.destination as! FollowersTableViewController
+            followersView.followerUsers = followerUsers
+            followersView.currentUserID = currentUserID 
         }
     }
     
@@ -167,38 +218,60 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataUsers.count
+        let following = self.dataUsers.filter( { $0.status.contains(K.FStore.Relationships.statusFollowing) } )
+        if following.count != 0 {
+           return following.count
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: K.userCell.userCellIdentifier, for: indexPath) as! UserCell
-        cell.avatarImage.image = UIImage(named: dataUsers[indexPath.row].avatar)
-        cell.userLabel.text = dataUsers[indexPath.row].pseudo
+        
+        let following = self.dataUsers.filter( { $0.status.contains(K.FStore.Relationships.statusFollowing) } )
+        
+        if following.count != 0 {
+            cell.avatarImage.image = UIImage(named: following[indexPath.row].avatar)
+            cell.userLabel.text = following[indexPath.row].pseudo
+
+        } else {
+            cell.avatarImage.image = UIImage()
+            cell.userLabel.text = "Following no friends for now"
+        }
+        
    
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        friendAvatar = dataUsers[indexPath.row].avatar
-        friendPseudo = dataUsers[indexPath.row].pseudo
-        friendID = dataUsers[indexPath.row].id
-        performSegue(withIdentifier: K.segueGoToFriendActivity, sender: self)
+        let following = self.dataUsers.filter( { $0.status.contains(K.FStore.Relationships.statusFollowing) } )
+        
+        if following.count != 0 {
+            friendAvatar = following[indexPath.row].avatar
+            friendPseudo = following[indexPath.row].pseudo
+            friendID = following[indexPath.row].id
+            performSegue(withIdentifier: K.segueGoToFriendActivity, sender: self)
+        }
     }
     
 }
 
 // MARK: - Section Delegates - Protocoles
 
-extension ProfileViewController: accountViewDelegate {
-    func sendDataBackToProfileVC(pseudo: String, avatar: String) {
-        pseudoCurrentUser = pseudo
-        avatarCurrentUser = avatar
+extension ProfileViewController: addFriendViewDelegate {
+    func sendFriendsBackToProfileVC(friendsArray: [User], friendsIDArray : [String:String]) {
+        dataUsers = friendsArray
+//        dataFollowedUsers = friendsIDArray
+        
+        self.tableView.reloadData()
     }
 }
 
-extension ProfileViewController: addFriendViewDelegate {
-    func sendFriendsBackToProfileVC(friendsArray: [User]) {
-        dataUsers = friendsArray
-        self.tableView.reloadData()
+extension Dictionary where Value: Equatable {
+    func allKeys(forValue val: Value) -> [Key] {
+        return self.filter { $1 == val }.map { $0.0 }
     }
 }

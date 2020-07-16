@@ -7,16 +7,46 @@
 //
 
 struct K {
+    
     static let appName = "INSANITY"
+
+    
+    struct Segue {
+        struct WelcomeVC {
+            static let segueWelcomeToSignUp = "welcomeToSignUP"
+            static let segueWelcomeToLogIn = "welcomeToLogIn"
+            static let segueWelcomeToHome = "welcomeToHomeloggedIn"
+        }
+        struct LoginVC {
+            static let segueLoginToHome = "loginToHome"
+            static let segueLogInToSignUp = "logInToSignUp"
+            static let segueGoToForgotPassword = "goToForgotPassword"
+        }
+        struct SignUpVC {
+            static let segueSignUpToHome = "signUpToHome"
+            static let segueSignUpToLogIn = "signUpToLogIn"
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
     static let segueToProgress = "goToProgress"
-    static let segueLoginToHome = "loginToHome"
-    static let segueSignUpToHome = "signUpToHome"
+    
+    
     static let segueResultsToTest = "goToTest"
     static let segueHomeToAccount = "goToAccount"
-    static let segueWelcomeToHome = "welcomeToHomeloggedIn"
+    
     static let segueToReset = "goToReset"
     static let segueGoToAddFriends = "goToAddFriends"
     static let segueGoToFriendActivity = "goToFriendActivity"
+    static let segueGoToFollowers = "goToFollowers"
+    static let segueResetGoBackToLogIn = "resetGoBackToLogIn"
+    
+    
     
     static let avatarImages = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7", "avatar8", "avatar9", "avatar10", "avatar11", "avatar12", "avatar13", "avatar14", "avatar15", "avatar16", "avatar17", "avatar18"]
     static let reuseAvatarIdentifier = "reuseAvatarCell"
@@ -34,8 +64,6 @@ struct K {
         static let addFriendCellIdentifier = "reuseAddFriend" 
         static let addFriendCellNibName = "AddFriendCell"
         static let noOpponentAvatar = "noOpponentAvatar"
-        static let usersAvatar = ["MalekAvatar", "LeaAvatar", "MathAvatar", "LouxAvatar"]
-        static let usersLabel = ["Malfouf, le Nul", "Lea, fit Courgette", "Mathou, super Blonde", "Loux, nihon Kyojin"]
     }
     
     
@@ -63,24 +91,30 @@ struct K {
     }
     
     struct FStore {
-        static let collectionTestName = "workoutTests"
-        static let dateField = "date"
-        static let idField = "id"
-        static let friendsField = "friends"
-        static let calendarField = "calendar"
-        static let testField = "testResults"
-        static let collectionUsersName = "users"
-        static let nameField = "name"
-        static let pseudoField = "pseudo"
-        static let maxField  = "max"
-        static let avatarField = "avatar"
-        static let users = ["Malek", "Lea", "Math", "Loux"]
+        struct Users {
+            static let collectionUsersName = "users"
+            static let nameSearchField = "nameSearch"
+            static let pseudoField = "pseudo"
+            static let maxField  = "max"
+            static let avatarField = "avatar"
+            static let calendarField = "calendar"
+            static let followedUsersField = "followedUsers"
+        }
+        struct WorkoutTests {
+            static let collectionTestName = "workoutTests"
+            static let dateField = "date"
+            static let idField = "id"
+            static let testField = "testResults"
+        }
+        struct Relationships {
+            static let collectionRelationshipsName = "relationships"
+            static let statusField = "status"
+            static let friendIDField = "friendID"
+            static let userIDField = "userID"
+            static let statusWaitingApproval = "waitingApproval"
+            static let statusFollowing = "following"
+        }
         
     }
-    
-
-        
-
-
 
 }

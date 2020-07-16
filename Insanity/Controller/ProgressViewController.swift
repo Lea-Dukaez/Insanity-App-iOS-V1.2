@@ -16,14 +16,6 @@ class ProgressViewController: UIViewController {
     var dataWorkoutTest: [Workout] = []
     
     var chartBrain: ChartBrain?
-    var dataBrain = DataBrain()
-    
-    var currentUserID: String = "" {
-        didSet {
-            dataBrain.currentUserID = self.currentUserID
-            dataBrain.recupUserMax(uid: currentUserID)
-        }
-    }
     
     var firstValues: [Double] = []
 
@@ -38,11 +30,14 @@ class ProgressViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        DataBrain.sharedInstance.recupUserMax()
+
         chartBrain = ChartBrain(barChart: barChart)
         
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
         addTestButton.layer.borderColor = UIColor.label.cgColor
+        addTestButton.layer.cornerRadius = 3
         
         segment1.selectedSegmentIndex = 0
         segment2.selectedSegmentIndex = -1
@@ -67,7 +62,7 @@ class ProgressViewController: UIViewController {
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
-        let maxVal = dataBrain.currentUserMaxValues[workOutSelected]
+        let maxVal = DataBrain.sharedInstance.currentUserMaxValues[workOutSelected] // FATAL ERROR INDEX OUT OF RANGE ??
         let first = firstValues[workOutSelected]
         let percent: Double = ((maxVal - first) / first) * 100
         let percentString = String(format: "%.0f", percent)
@@ -83,9 +78,9 @@ class ProgressViewController: UIViewController {
     func loadWorkoutData() {
         dataWorkoutTest = []
 
-        db.collection(K.FStore.collectionTestName).order(by: K.FStore.dateField)
-            .whereField(K.FStore.idField, isEqualTo: self.currentUserID)
-            .getDocuments { (querySnapshot, error) in
+        db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
+            .whereField(K.FStore.WorkoutTests.idField, isEqualTo: DataBrain.sharedInstance.currentUserID)
+            .addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
             } else {
@@ -97,7 +92,9 @@ class ProgressViewController: UIViewController {
                     if let snapshotDocuments = querySnapshot?.documents {
                         for (index, doc) in snapshotDocuments.enumerated() {
                             let data = doc.data()
-                            if let idCompetitor = data[K.FStore.idField] as? String, let testResult = data[K.FStore.testField] as? [Double], let testDate = data[K.FStore.dateField] as? Timestamp {
+                            if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
+                                let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
+                                let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
                                 
                                 // get the first fit test for the progression
                                 if index == 0 {
@@ -143,18 +140,10 @@ class ProgressViewController: UIViewController {
         return dateString
     }
     
-    
     // MARK: - Add Result Section
     
     @IBAction func addTestPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueResultsToTest, sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueResultsToTest {
-            let testView = segue.destination as! TestViewController
-            testView.currentUserId = currentUserID
-        }
     }
     
 }

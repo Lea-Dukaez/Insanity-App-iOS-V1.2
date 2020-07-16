@@ -11,7 +11,7 @@ import FirebaseAuth
 import Firebase
 
 protocol addFriendViewDelegate {
-    func sendFriendsBackToProfileVC(friendsArray: [User])
+    func sendFriendsBackToProfileVC(friendsArray: [User], friendsIDArray : [String:String])
 }
 
 class AddFriendsTableViewController: UITableViewController {
@@ -20,25 +20,20 @@ class AddFriendsTableViewController: UITableViewController {
     let db = Firestore.firestore()
     var currentUserID = ""
     
-    var friendsIDArray : [String] = []
+    var friendsIDArray : [String:String] = [:]
     var allUsersArray: [User] = []
     var matchingUsersArray = [User]()
-    var dataUsers: [User] = [] {
-        didSet {
-            updateFriendsIDArray()
-        }
-    }
-    
+    var dataUsers: [User] = []
+
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
-    
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        getUsers()
+        
+        friendsIDArray = DataBrain.sharedInstance.dataFollowedUsers
         
         searchBar.delegate = self
         self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
@@ -46,13 +41,6 @@ class AddFriendsTableViewController: UITableViewController {
         searchBar.placeholder = "Search a pseudo"
     }
     
-    func updateFriendsIDArray() {
-        for user in dataUsers {
-            if friendsIDArray.filter( { $0.contains(user.id) } ).isEmpty {
-                friendsIDArray.append(user.id)
-            }
-        }
-    }
 
     // MARK: - TableView DataSource
 
@@ -69,33 +57,49 @@ class AddFriendsTableViewController: UITableViewController {
         cell.avatarImage.image = UIImage(named: matchingUsersArray[indexPath.row].avatar)
         cell.pseudolabel.text = matchingUsersArray[indexPath.row].pseudo
         cell.userID = userID
+        cell.userStatus = matchingUsersArray[indexPath.row].status
+        cell.addButton.titleLabel?.textAlignment = .center
         
         if self.dataUsers.filter( { $0.id.contains(userID) } ).isEmpty == false {
             // case user is already added as "friends"
-            cell.addButton.setTitle("Remove", for: .normal)
-            cell.addButton.backgroundColor = .red
+            if self.dataUsers.filter( { $0.id.contains(userID) } )[0].status == K.FStore.Relationships.statusWaitingApproval {
+                cell.userStatus = K.FStore.Relationships.statusWaitingApproval
+                cell.addButton.setTitle("Waiting", for: .normal)
+                cell.addButton.backgroundColor = UIColor.systemGray
+            } else {
+                cell.userStatus = K.FStore.Relationships.statusFollowing
+                cell.addButton.setTitle("Unfollow", for: .normal)
+                cell.addButton.backgroundColor = UIColor(named: K.BrandColor.orangeBrancColor)
+            }
         } else {
-            cell.addButton.setTitle("Add", for: .normal)
+            cell.addButton.setTitle("Follow", for: .normal)
             cell.addButton.backgroundColor = .label
         }
 
+        
+        // implement the button action for cell
         cell.user = { userIDAdded in
             
-            let userAdded = self.allUsersArray.filter( { $0.id.contains(userIDAdded!) } )
+            let userAddedArray = self.allUsersArray.filter( { $0.id.contains(userIDAdded!) } )
+            var userAdded = userAddedArray[0]
             
-            if cell.addButton.titleLabel?.text == "Add" {
-                self.dataUsers.append(userAdded[0])
-                self.updateOtherUsersFriends(userID: userIDAdded!, added: true)
-            } else {
-                if let index = self.dataUsers.firstIndex(of: userAdded[0]) {
-                    let removedFriend = self.dataUsers.remove(at: index)
-                    if let indexRemoved = self.friendsIDArray.firstIndex(of: removedFriend.id) {
-                        self.friendsIDArray.remove(at: indexRemoved)
-                    }
-                }
-                self.updateOtherUsersFriends(userID: userIDAdded!, added: false)
+            if cell.addButton.titleLabel?.text == "Follow" {
+                // case: ask approval for following
+                userAdded.status = K.FStore.Relationships.statusWaitingApproval
+                cell.userStatus = K.FStore.Relationships.statusWaitingApproval
+                self.dataUsers.append(userAdded)
+                self.friendsIDArray[userIDAdded!] = userAdded.status
+            
             }
-            self.updateFriendsCurrentUser()
+            else {
+                // case: End following relationship OR case: cancel add/follow action
+                if let index = self.dataUsers.firstIndex(of: userAdded) {
+                    let removedFriend = self.dataUsers.remove(at: index)
+                    self.friendsIDArray[removedFriend.id] = nil
+                }
+            }
+            
+            self.updatefollowedUsersOfCurrentUser()
             self.tableView.reloadData()
         }
         
@@ -104,11 +108,11 @@ class AddFriendsTableViewController: UITableViewController {
     
     // MARK: - Section DataBase Interactions
     
-    func updateFriendsCurrentUser() {
-        let currentUserRef = db.collection(K.FStore.collectionUsersName).document(currentUserID)
-        
+    func updatefollowedUsersOfCurrentUser() {
+        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
+
         currentUserRef.updateData([
-            K.FStore.friendsField : friendsIDArray
+            K.FStore.Users.followedUsersField : friendsIDArray
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -116,61 +120,20 @@ class AddFriendsTableViewController: UITableViewController {
                 print("Document successfully updated")
             }
         }
-        self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers)
-    }
-    
-    func updateOtherUsersFriends(userID: String, added: Bool) {
         
-        let otherUsersRef = db.collection(K.FStore.collectionUsersName).document(userID)
-
-        db.runTransaction({ (transaction, errorPointer) -> Any? in
-            let otherUserDocument: DocumentSnapshot
-            do {
-                try otherUserDocument = transaction.getDocument(otherUsersRef)
-            } catch let fetchError as NSError {
-                errorPointer?.pointee = fetchError
-                return nil
-            }
-
-            guard var oldFriends = otherUserDocument.data()?[K.FStore.friendsField] as? [String] else {
-                let error = NSError(
-                    domain: "AppErrorDomain",
-                    code: -1,
-                    userInfo: [
-                        NSLocalizedDescriptionKey: "Unable to retrieve friends from snapshot \(otherUsersRef)"
-                    ]
-                )
-                errorPointer?.pointee = error
-                return nil
-            }
-
-            var newFriends : [String] = []
-            if added {
-                oldFriends.append(self.currentUserID)
-                newFriends = oldFriends
-                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
-            } else {
-                if let indexToRemove = oldFriends.firstIndex(of: self.currentUserID) {
-                    oldFriends.remove(at: indexToRemove)
-                    newFriends = oldFriends
-                }
-                transaction.updateData([K.FStore.friendsField: newFriends], forDocument: otherUsersRef)
-            }
-            return nil
-        }) { (object, error) in
-            if let error = error {
-                print("Transaction failed: \(error)")
-            } else {
-                print("Transaction successfully committed!")
-            }
-        }
+        DataBrain.sharedInstance.dataFollowedUsers = friendsIDArray
+        
+        self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers, friendsIDArray: friendsIDArray)
+        
     }
-    
 
-    func getUsers() {
+
+    func searchForFriends(for searchWord: String) {
         allUsersArray = []
 
-        self.db.collection(K.FStore.collectionUsersName)
+        self.db.collection(K.FStore.Users.collectionUsersName)
+            .whereField(K.FStore.Users.nameSearchField, isGreaterThanOrEqualTo: searchWord)
+            .limit(to: 10)
             .getDocuments { (querySnapshot, error) in
                 if let err = error {
                 print("Error getting documents: \(err)")
@@ -179,10 +142,22 @@ class AddFriendsTableViewController: UITableViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         let data = doc.data()
-                         if let pseudo = data[K.FStore.pseudoField] as? String, let avatar = data[K.FStore.avatarField] as? String {
+                        if let pseudo = data[K.FStore.Users.pseudoField] as? String,
+                            let avatar = data[K.FStore.Users.avatarField] as? String,
+                            let nameSearch = data[K.FStore.Users.nameSearchField] as? String {
+                
                             if doc.documentID != self.currentUserID {
-                                let newUser = User(pseudo: pseudo, avatar: avatar, id: doc.documentID)
+                                
+                                let status = self.friendsIDArray[doc.documentID] ?? "nul"
+                                
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID, status: status)
+                                
                                 self.allUsersArray.append(newUser)
+                                
+                                DispatchQueue.main.async {
+                                    self.matchingUsersArray = self.allUsersArray.filter( { $0.nameSearch.contains(searchWord) } )
+                                    self.tableView.reloadData()
+                                }
                             }
                          }
                     }
@@ -190,7 +165,6 @@ class AddFriendsTableViewController: UITableViewController {
             }
         }
     }
-
 }
 
 // MARK: - Section UISearchBarDelegate
@@ -198,8 +172,8 @@ class AddFriendsTableViewController: UITableViewController {
 extension AddFriendsTableViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        matchingUsersArray = allUsersArray.filter( { $0.pseudo.contains(searchBar.text!) } )
-        tableView.reloadData()
+        let searchWord = searchBar.text!.lowercased()
+        searchForFriends(for: searchWord)
     }
     
 }

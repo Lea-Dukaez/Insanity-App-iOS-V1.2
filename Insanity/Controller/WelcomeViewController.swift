@@ -12,44 +12,47 @@ import Firebase
 
 class WelcomeViewController: UIViewController {
     
-    var currentUserID = ""
-        
     @IBOutlet weak var logInButton: UIButton!
-    
-    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     override func viewDidLoad() {
+        print("WelcomeViewController viewDidLoad")
+        
         super.viewDidLoad()
-        
-        // Check if the user is logged in
-        if UserDefaults.standard.object(forKey: "USER_KEY_UID") != nil {
-            currentUserID = UserDefaults.standard.object(forKey: "USER_KEY_UID") as! String
-            
-            self.performSegue(withIdentifier: K.segueWelcomeToHome, sender: self)
-        }
-        
         logInButton.backgroundColor = .clear
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = UIColor.label.cgColor
+        
+        if Auth.auth().currentUser != nil {
+            DataBrain.sharedInstance.isLoggedIn = true
+            
+            if let userID = Auth.auth().currentUser?.uid {
+                DataBrain.sharedInstance.currentUserID = userID
+                DataBrain.sharedInstance.getCurrentUser()
+            }
+    
+        } else {
+            print("user not logged in")
+            DataBrain.sharedInstance.isLoggedIn = false
+        }
+        
+//        if UserDefaults.standard.object(forKey: "USER_KEY_UID") != nil {
+//            currentUserID = UserDefaults.standard.object(forKey: "USER_KEY_UID") as! String
+//        }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueWelcomeToHome {
-            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-            
-            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
-            calendarView.currentUserID = currentUserID
-            
-            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
-            activityView.currentUserID = currentUserID
-            
-            
-            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
-            podiumView.currentUserID = currentUserID
-            
-            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
-            profileView.currentUserID = currentUserID
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+        if DataBrain.sharedInstance.isLoggedIn {
+            self.performSegue(withIdentifier: K.Segue.WelcomeVC.segueWelcomeToHome, sender: self)
         }
     }
-        
+    
+    @IBAction func buttonSignUpPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: K.Segue.WelcomeVC.segueWelcomeToSignUp, sender: self)
+    }
+    
+    @IBAction func buttonLogInPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: K.Segue.WelcomeVC.segueWelcomeToLogIn, sender: self)
+    }
+    
 }

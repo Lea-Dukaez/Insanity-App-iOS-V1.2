@@ -207,6 +207,7 @@ PODS:
     - "gRPC-C++ (= 0.0.9)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 0.3.901)
+  - FRHyperLabel (1.0.4)
   - GoogleDataTransport (5.0.0)
   - GoogleDataTransportCCTSupport (2.0.0):
     - GoogleDataTransport (~> 5.0)
@@ -254,6 +255,7 @@ DEPENDENCIES:
   - Charts
   - Firebase/Auth
   - Firebase/Firestore
+  - FRHyperLabel
   - IQKeyboardManagerSwift (= 6.5.0)
 
 SPEC REPOS:
@@ -268,6 +270,7 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
+    - FRHyperLabel
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
@@ -289,6 +292,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: e9b4cd8ba60dee0f2d13347332e4b7898cca5b61
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseFirestore: ce81b0e390174e33c4b713c22c4dbd83e50e07b0
+  FRHyperLabel: f4a127d5f8ffb211040554615e93f936d5a576a6
   GoogleDataTransport: a857c6a002d201b524dd4bc2ed7e7355ed07e785
   GoogleDataTransportCCTSupport: 32f75fbe904c82772fcbb6b6bd4525bfb6f2a862
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
@@ -299,6 +303,6 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
 
-PODFILE CHECKSUM: 1d8845bb371587606a973fcaaaa7c49fad401b67
+PODFILE CHECKSUM: 748a085fbdacb9e2729a458689550ad37a444730
 
 COCOAPODS: 1.9.1
