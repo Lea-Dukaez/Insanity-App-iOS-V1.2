@@ -17,6 +17,12 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+        self.pseudoTextField.text = ""
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("AccountViewController viewDidLoad")
@@ -30,13 +36,12 @@ class AccountViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-
-    @IBAction func closePressed(_ sender: UIButton) {
-        self.pseudoTextField.text = ""
-        self.navigationController?.popViewController(animated: true)
-    }
     
-    @IBAction func termsOfUsePressed(_ sender: UIButton) {
+    @IBAction func infoNavButtonPressed(_ sender: UIBarButtonItem) {
+        // go to table view
+        // cell for Contact => click open mailBox associated with user email ?
+        // cell for Terms and conditions => open new vc ?
+        // cell for Private Policy  => open new vc  ?
     }
     
     
