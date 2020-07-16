@@ -10,17 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-protocol accountViewDelegate {
-    func sendDataBackToProfileVC(pseudo: String, avatar: String)
-}
-
 class AccountViewController: UIViewController {
-
-    var accountDelegate: accountViewDelegate?
-    let db = Firestore.firestore()
-    var avatarImage = ""
-    var pseudo = ""
-    var userID = ""
 
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
@@ -29,11 +19,12 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("AccountViewController viewDidLoad")
+
         pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Change your pseudonyme", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
-        currentUserImage.image = UIImage(named: avatarImage)
-        currentUserLabel.text = pseudo
+        currentUserImage.image = UIImage(named: DataBrain.sharedInstance.avatarCurrentUser)
+        currentUserLabel.text = DataBrain.sharedInstance.pseudoCurrentUser
 
         pseudoTextField.delegate = self
         collectionView.dataSource = self
@@ -41,7 +32,6 @@ class AccountViewController: UIViewController {
     }
 
     @IBAction func closePressed(_ sender: UIButton) {
-        self.accountDelegate?.sendDataBackToProfileVC(pseudo: pseudo, avatar: avatarImage)
         self.pseudoTextField.text = ""
         self.navigationController?.popViewController(animated: true)
     }
@@ -56,26 +46,10 @@ class AccountViewController: UIViewController {
     
     func saveProfile() {
         if pseudoTextField.text?.isEmpty == false {
-            pseudo = pseudoTextField.text!
+            DataBrain.sharedInstance.pseudoCurrentUser = pseudoTextField.text!
         }
-        changePseudoAndImage()
-        self.accountDelegate?.sendDataBackToProfileVC(pseudo: pseudo, avatar: avatarImage)
+        DataBrain.sharedInstance.changePseudoAndImage()
         self.navigationController?.popViewController(animated: true)
-    }
-
-    
-    func changePseudoAndImage() {
-        self.db.collection(K.FStore.Users.collectionUsersName).document(self.userID).updateData([
-            K.FStore.Users.pseudoField: self.pseudo,
-            K.FStore.Users.nameSearchField: self.pseudo.lowercased(),
-            K.FStore.Users.avatarField: self.avatarImage
-        ]) { error in
-            if let err = error {
-                print("Error adding document: \(err)")
-            } else {
-                self.pseudoTextField.text = ""
-            }
-        }
     }
     
 }
@@ -103,7 +77,7 @@ extension AccountViewController:  UICollectionViewDataSource {
 
 extension AccountViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        avatarImage = K.avatarImages[indexPath.item]
+        DataBrain.sharedInstance.avatarCurrentUser = K.avatarImages[indexPath.item]
     }
 
 }

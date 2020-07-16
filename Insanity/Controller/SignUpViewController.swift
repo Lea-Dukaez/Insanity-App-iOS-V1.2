@@ -8,23 +8,15 @@
 
 import UIKit
 import FirebaseAuth
-import Firebase
 import FRHyperLabel
 
 class SignUpViewController: UIViewController {
-
-    let db = Firestore.firestore()
-    
-    var pseudoCurrentUser = ""
-    var avatar = ""
-    var userID = ""
 
     @IBOutlet weak var pseudoTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var termsOfUseLabel: FRHyperLabel!
     @IBOutlet weak var goToLogInLabel: FRHyperLabel!
-    
 
     let alertEmpty = UIAlertController(title: "Error", message: "email/password can't be empty", preferredStyle: UIAlertController.Style.alert)
 
@@ -39,7 +31,6 @@ class SignUpViewController: UIViewController {
 
         handleTermsOfUse()
         handleGoToLogIn()
-        
     }
     
     
@@ -61,23 +52,28 @@ class SignUpViewController: UIViewController {
                     }
 
                     if let uid = dataResult?.user.uid {
-                        self.userID = uid
-                        // keep UID for avoid login again after closing the app
-                          UserDefaults.standard.set(uid, forKey: "USER_KEY_UID")
-                          UserDefaults.standard.synchronize()
+                        let randomInt = Int.random(in: 0...17)
+                        DataBrain.sharedInstance.currentUserID = uid
+                        DataBrain.sharedInstance.pseudoCurrentUser = pseudo
+                        DataBrain.sharedInstance.avatarCurrentUser = K.avatarImages[randomInt]
+                        DataBrain.sharedInstance.dataFollowedUsers = [String:String]()
+                        
+                        DataBrain.sharedInstance.createUserInfo(pseudoDefault: pseudo, avatarDefault: K.avatarImages[randomInt])
+                        
+//                         // keep UID for avoid login again after closing the app
+//                          UserDefaults.standard.set(uid, forKey: "USER_KEY_UID")
+//                          UserDefaults.standard.synchronize()
                     }
-                    let randomInt = Int.random(in: 0...17)
-                    self.pseudoCurrentUser = pseudo
-                    self.avatar = K.avatarImages[randomInt]
-                    self.createUserInfo(pseudoDefault: self.pseudoCurrentUser, avatarDefault: self.avatar)
                     self.pseudoTextField.text = ""
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
-                    self.performSegue(withIdentifier: K.segueSignUpToHome, sender: self)
+                    
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: K.Segue.SignUpVC.segueSignUpToHome, sender: self)
+                    }
                     print("user sign up !")
                 }
             }
-
         }
     }
     
@@ -119,12 +115,11 @@ class SignUpViewController: UIViewController {
         
         let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
             
-            self.performSegue(withIdentifier: K.segueSignUpToLogIn, sender: self)
+            self.performSegue(withIdentifier: K.Segue.SignUpVC.segueSignUpToLogIn, sender: self)
             
         }
         
         goToLogInLabel.setLinkForSubstring("Log In", withLinkHandler: handler)
-        
     }
     
     
@@ -137,44 +132,6 @@ class SignUpViewController: UIViewController {
     
     @objc func dismissAlert() {
         self.dismiss(animated: true, completion: nil)
-    }
-
-    func createUserInfo(pseudoDefault: String, avatarDefault: String) {
-        let calendar: [Bool] = Array(repeating: false, count: 72)
-        
-        // Add a new document in Firestore for new user
-        self.db.collection(K.FStore.Users.collectionUsersName).document(self.userID).setData([
-            K.FStore.Users.maxField: [Double](),
-            K.FStore.Users.followedUsersField: [String:String](),
-            K.FStore.Users.calendarField:calendar,
-            K.FStore.Users.pseudoField: pseudoDefault,
-            K.FStore.Users.nameSearchField: pseudoDefault.lowercased(),
-            K.FStore.Users.avatarField: avatarDefault
-        ]) { error in
-            if let err = error {
-                print("Error adding document: \(err)")
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueSignUpToHome {
-            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-
-            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
-            calendarView.currentUserID = userID
-
-            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
-            activityView.currentUserID = userID
-
-            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
-            podiumView.currentUserID = userID
-
-            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
-            profileView.currentUserID = userID
-            profileView.pseudoCurrentUser = pseudoCurrentUser
-            profileView.avatarCurrentUser = avatar
-        }
     }
     
 

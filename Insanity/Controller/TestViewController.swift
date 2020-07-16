@@ -8,12 +8,8 @@
 
 import UIKit
 import FirebaseAuth
-import Firebase
 
 class TestViewController: UIViewController {
-    
-    let db = Firestore.firestore()
-    var currentUserId = ""
     
     var workoutDate = Date()
     var listWorkoutTest = [Double]()
@@ -63,20 +59,12 @@ class TestViewController: UIViewController {
             for textField in textFieldArray {
                 listWorkoutTest.append(Double(textField.text!)!)
             }
+            
             // Add a new document in Firestore for currentUser
-            self.db.collection(K.FStore.WorkoutTests.collectionTestName).addDocument(data: [
-                K.FStore.WorkoutTests.idField: self.currentUserId,
-                K.FStore.WorkoutTests.testField: self.listWorkoutTest,
-                K.FStore.WorkoutTests.dateField: Timestamp(date: workoutDate)
-            ]) { error in
-                if let err = error {
-                    print("Error adding document: \(err)")
-                } else {
-                    print("Document added!")
-                    self.majMax(listTest: self.listWorkoutTest)
-                    self.listWorkoutTest = [Double]()
-                }
-            }
+            DataBrain.sharedInstance.saveNewWorkout(testResults: self.listWorkoutTest, workoutDate: self.workoutDate)
+            DataBrain.sharedInstance.majMax(listTest: self.listWorkoutTest)
+            self.listWorkoutTest = [Double]()
+            
             // dismiss view
             self.navigationController?.popViewController(animated: true)
    
@@ -108,51 +96,7 @@ class TestViewController: UIViewController {
         }
     }
     
-    func majMax(listTest: [Double]) {
-        var newMaxValues: [Double] = []
-        
-        let userRef = db.collection(K.FStore.Users.collectionUsersName).document(currentUserId)
-        db.runTransaction({ (transaction, errorPointer) -> Any? in
-            let userDocument: DocumentSnapshot
-            do {
-             try userDocument = transaction.getDocument(userRef)
-            } catch let fetchError as NSError {
-                errorPointer?.pointee = fetchError
-                return nil
-            }
-            
-            guard let oldMaxValues = userDocument.data()?[K.FStore.Users.maxField] as? [Double] else {
-                let error = NSError(
-                    domain: "AppErrorDomain",
-                    code: -1,
-                    userInfo: [
-                        NSLocalizedDescriptionKey: "Unable to retrieve maxValue from snapshot \(userDocument)"
-                    ]
-                )
-                errorPointer?.pointee = error
-                return nil
-            }
-            
-            // if it is the first time the user do the test
-            if oldMaxValues.isEmpty {
-                transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
-                return nil
-            } else {
-                for index in 0..<oldMaxValues.count {
-                    newMaxValues.append(max(listTest[index], oldMaxValues[index]))
-                }
-                transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
-                return nil
-            }
-            
-        }) { (object, error) in
-            if let err = error {
-                print("Transaction failed: \(err)")
-            } else {
-                print("Transaction successfully committed!")
-            }
-        }
-    }
+
     
 }
 

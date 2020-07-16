@@ -157,6 +157,7 @@
 				DB97C55624693C44008348E1 /* LoginViewController.swift */,
 				DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */,
 				DB5469762496B94F0007AC71 /* ResetViewController.swift */,
+				DBF15F6A24ACDFFE004EF1D6 /* CalendarViewController.swift */,
 				DB989B3A2452F740009F2C6F /* ProgressViewController.swift */,
 				DB989B382452F730009F2C6F /* TestViewController.swift */,
 				DB4454F8245B186D008D4398 /* PodiumViewController.swift */,
@@ -164,7 +165,6 @@
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */,
 				DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */,
-				DBF15F6A24ACDFFE004EF1D6 /* CalendarViewController.swift */,
 				DBF15F6F24B2F2A4004EF1D6 /* FollowersTableViewController.swift */,
 			);
 			path = Controller;

@@ -8,13 +8,9 @@
 
 import UIKit
 import FirebaseAuth
-import Firebase
 import FRHyperLabel
 
 class LoginViewController: UIViewController {
-
-    var userID = ""
-    let db = Firestore.firestore()
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -42,12 +38,10 @@ class LoginViewController: UIViewController {
         
         let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
             
-            self.performSegue(withIdentifier: K.segueLogInToSignUp, sender: self)
-            
+            self.performSegue(withIdentifier: K.Segue.LoginVC.segueLogInToSignUp, sender: self)
         }
         
         goToSignUpLabel.setLinkForSubstring("Sign Up", withLinkHandler: handler)
-        
     }
     
     @IBAction func loginPressed(_ sender: UIButton) {
@@ -68,16 +62,20 @@ class LoginViewController: UIViewController {
                         return
                     }
 
-                  
                     if let uid = dataResult?.user.uid {
-                        self.userID = uid
-                        // keep UID for avoid login again after closing the app
-                        UserDefaults.standard.set(uid, forKey: "USER_KEY_UID")
-                        UserDefaults.standard.synchronize()
+//                        // keep UID for avoid login again after closing the app
+//                        UserDefaults.standard.set(uid, forKey: "USER_KEY_UID")
+//                        UserDefaults.standard.synchronize()
+                        
+                        DataBrain.sharedInstance.currentUserID = uid
+                        DataBrain.sharedInstance.getCurrentUser()
+                        
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: K.Segue.LoginVC.segueLoginToHome, sender: self)
+                        }
                     }
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
-                    self.performSegue(withIdentifier: K.segueLoginToHome, sender: self)
                     print("user logged in !")
                 }
             }
@@ -96,24 +94,9 @@ class LoginViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueLoginToHome {
-            let tabCtrl: UITabBarController = segue.destination as! UITabBarController
-   
-            let calendarView = tabCtrl.viewControllers![0] as! CalendarViewController
-            calendarView.currentUserID = userID
-            
-            let activityView = tabCtrl.viewControllers![1] as! ProgressViewController
-            activityView.currentUserID = userID
-            
-            
-            let podiumView = tabCtrl.viewControllers![2] as! PodiumViewController
-            podiumView.currentUserID = userID
-            
-            let profileView = tabCtrl.viewControllers![3] as! ProfileViewController
-            profileView.currentUserID = userID 
-        }
+    
+    @IBAction func forgotPasswordPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: K.Segue.LoginVC.segueGoToForgotPassword, sender: self)
     }
     
     @IBAction func closePressed(_ sender: UIButton) {

@@ -7,20 +7,46 @@
 //
 
 struct K {
+    
     static let appName = "INSANITY"
+
+    
+    struct Segue {
+        struct WelcomeVC {
+            static let segueWelcomeToSignUp = "welcomeToSignUP"
+            static let segueWelcomeToLogIn = "welcomeToLogIn"
+            static let segueWelcomeToHome = "welcomeToHomeloggedIn"
+        }
+        struct LoginVC {
+            static let segueLoginToHome = "loginToHome"
+            static let segueLogInToSignUp = "logInToSignUp"
+            static let segueGoToForgotPassword = "goToForgotPassword"
+        }
+        struct SignUpVC {
+            static let segueSignUpToHome = "signUpToHome"
+            static let segueSignUpToLogIn = "signUpToLogIn"
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
     static let segueToProgress = "goToProgress"
-    static let segueLoginToHome = "loginToHome"
-    static let segueSignUpToHome = "signUpToHome"
+    
+    
     static let segueResultsToTest = "goToTest"
     static let segueHomeToAccount = "goToAccount"
-    static let segueWelcomeToHome = "welcomeToHomeloggedIn"
+    
     static let segueToReset = "goToReset"
     static let segueGoToAddFriends = "goToAddFriends"
     static let segueGoToFriendActivity = "goToFriendActivity"
     static let segueGoToFollowers = "goToFollowers"
     static let segueResetGoBackToLogIn = "resetGoBackToLogIn"
-    static let segueSignUpToLogIn = "signUpToLogIn"
-    static let segueLogInToSignUp = "logInToSignUp"
+    
+    
     
     static let avatarImages = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7", "avatar8", "avatar9", "avatar10", "avatar11", "avatar12", "avatar13", "avatar14", "avatar15", "avatar16", "avatar17", "avatar18"]
     static let reuseAvatarIdentifier = "reuseAvatarCell"

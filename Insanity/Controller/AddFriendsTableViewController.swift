@@ -33,6 +33,8 @@ class AddFriendsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        friendsIDArray = DataBrain.sharedInstance.dataFollowedUsers
+        
         searchBar.delegate = self
         self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
         self.tableView.tableFooterView = UIView()
@@ -118,6 +120,9 @@ class AddFriendsTableViewController: UITableViewController {
                 print("Document successfully updated")
             }
         }
+        
+        DataBrain.sharedInstance.dataFollowedUsers = friendsIDArray
+        
         self.addFriendDelegate?.sendFriendsBackToProfileVC(friendsArray: dataUsers, friendsIDArray: friendsIDArray)
         
     }

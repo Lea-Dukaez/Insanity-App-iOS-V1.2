@@ -12,8 +12,6 @@ import Firebase
 
 class ProfileViewController: UIViewController {
         
-    var pseudoCurrentUser : String = ""
-    var avatarCurrentUser : String = ""
     var currentUserID = ""
     
     var friendPseudo = ""
@@ -22,17 +20,6 @@ class ProfileViewController: UIViewController {
     
     var dataUsers: [User] = []
     var followerUsers: [User] = []
-    
-    var dataFollowedUsers: [String:String] = [:] {
-        didSet {
-
-            let nbFollowing = self.dataFollowedUsers.allKeys(forValue: K.FStore.Relationships.statusFollowing)
-
-            self.followingButton.setTitle("\(nbFollowing.count)\nFollowing", for: .normal)
-            
-            loadUsers()
-        }
-    }
     
     let db = Firestore.firestore()
     
@@ -48,6 +35,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ProfileViewController viewDidLoad")
+        
         self.navigationItem.setHidesBackButton(true, animated: true);
 
         followingButton.titleLabel?.numberOfLines = 0
@@ -63,7 +52,13 @@ class ProfileViewController: UIViewController {
         logOutButton.layer.cornerRadius = 3
         logOutButton.layer.borderColor = UIColor.label.cgColor
         
-        getCurrentUser()
+        currentUserID = DataBrain.sharedInstance.currentUserID
+        
+        let nbFollowing = DataBrain.sharedInstance.dataFollowedUsers.allKeys(forValue: K.FStore.Relationships.statusFollowing)
+        followingButton.setTitle("\(nbFollowing.count)\nFollowing", for: .normal)
+        
+        loadUsers()
+
         getFollower()
         
         self.tableView.dataSource = self
@@ -74,38 +69,11 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.currentUserLabel.text = self.pseudoCurrentUser
-        self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
+        self.currentUserLabel.text = DataBrain.sharedInstance.pseudoCurrentUser
+        self.currentUserImage.image = UIImage(named: DataBrain.sharedInstance.avatarCurrentUser)
     }
-    
-    
     
     // MARK: - Section DataBase Interactions
-    
-    func getCurrentUser() {
-        self.db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
-            .getDocument { (document, error) in
-            if let doc = document {
-                if let data = doc.data() {
-                    if let pseudo = data[K.FStore.Users.pseudoField] as? String,
-                        let avatar = data[K.FStore.Users.avatarField] as? String,
-                        let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String] {
-                        
-                        self.dataFollowedUsers = followedUsers
-                        self.pseudoCurrentUser = pseudo
-                        self.avatarCurrentUser = avatar
-                        
-                        DispatchQueue.main.async {
-                            self.currentUserLabel.text = self.pseudoCurrentUser
-                            self.currentUserImage.image = UIImage(named: self.avatarCurrentUser)
-                            
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
     
     func loadUsers() {
         db.collection(K.FStore.Users.collectionUsersName)
@@ -119,7 +87,7 @@ class ProfileViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
                         // get Followed Users
-                        if self.dataFollowedUsers.keys.contains(doc.documentID) {
+                        if DataBrain.sharedInstance.dataFollowedUsers.keys.contains(doc.documentID) {
                             
                             let data = doc.data()
                             
@@ -127,7 +95,7 @@ class ProfileViewController: UIViewController {
                                 let avatar = data[K.FStore.Users.avatarField] as? String,
                                 let nameSearch = data[K.FStore.Users.nameSearchField] as? String {
 
-                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID, status: self.dataFollowedUsers[doc.documentID]!)
+                                let newUser = User(pseudo: pseudo, nameSearch: nameSearch, avatar: avatar, id: doc.documentID, status: DataBrain.sharedInstance.dataFollowedUsers[doc.documentID]!)
                                 self.dataUsers.append(newUser)
 
                                 DispatchQueue.main.async {
@@ -203,10 +171,14 @@ class ProfileViewController: UIViewController {
         }
         if Auth.auth().currentUser == nil {
             // Remove User Session from device
+            DataBrain.sharedInstance.isLoggedIn = false
             UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
             UserDefaults.standard.synchronize()
-        print("user logged out")
-        self.navigationController!.popToRootViewController(animated: true)
+            print("user logged out")
+            DispatchQueue.main.async {
+                self.navigationController!.popToRootViewController(animated: true)
+            }
+        
         }
     }
     
@@ -219,19 +191,12 @@ class ProfileViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueHomeToAccount {
-            let accountView = segue.destination as! AccountViewController
-            accountView.pseudo = pseudoCurrentUser //dataBrain.pseudoCurrentUser
-            accountView.avatarImage = avatarCurrentUser // dataBrain.avatarCurrentUser
-            accountView.userID = currentUserID //dataBrain.currentUserID
-            accountView.accountDelegate = self
-        }
-        else if segue.identifier == K.segueGoToAddFriends {
+        if segue.identifier == K.segueGoToAddFriends {
             let addFriendsView = segue.destination as! AddFriendsTableViewController
             addFriendsView.currentUserID = currentUserID // dataBrain.currentUserID
             addFriendsView.dataUsers = dataUsers
             addFriendsView.addFriendDelegate = self
-            addFriendsView.friendsIDArray = dataFollowedUsers
+//            addFriendsView.friendsIDArray = dataFollowedUsers
         }
         else if segue.identifier == K.segueGoToFriendActivity {
             let friendActivityView = segue.destination as! FriendActivityViewController
@@ -296,17 +261,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Section Delegates - Protocoles
 
-extension ProfileViewController: accountViewDelegate {
-    func sendDataBackToProfileVC(pseudo: String, avatar: String) {
-        pseudoCurrentUser = pseudo
-        avatarCurrentUser = avatar
-    }
-}
-
 extension ProfileViewController: addFriendViewDelegate {
     func sendFriendsBackToProfileVC(friendsArray: [User], friendsIDArray : [String:String]) {
         dataUsers = friendsArray
-        dataFollowedUsers = friendsIDArray
+//        dataFollowedUsers = friendsIDArray
         
         self.tableView.reloadData()
     }

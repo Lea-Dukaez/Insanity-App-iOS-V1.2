@@ -16,14 +16,6 @@ class ProgressViewController: UIViewController {
     var dataWorkoutTest: [Workout] = []
     
     var chartBrain: ChartBrain?
-    var dataBrain = DataBrain()
-    
-    var currentUserID: String = "" {
-        didSet {
-            dataBrain.currentUserID = self.currentUserID
-            dataBrain.recupUserMax(uid: currentUserID)
-        }
-    }
     
     var firstValues: [Double] = []
 
@@ -37,6 +29,8 @@ class ProgressViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        DataBrain.sharedInstance.recupUserMax()
 
         chartBrain = ChartBrain(barChart: barChart)
         
@@ -68,7 +62,7 @@ class ProgressViewController: UIViewController {
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
-        let maxVal = dataBrain.currentUserMaxValues[workOutSelected]
+        let maxVal = DataBrain.sharedInstance.currentUserMaxValues[workOutSelected] // FATAL ERROR INDEX OUT OF RANGE ??
         let first = firstValues[workOutSelected]
         let percent: Double = ((maxVal - first) / first) * 100
         let percentString = String(format: "%.0f", percent)
@@ -85,8 +79,8 @@ class ProgressViewController: UIViewController {
         dataWorkoutTest = []
 
         db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
-            .whereField(K.FStore.WorkoutTests.idField, isEqualTo: self.currentUserID)
-            .getDocuments { (querySnapshot, error) in 
+            .whereField(K.FStore.WorkoutTests.idField, isEqualTo: DataBrain.sharedInstance.currentUserID)
+            .addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
             } else {
@@ -146,18 +140,10 @@ class ProgressViewController: UIViewController {
         return dateString
     }
     
-    
     // MARK: - Add Result Section
     
     @IBAction func addTestPressed(_ sender: UIButton) {
         performSegue(withIdentifier: K.segueResultsToTest, sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueResultsToTest {
-            let testView = segue.destination as! TestViewController
-            testView.currentUserId = currentUserID
-        }
     }
     
 }
