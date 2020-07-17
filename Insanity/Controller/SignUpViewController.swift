@@ -57,7 +57,8 @@ class SignUpViewController: UIViewController {
                         DataBrain.sharedInstance.pseudoCurrentUser = pseudo
                         DataBrain.sharedInstance.avatarCurrentUser = K.avatarImages[randomInt]
                         DataBrain.sharedInstance.dataFollowedUsers = [String:String]()
-                        
+                        DataBrain.sharedInstance.currentUserMaxValues = [Double]()
+
                         DataBrain.sharedInstance.createUserInfo(pseudoDefault: pseudo, avatarDefault: K.avatarImages[randomInt])
                         
 //                         // keep UID for avoid login again after closing the app

@@ -9,6 +9,10 @@
 import Foundation
 import Firebase
 
+protocol dataBrainClassDelegate {
+    func getUserWorkoutInfo()
+}
+
 class DataBrain {
     static let sharedInstance = DataBrain()
 
@@ -23,7 +27,13 @@ class DataBrain {
     
     var dataPodium: [PodiumCompetitor] = []
     var currentUserMaxValues: [Double] = []
-    var userMaxValues: [Double] = []
+    
+    var dataBrainDelegate: dataBrainClassDelegate?
+    var userMaxValues: [Double] = [] {
+        didSet{
+            self.dataBrainDelegate?.getUserWorkoutInfo()
+        }
+    }
 
 
     func getCurrentUser() {

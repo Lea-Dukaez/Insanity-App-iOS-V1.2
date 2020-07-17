@@ -252,6 +252,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             friendAvatar = following[indexPath.row].avatar
             friendPseudo = following[indexPath.row].pseudo
             friendID = following[indexPath.row].id
+            DataBrain.sharedInstance.recupUserMax(uid: friendID)
             performSegue(withIdentifier: K.Segue.ProfileVC.segueGoToFriendActivity, sender: self)
         }
     }

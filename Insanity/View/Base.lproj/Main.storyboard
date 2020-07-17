@@ -353,7 +353,7 @@
             <objects>
                 <tableViewController id="jy5-ZN-rMQ" customClass="FollowersTableViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JBu-0e-YTP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <connections>
@@ -509,7 +509,7 @@
             <objects>
                 <viewController id="kQS-JR-DS4" customClass="NewPasswordViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nbe-dv-HaV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mEl-za-iP0">
@@ -753,7 +753,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ProfileViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yr2-de-P96" userLabel="UserView">
@@ -929,7 +929,7 @@
             <objects>
                 <tableViewController id="hxp-Dq-Kx6" customClass="AddFriendsTableViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="E3W-gE-Uro">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" text="" id="hgC-6K-cov">
@@ -956,14 +956,9 @@
             <objects>
                 <viewController id="X7c-Os-dG6" customClass="FriendActivityViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rVg-0N-3HU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data recorded yet." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vel-Ra-waj">
-                                <rect key="frame" x="0.0" y="314.5" width="375" height="18"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="w9z-Vp-XkK">
                                 <rect key="frame" x="10" y="100" width="355" height="537"/>
                                 <subviews>
@@ -1082,14 +1077,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="w9z-Vp-XkK" secondAttribute="bottom" constant="10" id="1lH-ZO-FV1"/>
-                            <constraint firstItem="Ncg-Ja-G4e" firstAttribute="trailing" secondItem="vel-Ra-waj" secondAttribute="trailing" id="4G8-Ng-iad"/>
                             <constraint firstItem="w9z-Vp-XkK" firstAttribute="top" secondItem="7zs-As-9bz" secondAttribute="bottom" constant="20" id="6Dc-1U-F7P"/>
                             <constraint firstAttribute="trailing" secondItem="w9z-Vp-XkK" secondAttribute="trailing" constant="10" id="9j9-fB-GC6"/>
                             <constraint firstItem="7zs-As-9bz" firstAttribute="top" secondItem="Ncg-Ja-G4e" secondAttribute="top" id="NMg-lD-lF0"/>
                             <constraint firstItem="Ncg-Ja-G4e" firstAttribute="trailing" secondItem="7zs-As-9bz" secondAttribute="trailing" id="QCu-Jb-aOB"/>
                             <constraint firstItem="w9z-Vp-XkK" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" constant="10" id="e5W-rb-JFB"/>
-                            <constraint firstItem="vel-Ra-waj" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" id="n5I-9h-Rwz"/>
-                            <constraint firstItem="vel-Ra-waj" firstAttribute="centerY" secondItem="rVg-0N-3HU" secondAttribute="centerY" id="nXx-IA-I1t"/>
                             <constraint firstItem="7zs-As-9bz" firstAttribute="leading" secondItem="rVg-0N-3HU" secondAttribute="leading" id="rOA-7l-SDI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ncg-Ja-G4e"/>
@@ -1099,7 +1091,6 @@
                         <outlet property="barChart" destination="PhR-sh-ifO" id="Pot-hv-DzG"/>
                         <outlet property="friendImage" destination="o9A-WG-5Pr" id="bEy-A1-6Rg"/>
                         <outlet property="friendPseudoLabel" destination="jn8-jO-pVe" id="bjR-cG-oxW"/>
-                        <outlet property="noDataLabel" destination="vel-Ra-waj" id="syr-ts-ZzC"/>
                         <outlet property="percentLabel" destination="RP6-50-vQF" id="Opg-N6-FhA"/>
                         <outlet property="progressLabel" destination="ZbO-V7-f8x" id="2hu-6r-iW3"/>
                         <outlet property="segment1" destination="tsW-b8-Z5f" id="Cul-rn-diw"/>
@@ -1115,14 +1106,9 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="0R8-ZT-1QA" customClass="ProgressViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gak-lA-93W">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data recorded.  Start exercise and come back !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRV-1k-e7D">
-                                <rect key="frame" x="0.0" y="296.5" width="375" height="54"/>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53S-76-BCi">
                                 <rect key="frame" x="40" y="528" width="295" height="40"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1229,13 +1215,9 @@
                             <constraint firstItem="GpL-i3-Fmc" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="30" id="Acn-TW-Dz4"/>
                             <constraint firstItem="GpL-i3-Fmc" firstAttribute="leading" secondItem="Gak-lA-93W" secondAttribute="leading" constant="10" id="OHb-iM-40X"/>
                             <constraint firstItem="53S-76-BCi" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="40" id="PES-Zi-6mx"/>
-                            <constraint firstItem="VRV-1k-e7D" firstAttribute="centerX" secondItem="Gak-lA-93W" secondAttribute="centerX" id="Thd-78-wqz"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="53S-76-BCi" secondAttribute="bottom" constant="30" id="Ump-Na-jxT"/>
-                            <constraint firstAttribute="trailing" secondItem="VRV-1k-e7D" secondAttribute="trailing" id="Ytj-ou-Spd"/>
-                            <constraint firstItem="VRV-1k-e7D" firstAttribute="centerY" secondItem="Gak-lA-93W" secondAttribute="centerY" id="bJm-KP-Dhh"/>
                             <constraint firstItem="53S-76-BCi" firstAttribute="top" secondItem="GpL-i3-Fmc" secondAttribute="bottom" constant="20" id="nUm-z9-f7g"/>
                             <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="53S-76-BCi" secondAttribute="trailing" constant="40" id="qJA-Lb-ED6"/>
-                            <constraint firstItem="VRV-1k-e7D" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="yWi-yA-A6B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="glq-rp-bN8"/>
                     </view>
@@ -1244,7 +1226,6 @@
                     <connections>
                         <outlet property="addTestButton" destination="53S-76-BCi" id="Pxi-pN-ZAt"/>
                         <outlet property="barChart" destination="Y54-26-QBy" id="tTQ-sp-4mI"/>
-                        <outlet property="msgLabel" destination="VRV-1k-e7D" id="d1C-xX-zKM"/>
                         <outlet property="percentLabel" destination="Qut-mV-zlW" id="0Q2-Xk-B9s"/>
                         <outlet property="progressLabel" destination="nMV-dd-o7J" id="VWF-L0-pEY"/>
                         <outlet property="segment1" destination="STN-OI-1Mi" id="jyF-LO-bep"/>
@@ -1514,7 +1495,7 @@
             <objects>
                 <viewController id="22Z-vv-aaw" customClass="PodiumViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IAs-YL-ktW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="CzL-6x-8XD">
@@ -1813,7 +1794,7 @@
             <objects>
                 <viewController id="Gqy-es-NxO" customClass="CalendarViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b7w-XM-7cF">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="95H-eg-uaf">

@@ -13,7 +13,6 @@ import Charts
 class ProgressViewController: UIViewController {
     
     let db = Firestore.firestore()
-    var dataWorkoutTest: [Workout] = []
     
     var chartBrain: ChartBrain?
     
@@ -21,7 +20,6 @@ class ProgressViewController: UIViewController {
 
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var percentLabel: UILabel!
-    @IBOutlet weak var msgLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
     @IBOutlet weak var segment1: UISegmentedControl!
     @IBOutlet weak var segment2: UISegmentedControl!
@@ -31,6 +29,7 @@ class ProgressViewController: UIViewController {
         super.viewDidLoad()
 
         chartBrain = ChartBrain(barChart: barChart)
+        chartBrain?.barChart.noDataText = ""
         
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
@@ -41,7 +40,14 @@ class ProgressViewController: UIViewController {
         segment2.selectedSegmentIndex = -1
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 
-        loadWorkoutData()
+        if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
+            print("no data recorded")
+            progressLabel.text = "Let's get started with your first fit test."
+            percentLabel.text = "Go!"
+        } else {
+            loadWorkoutData()
+        }
+        
     }
     
     
@@ -56,7 +62,13 @@ class ProgressViewController: UIViewController {
         }
 
         chartBrain?.barChartUpdate(workOutSelected: index)
-        updateProgressForWorkout(workOutSelected: index)
+        
+        if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
+            print("no data recorded, so no progression")
+        } else {
+            updateProgressForWorkout(workOutSelected: index)
+        }
+        
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
@@ -66,67 +78,59 @@ class ProgressViewController: UIViewController {
         let percent: Double = ((maxVal - first) / first) * 100
         let percentString = String(format: "%.0f", percent)
         
-        let text = "Best progression for \(K.workout.workoutMove[workOutSelected]) since your first fit test"
+        var percentText = ""
+        var text = ""
         
-        percentLabel.text = "+"+percentString+"%"
+        if self.chartBrain?.allWorkOutResults.count == 1 {
+            print("only one test")
+            percentText = "Keep Focus!"
+            text = "Keep going and you will progress for your next fit test !"
+        } else {
+            percentText = "+"+percentString+"%"
+            text = "Best progression for \(K.workout.workoutMove[workOutSelected]) since your first fit test"
+        }
+
+        percentLabel.text = percentText
         progressLabel.text = text
     }
     
     // MARK: - Section DataBase Interactions
 
     func loadWorkoutData() {
-        dataWorkoutTest = []
-
         db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
             .whereField(K.FStore.WorkoutTests.idField, isEqualTo: DataBrain.sharedInstance.currentUserID)
             .addSnapshotListener { (querySnapshot, error) in
             if let err = error {
                 print("Error getting documents: \(err)")
             } else {
-                if querySnapshot!.isEmpty {
-                    self.showMsg()
-                } else {
-                    self.dismissMsg()
-                    // documents exist in Firestore
-                    if let snapshotDocuments = querySnapshot?.documents {
-                        for (index, doc) in snapshotDocuments.enumerated() {
-                            let data = doc.data()
-                            if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
-                                let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
-                                let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
-                                
-                                // get the first fit test for the progression
-                                if index == 0 {
-                                    self.firstValues = testResult
-                                }
-                                
-                                let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
-                                self.chartBrain?.allWorkOutResults.append(newWorkout)
-                                let workOutDate = self.dateString(timeStampDate: newWorkout.date)
-                                self.chartBrain?.dateLabels.append(workOutDate)
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for (index, doc) in snapshotDocuments.enumerated() {
+                        let data = doc.data()
+                        if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
+                            let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
+                            let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
+                            
+                            // get the first fit test for the progression
+                            if index == 0 {
+                                self.firstValues = testResult
+                            }
+                            
+                            let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
+                            self.chartBrain?.allWorkOutResults.append(newWorkout)
+                            let workOutDate = self.dateString(timeStampDate: newWorkout.date)
+                            self.chartBrain?.dateLabels.append(workOutDate)
 
-                                // when data is collected, generate barChart
-                                DispatchQueue.main.async {
-                                    let index = self.segment1.selectedSegmentIndex
-                                    self.updateProgressForWorkout(workOutSelected: index)
-                                    self.chartBrain?.barChartUpdate(workOutSelected: index)
-                                }
+                            // when data is collected, generate barChart
+                            DispatchQueue.main.async {
+                                let index = self.segment1.selectedSegmentIndex
+                                self.updateProgressForWorkout(workOutSelected: index)
+                                self.chartBrain?.barChartUpdate(workOutSelected: index)
                             }
                         }
                     }
                 }
             }
         }
-    }
-    
-    
-    // Func for Alert if No data recorder
-    func showMsg() {
-        msgLabel.textColor = .label
-    }
-    
-    func dismissMsg() {
-        msgLabel.textColor = .clear
     }
     
     // Func to format the Date of workout Results

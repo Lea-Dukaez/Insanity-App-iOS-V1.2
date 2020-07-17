@@ -63,18 +63,28 @@ class PodiumViewController: UIViewController {
     }
     
 
-    func updatePodium(sportRow: Int) {
-        // by default, set the comment as if out of Podium
+    func updatePodium(sportRow: Int) {        
         let currentUserIndex = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].userID == currentUserID}
-
-        var commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[currentUserIndex[0]].max[sportRow])
-        var commentLabel = K.podium.notOnPodium
+        
+        var commentScore = ""
+        var commentLabel = ""
+        
+        if DataBrain.sharedInstance.dataPodium[currentUserIndex[0]].max.count == 0 {
+            // case no score recorded for current user
+            commentScore = ""
+            commentLabel = "Let's get started with your first fit test to compare yourself with your followed friends."
+        } else {
+            // case by default, current user out of Podium
+            commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[currentUserIndex[0]].max[sportRow]) // out of range
+            commentLabel = K.podium.notOnPodium
+        }
+        
    
         let dataPodiumFiltered = DataBrain.sharedInstance.dataPodium.filter { $0.max.isEmpty == false }
 
         switch dataPodiumFiltered.count {
         case 1:
-            // case only 1 array Max not empty => Data for 1 user => The Current User
+            // case only 1 array Max not empty => Data for 1 user
             let index = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == dataPodiumFiltered[0].max } // return array with 1 element
             topOneImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[0]].avatar)
             topOneLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[0]].max[sportRow])
