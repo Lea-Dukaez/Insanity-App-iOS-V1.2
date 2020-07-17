@@ -30,8 +30,6 @@ class ProgressViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DataBrain.sharedInstance.recupUserMax()
-
         chartBrain = ChartBrain(barChart: barChart)
         
         addTestButton.backgroundColor = .clear
@@ -62,7 +60,8 @@ class ProgressViewController: UIViewController {
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
-        let maxVal = DataBrain.sharedInstance.currentUserMaxValues[workOutSelected] // FATAL ERROR INDEX OUT OF RANGE ??
+
+        let maxVal = DataBrain.sharedInstance.currentUserMaxValues[workOutSelected]
         let first = firstValues[workOutSelected]
         let percent: Double = ((maxVal - first) / first) * 100
         let percentString = String(format: "%.0f", percent)
@@ -143,7 +142,7 @@ class ProgressViewController: UIViewController {
     // MARK: - Add Result Section
     
     @IBAction func addTestPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueResultsToTest, sender: self)
+        performSegue(withIdentifier: K.Segue.segueResultsToTest , sender: self)
     }
     
 }

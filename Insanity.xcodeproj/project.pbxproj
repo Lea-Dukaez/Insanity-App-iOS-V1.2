@@ -10,6 +10,7 @@
 		0F764AF46A0531FF3F017AC4 /* Pods_Insanity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD0E847B193FD1255230848 /* Pods_Insanity.framework */; };
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
 		DB1F3E812499084C00F76EE1 /* AddFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */; };
+		DB3EF6F724C19407003828B6 /* InfosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */; };
 		DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4454F8245B186D008D4398 /* PodiumViewController.swift */; };
 		DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */; };
 		DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469762496B94F0007AC71 /* ResetViewController.swift */; };
@@ -51,6 +52,7 @@
 		775272C35787601C39137079 /* Pods-Insanity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.debug.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.debug.xcconfig"; sourceTree = "<group>"; };
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
 		DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsTableViewController.swift; sourceTree = "<group>"; };
+		DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfosTableViewController.swift; sourceTree = "<group>"; };
 		DB4454F8245B186D008D4398 /* PodiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumViewController.swift; sourceTree = "<group>"; };
 		DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		DB5469762496B94F0007AC71 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
@@ -162,10 +164,11 @@
 				DB989B382452F730009F2C6F /* TestViewController.swift */,
 				DB4454F8245B186D008D4398 /* PodiumViewController.swift */,
 				DBD793292452265D009358F8 /* ProfileViewController.swift */,
-				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */,
 				DBCA76E224AA22A5005D1FD2 /* FriendActivityViewController.swift */,
 				DBF15F6F24B2F2A4004EF1D6 /* FollowersTableViewController.swift */,
+				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
+				DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				DB97C55D246AC4D0008348E1 /* AccountViewController.swift in Sources */,
 				DBCA76E324AA22A5005D1FD2 /* FriendActivityViewController.swift in Sources */,
 				DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */,
+				DB3EF6F724C19407003828B6 /* InfosTableViewController.swift in Sources */,
 				DB97C561246BF221008348E1 /* User.swift in Sources */,
 				DB989B342452EE74009F2C6F /* UserCell.swift in Sources */,
 				DB989B3B2452F740009F2C6F /* ProgressViewController.swift in Sources */,

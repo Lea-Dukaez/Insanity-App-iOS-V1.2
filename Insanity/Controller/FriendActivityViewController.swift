@@ -69,8 +69,6 @@ class FriendActivityViewController: UIViewController {
     }
     
     func updateProgressForWorkout(workOutSelected: Int) {
-        print(workOutSelected)
-        print()
         let maxVal = dataBrain.userMaxValues[workOutSelected]
         let first = firstValues[workOutSelected]
         let percent: Double = ((maxVal - first) / first) * 100

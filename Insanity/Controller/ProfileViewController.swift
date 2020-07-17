@@ -158,7 +158,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Section Buttons Action
     
     @IBAction func accountPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueHomeToAccount, sender: self)
+        performSegue(withIdentifier: K.Segue.ProfileVC.segueProfileToSettings, sender: self)
     }
 
 
@@ -172,8 +172,8 @@ class ProfileViewController: UIViewController {
         if Auth.auth().currentUser == nil {
             // Remove User Session from device
             DataBrain.sharedInstance.isLoggedIn = false
-            UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
-            UserDefaults.standard.synchronize()
+//            UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
+//            UserDefaults.standard.synchronize()
             print("user logged out")
             DispatchQueue.main.async {
                 self.navigationController!.popToRootViewController(animated: true)
@@ -183,28 +183,27 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func followerPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueGoToFollowers, sender: self)
+        performSegue(withIdentifier: K.Segue.ProfileVC.segueGoToFollowers, sender: self)
     }
     
     @IBAction func addFriendsPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: K.segueGoToAddFriends, sender: self)
+        performSegue(withIdentifier: K.Segue.ProfileVC.segueGoToAddFriends, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueGoToAddFriends {
+        if segue.identifier == K.Segue.ProfileVC.segueGoToAddFriends {
             let addFriendsView = segue.destination as! AddFriendsTableViewController
-            addFriendsView.currentUserID = currentUserID // dataBrain.currentUserID
+            addFriendsView.currentUserID = currentUserID
             addFriendsView.dataUsers = dataUsers
             addFriendsView.addFriendDelegate = self
-//            addFriendsView.friendsIDArray = dataFollowedUsers
         }
-        else if segue.identifier == K.segueGoToFriendActivity {
+        else if segue.identifier == K.Segue.ProfileVC.segueGoToFriendActivity {
             let friendActivityView = segue.destination as! FriendActivityViewController
             friendActivityView.friendID = friendID
             friendActivityView.friendAvatar = friendAvatar
             friendActivityView.friendPseudo = friendPseudo
         }
-        else if segue.identifier == K.segueGoToFollowers {
+        else if segue.identifier == K.Segue.ProfileVC.segueGoToFollowers {
             let followersView = segue.destination as! FollowersTableViewController
             followersView.followerUsers = followerUsers
             followersView.currentUserID = currentUserID 
@@ -253,7 +252,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             friendAvatar = following[indexPath.row].avatar
             friendPseudo = following[indexPath.row].pseudo
             friendID = following[indexPath.row].id
-            performSegue(withIdentifier: K.segueGoToFriendActivity, sender: self)
+            performSegue(withIdentifier: K.Segue.ProfileVC.segueGoToFriendActivity, sender: self)
         }
     }
     
@@ -264,8 +263,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
 extension ProfileViewController: addFriendViewDelegate {
     func sendFriendsBackToProfileVC(friendsArray: [User], friendsIDArray : [String:String]) {
         dataUsers = friendsArray
-//        dataFollowedUsers = friendsIDArray
-        
         self.tableView.reloadData()
     }
 }

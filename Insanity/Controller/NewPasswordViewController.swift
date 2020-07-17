@@ -38,7 +38,7 @@ class NewPasswordViewController: UIViewController {
                         return
                     }
                     self.userEmail = email
-                    self.performSegue(withIdentifier: K.segueToReset, sender: self)
+                    self.performSegue(withIdentifier: K.Segue.segueToReset, sender: self)
                     self.emailTextField.text = ""
                 }
             }
@@ -46,7 +46,7 @@ class NewPasswordViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == K.segueToReset {
+        if segue.identifier == K.Segue.segueToReset {
             let resetVC = segue.destination as! ResetViewController
             resetVC.userEmail = userEmail
         }
@@ -73,7 +73,7 @@ class NewPasswordViewController: UIViewController {
         
         let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
             
-            self.performSegue(withIdentifier: K.segueResetGoBackToLogIn, sender: self)
+            self.performSegue(withIdentifier: K.Segue.segueResetGoBackToLogIn, sender: self)
             
         }
         

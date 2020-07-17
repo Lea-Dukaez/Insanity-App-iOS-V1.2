@@ -38,10 +38,7 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func infoNavButtonPressed(_ sender: UIBarButtonItem) {
-        // go to table view
-        // cell for Contact => click open mailBox associated with user email ?
-        // cell for Terms and conditions => open new vc ?
-        // cell for Private Policy  => open new vc  ?
+        performSegue(withIdentifier: K.Segue.segueSettingsToInfos, sender: self)
     }
     
     

@@ -19,7 +19,6 @@ class FollowersTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
     override func viewDidLoad() {
-        print(currentUserID)
         super.viewDidLoad()
         self.tableView.register(UINib(nibName: K.userCell.addFriendCellNibName, bundle: nil), forCellReuseIdentifier: K.userCell.addFriendCellIdentifier)
         self.tableView.tableFooterView = UIView()

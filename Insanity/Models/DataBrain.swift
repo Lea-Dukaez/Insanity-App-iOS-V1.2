@@ -34,8 +34,10 @@ class DataBrain {
                 if let data = doc.data() {
                     if let pseudo = data[K.FStore.Users.pseudoField] as? String,
                         let avatar = data[K.FStore.Users.avatarField] as? String,
-                        let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String] {
-
+                        let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String],
+                        let maxValues = data[K.FStore.Users.maxField] as? [Double] {
+                        
+                        self.currentUserMaxValues = maxValues
                         self.dataFollowedUsers = followedUsers
                         self.pseudoCurrentUser = pseudo
                         self.avatarCurrentUser = avatar
@@ -180,6 +182,7 @@ class DataBrain {
     
     func recupUserMax(uid: String? = nil) {
         let userID = uid ?? self.currentUserID
+        
         db.collection(K.FStore.Users.collectionUsersName).document(userID)
             .getDocument { (document, error) in
                 if let err = error {
@@ -194,7 +197,6 @@ class DataBrain {
                                 } else {
                                     self.userMaxValues = maxValues
                                 }
-                                
                             }
                         }
                     }

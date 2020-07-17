@@ -26,25 +26,23 @@ struct K {
             static let segueSignUpToHome = "signUpToHome"
             static let segueSignUpToLogIn = "signUpToLogIn"
         }
-        
-        
-        
+        struct ProfileVC {
+            static let segueProfileToSettings = "ProfileToSettings"
+            static let segueGoToAddFriends = "goToAddFriends"
+            static let segueGoToFriendActivity = "goToFriendActivity"
+            static let segueGoToFollowers = "goToFollowers"
+        }
+        static let segueToProgress = "goToProgress"
+        static let segueSettingsToInfos = "settingsToInfos"
+        static let segueResultsToTest = "goToTest"
+        static let segueToReset = "goToReset"
+        static let segueResetGoBackToLogIn = "resetGoBackToLogIn"
     }
     
     
     
     
-    static let segueToProgress = "goToProgress"
-    
-    
-    static let segueResultsToTest = "goToTest"
-    static let segueHomeToAccount = "goToAccount"
-    
-    static let segueToReset = "goToReset"
-    static let segueGoToAddFriends = "goToAddFriends"
-    static let segueGoToFriendActivity = "goToFriendActivity"
-    static let segueGoToFollowers = "goToFollowers"
-    static let segueResetGoBackToLogIn = "resetGoBackToLogIn"
+
     
     
     

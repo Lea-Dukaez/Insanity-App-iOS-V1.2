@@ -13,14 +13,14 @@ class CalendarViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-        // MARK: - Properties
-//        let db = Firestore.firestore()
-//        var currentUserID = ""
+        let db = Firestore.firestore()
+        var currentUserID = ""
         var newCalendar = [Bool]()
         
         let program = [0:"week", 1:"Fit Test", 2:"Plyo Cardio Circuit", 3:"Cardio Power & Resistance", 4:"Cardio Recovery", 5:"Pure Cardio", 6:"Pure Cardio & Abs", 7:"Core Cardio & Balance", 8:"Fit Test / Max Interval Training", 9:"Max Interval Plyo", 10:"Max Cardio Conditioning", 11:"Max Recovery", 12:"Max Interval Circuit", 13:"Max Cardio Conditioning & Abs", 14:"Fit Test/ Max Interval Circuit",15:"Rest"]
         
         let days = ["","Mon", "Tue", "Wed","Thu", "Fri","Sat","Sun"]
+    
         let weekNb = [8:"Week 1", 16:"Week 2",24:"Week 3",32:"Week 4",40:"Week 5 Recovery",48:"Week 6",56:"Week 7",64:"Week 8",72:"Week 9"]
         
         private let reuseIdentifier = "calendarCell"
@@ -46,48 +46,50 @@ class CalendarViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        currentUserID = DataBrain.sharedInstance.currentUserID
+        
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
         
-//        loadCalendar()
+        loadCalendar()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        updateCalendar()
+        updateCalendar()
     }
 
-//    func loadCalendar() {
-//        db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
-//            .getDocument { (document, error) in
-//               if let err = error {
-//                   print("Error retrieving document: \(err)")
-//                   return
-//               } else {
-//                   if let doc = document, doc.exists {
-//                       if let data = doc.data() {
-//                        if let calendarDoneValue = data[K.FStore.Users.calendarField] as? [Bool] {
-//                            self.newCalendar = calendarDoneValue
-//                            DispatchQueue.main.async {
-//                                self.collectionView.dataSource = self
-//                                self.collectionView.delegate = self
-//                                self.collectionView.reloadData()
-//                            }
-//                       }
-//                   }
-//               }
-//           }
-//       }
-//    }
+    func loadCalendar() {
+        db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
+            .getDocument { (document, error) in
+               if let err = error {
+                   print("Error retrieving document: \(err)")
+                   return
+               } else {
+                   if let doc = document, doc.exists {
+                       if let data = doc.data() {
+                        if let calendarDoneValue = data[K.FStore.Users.calendarField] as? [Bool] {
+                            self.newCalendar = calendarDoneValue
+                            DispatchQueue.main.async {
+                                self.collectionView.dataSource = self
+                                self.collectionView.delegate = self
+                                self.collectionView.reloadData()
+                            }
+                       }
+                   }
+               }
+           }
+       }
+    }
 
-//    func updateCalendar() {
-//        self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
-//            K.FStore.Users.calendarField: newCalendar
-//        ]) { error in
-//            if let err = error {
-//                print("Error adding document: \(err)")
-//            }
-//        }
-//    }
+    func updateCalendar() {
+        self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
+            K.FStore.Users.calendarField: newCalendar
+        ]) { error in
+            if let err = error {
+                print("Error adding document: \(err)")
+            }
+        }
+    }
     
 }
 
@@ -96,7 +98,7 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController:  UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0 // workOutCalendar.count + 8
+        return workOutCalendar.count + 8
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
