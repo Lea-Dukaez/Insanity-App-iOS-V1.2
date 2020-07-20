@@ -7,17 +7,13 @@
 //
 
 import UIKit
+import MessageUI
 
 class InfosTableViewController: UITableViewController {
-    
-    // cell for Contact => click open mailBox associated with user email ?
-    // cell for Terms and conditions => open new vc ?
-    // cell for Private Policy  => open new vc  ?
     
     var infos = ["Contact", "Terms & Conditions"]
     let cellReuseIdentifier = "cell"
 
-    
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
@@ -51,8 +47,33 @@ class InfosTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if self.infos[indexPath.row] == "Terms & Conditions" {
+            performSegue(withIdentifier: K.Segue.segueInfoGoToTerms, sender: self)
+        } else if self.infos[indexPath.row] == "Contact"{
+            self.openEmail()
+        }
 
     }
 
 }
 
+extension InfosTableViewController: MFMailComposeViewControllerDelegate {
+    func openEmail() {
+
+        // Use the iOS Mail app
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        composeVC.setToRecipients(["lea.s.dkz+insanity@gmail.com"])
+        composeVC.setSubject("Feedback")
+        composeVC.setMessageBody("Feature request or bug report?", isHTML: false)
+
+        // Present the view controller modally.
+        self.present(composeVC, animated: true, completion: nil)
+    }
+
+    // MARK: MailComposeViewControllerDelegate
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        // Dismiss the mail compose view controller.
+        controller.dismiss(animated: true, completion: nil)
+    }
+}

@@ -45,6 +45,7 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("CalendarViewController viewDidLoad")
         
         currentUserID = DataBrain.sharedInstance.currentUserID
         
@@ -70,6 +71,7 @@ class CalendarViewController: UIViewController {
                         if let calendarDoneValue = data[K.FStore.Users.calendarField] as? [Bool] {
                             self.newCalendar = calendarDoneValue
                             DispatchQueue.main.async {
+                                print()
                                 self.collectionView.dataSource = self
                                 self.collectionView.delegate = self
                                 self.collectionView.reloadData()
@@ -102,14 +104,11 @@ extension CalendarViewController:  UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("cellForItemAt called")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
 
         switch indexPath.item {
-        case 0:
-            cell.calendarCellLabel.text = days[indexPath.item]
-            cell.calendarCellLabel.textColor = .clear
-            cell.backgroundColor = .clear
-        case 1...7:
+        case 0...7:
             // case first line days of week
             cell.calendarCellLabel.text = days[indexPath.item]
             cell.calendarCellLabel.textColor = .label
@@ -120,11 +119,12 @@ extension CalendarViewController:  UICollectionViewDataSource {
             cell.calendarCellLabel.textColor = .label
             cell.backgroundColor = UIColor(named: "barShadowColor")
         default:
+            
             let index = indexPath.item-8
             let workoutNumber = workOutCalendar[index]//calendarWorkout[index].type //calendar[index]
             cell.calendarCellLabel.text = program[workoutNumber]
             cell.calendarCellLabel.textColor = .label
-            cell.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
+            cell.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground // out of range
         }
         
         return cell

@@ -25,6 +25,7 @@ struct K {
         struct SignUpVC {
             static let segueSignUpToHome = "signUpToHome"
             static let segueSignUpToLogIn = "signUpToLogIn"
+            static let segueSignUpGoToTerms = "signUpGoToTerms"
         }
         struct ProfileVC {
             static let segueProfileToSettings = "ProfileToSettings"
@@ -37,6 +38,7 @@ struct K {
         static let segueResultsToTest = "goToTest"
         static let segueToReset = "goToReset"
         static let segueResetGoBackToLogIn = "resetGoBackToLogIn"
+        static let segueInfoGoToTerms = "infoGoToTerms"
     }
     
     

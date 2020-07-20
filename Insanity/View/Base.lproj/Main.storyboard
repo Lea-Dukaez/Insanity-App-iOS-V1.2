@@ -164,6 +164,7 @@
                         <outlet property="termsOfUseLabel" destination="bDU-nc-0rz" id="CsK-Fd-kCf"/>
                         <segue destination="wzm-WG-hmc" kind="show" identifier="signUpToHome" id="zyE-TI-gkT"/>
                         <segue destination="x3f-LA-dVw" kind="show" identifier="signUpToLogIn" id="nsI-Fd-8xf"/>
+                        <segue destination="Kkp-Ac-fgb" kind="show" identifier="signUpGoToTerms" id="Jdt-kh-3kO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q1e-YT-zVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -343,10 +344,29 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Infos" id="lGX-ww-BNV"/>
+                    <connections>
+                        <segue destination="EbH-3F-CuQ" kind="show" identifier="infoGoToTerms" id="dRO-eG-p2m"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EmV-uV-0fy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5581" y="-2411"/>
+        </scene>
+        <!--Terms View Controller-->
+        <scene sceneID="SoD-xu-DuG">
+            <objects>
+                <viewController id="EbH-3F-CuQ" customClass="TermsViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YBo-Vy-gEh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="b6n-el-kLS"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Dh-Jp-OWz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eAS-P4-BVV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6422" y="-2409"/>
         </scene>
         <!--Followers-->
         <scene sceneID="Kct-jR-cfP">
@@ -372,7 +392,7 @@
             <objects>
                 <viewController id="x3f-LA-dVw" customClass="LoginViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WRq-dV-8ME">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7mT-G6-gYR">
@@ -509,7 +529,7 @@
             <objects>
                 <viewController id="kQS-JR-DS4" customClass="NewPasswordViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nbe-dv-HaV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mEl-za-iP0">
@@ -747,6 +767,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E1Y-hX-wHM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1542" y="1501"/>
+        </scene>
+        <!--Terms From Sign Up View Controller-->
+        <scene sceneID="guq-Ve-wus">
+            <objects>
+                <viewController id="Kkp-Ac-fgb" customClass="TermsFromSignUpViewController" customModule="Insanity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="azB-cG-9OC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="0pO-Ia-QgQ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="URz-jF-AZX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2iG-P0-lek" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2310" y="-783"/>
         </scene>
         <!--Profile-->
         <scene sceneID="tne-QT-ifu">
@@ -1855,8 +1891,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="smS-6T-gca"/>
-        <segue reference="2Td-6F-ctR"/>
+        <segue reference="zyE-TI-gkT"/>
+        <segue reference="nsI-Fd-8xf"/>
         <segue reference="31i-Sc-cy2"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="BrandOrangeColor"/>
@@ -1877,7 +1913,7 @@
         <image name="orangePodium" width="1000" height="1000"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BrandOrangeColor">
-            <color red="0.95300000905990601" green="0.65100002288818359" blue="0.51399999856948853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.95294117647058818" green="0.65098039215686276" blue="0.51372549019607838" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

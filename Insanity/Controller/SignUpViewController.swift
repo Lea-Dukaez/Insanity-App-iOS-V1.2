@@ -95,11 +95,7 @@ class SignUpViewController: UIViewController {
         
         let handler = { (hyperLabel: FRHyperLabel?, substring: String?) -> Void in
             
-            let controller = UIAlertController(title: "Terms Of Use", message: nil, preferredStyle: UIAlertController.Style.alert)
-
-            controller.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
-
-            self.present(controller, animated: true, completion: nil)
+            self.performSegue(withIdentifier: K.Segue.SignUpVC.segueSignUpGoToTerms, sender: self)
         }
 
         termsOfUseLabel.setLinkForSubstring("Terms of Use", withLinkHandler: handler)

@@ -8,9 +8,13 @@
 
 import UIKit
 import FirebaseAuth
+import Firebase
 import FRHyperLabel
 
 class LoginViewController: UIViewController {
+    
+    let db = Firestore.firestore()
+
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -82,6 +86,7 @@ class LoginViewController: UIViewController {
         }
     }
     
+
 
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {

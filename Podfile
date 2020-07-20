@@ -11,6 +11,8 @@ target 'Insanity' do
   pod 'Firebase/Auth'
   # Pod for Cloud Firestore
   pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
+
   
   # Pod for Charts / Graph
   pod 'Charts'

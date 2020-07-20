@@ -11,6 +11,8 @@
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
 		DB1F3E812499084C00F76EE1 /* AddFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */; };
 		DB3EF6F724C19407003828B6 /* InfosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */; };
+		DB3EF71924C46BA7003828B6 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EF71824C46BA7003828B6 /* TermsViewController.swift */; };
+		DB3EF71B24C56F14003828B6 /* TermsFromSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EF71A24C56F14003828B6 /* TermsFromSignUpViewController.swift */; };
 		DB4454F9245B186D008D4398 /* PodiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4454F8245B186D008D4398 /* PodiumViewController.swift */; };
 		DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */; };
 		DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5469762496B94F0007AC71 /* ResetViewController.swift */; };
@@ -53,6 +55,8 @@
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
 		DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsTableViewController.swift; sourceTree = "<group>"; };
 		DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfosTableViewController.swift; sourceTree = "<group>"; };
+		DB3EF71824C46BA7003828B6 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		DB3EF71A24C56F14003828B6 /* TermsFromSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsFromSignUpViewController.swift; sourceTree = "<group>"; };
 		DB4454F8245B186D008D4398 /* PodiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumViewController.swift; sourceTree = "<group>"; };
 		DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordViewController.swift; sourceTree = "<group>"; };
 		DB5469762496B94F0007AC71 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 			children = (
 				DB97C55A246A81FD008348E1 /* WelcomeViewController.swift */,
 				DB97C558246A815C008348E1 /* SignUpViewController.swift */,
+				DB3EF71A24C56F14003828B6 /* TermsFromSignUpViewController.swift */,
 				DB97C55624693C44008348E1 /* LoginViewController.swift */,
 				DB5469742496B5AC0007AC71 /* NewPasswordViewController.swift */,
 				DB5469762496B94F0007AC71 /* ResetViewController.swift */,
@@ -169,6 +174,7 @@
 				DBF15F6F24B2F2A4004EF1D6 /* FollowersTableViewController.swift */,
 				DB97C55C246AC4D0008348E1 /* AccountViewController.swift */,
 				DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */,
+				DB3EF71824C46BA7003828B6 /* TermsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -201,8 +207,8 @@
 				DB989B302452EE34009F2C6F /* View */,
 				DB989B312452EE3D009F2C6F /* Controller */,
 				DBD7933024522661009358F8 /* LaunchScreen.storyboard */,
-				DBD7933324522661009358F8 /* Info.plist */,
 				DBDE22592455B1A500D961E0 /* GoogleService-Info.plist */,
+				DBD7933324522661009358F8 /* Info.plist */,
 				DB989B362452F085009F2C6F /* Constants.swift */,
 			);
 			path = Insanity;
@@ -329,6 +335,7 @@
 			files = (
 				DB989B372452F085009F2C6F /* Constants.swift in Sources */,
 				DBF15F6924AC7A85004EF1D6 /* ColumnFlowLayout.swift in Sources */,
+				DB3EF71B24C56F14003828B6 /* TermsFromSignUpViewController.swift in Sources */,
 				DBF15F6324AB19CB004EF1D6 /* DataBrain.swift in Sources */,
 				DBCA76E124AA1DE9005D1FD2 /* ChartBrain.swift in Sources */,
 				DBD7932A2452265D009358F8 /* ProfileViewController.swift in Sources */,
@@ -342,6 +349,7 @@
 				DB989B3B2452F740009F2C6F /* ProgressViewController.swift in Sources */,
 				DBD793262452265D009358F8 /* AppDelegate.swift in Sources */,
 				DB5469752496B5AC0007AC71 /* NewPasswordViewController.swift in Sources */,
+				DB3EF71924C46BA7003828B6 /* TermsViewController.swift in Sources */,
 				DBA637CF249BADA2008E92CA /* AddFriendCell.swift in Sources */,
 				DB97C55B246A81FD008348E1 /* WelcomeViewController.swift in Sources */,
 				DB5469772496B94F0007AC71 /* ResetViewController.swift in Sources */,

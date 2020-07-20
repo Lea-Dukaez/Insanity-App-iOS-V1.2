@@ -46,7 +46,6 @@ class FriendActivityViewController: UIViewController {
         
         chartBrain = ChartBrain(barChart: barChart)
         chartBrain?.barChart.noDataText = ""
-
         
         segment1.selectedSegmentIndex = 0
         segment2.selectedSegmentIndex = -1
