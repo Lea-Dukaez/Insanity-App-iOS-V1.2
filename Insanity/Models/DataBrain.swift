@@ -9,8 +9,12 @@
 import Foundation
 import Firebase
 
-protocol dataBrainClassDelegate {
+protocol dataBrainUserMaxValuesDelegate {
     func getUserWorkoutInfo()
+}
+
+protocol dataBrainCalendarDelegate {
+    func getCalendar()
 }
 
 class DataBrain {
@@ -25,13 +29,20 @@ class DataBrain {
     var pseudoCurrentUser: String = ""
     var dataFollowedUsers: [String:String] = [:]
     
+    var dataBrainCalendarDelegate: dataBrainCalendarDelegate?
+    var calendarCurrentUser: [Bool] = [] {
+        didSet{
+            self.dataBrainCalendarDelegate?.getCalendar()
+        }
+    }
+    
     var dataPodium: [PodiumCompetitor] = []
     var currentUserMaxValues: [Double] = []
     
-    var dataBrainDelegate: dataBrainClassDelegate?
+    var dataBrainUserMaxValuesDelegate: dataBrainUserMaxValuesDelegate?
     var userMaxValues: [Double] = [] {
         didSet{
-            self.dataBrainDelegate?.getUserWorkoutInfo()
+            self.dataBrainUserMaxValuesDelegate?.getUserWorkoutInfo()
         }
     }
 
@@ -45,12 +56,14 @@ class DataBrain {
                     if let pseudo = data[K.FStore.Users.pseudoField] as? String,
                         let avatar = data[K.FStore.Users.avatarField] as? String,
                         let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String],
+                        let calendar = data[K.FStore.Users.calendarField] as? [Bool],
                         let maxValues = data[K.FStore.Users.maxField] as? [Double] {
                         
                         self.currentUserMaxValues = maxValues
                         self.dataFollowedUsers = followedUsers
                         self.pseudoCurrentUser = pseudo
                         self.avatarCurrentUser = avatar
+                        self.calendarCurrentUser = calendar
                     }
                 }
             }

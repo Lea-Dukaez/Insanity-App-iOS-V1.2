@@ -14,6 +14,8 @@ class InfosTableViewController: UITableViewController {
     var infos = ["Contact", "Terms & Conditions"]
     let cellReuseIdentifier = "cell"
 
+    let alert = UIAlertController(title: "Mail App Not Install", message: "For any feature request or bug report, please contact us at: lea.s.dkz+insanity@gmail.com", preferredStyle: UIAlertController.Style.alert)
+    
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
 
@@ -59,16 +61,37 @@ class InfosTableViewController: UITableViewController {
 
 extension InfosTableViewController: MFMailComposeViewControllerDelegate {
     func openEmail() {
+        
+        let recipientEmail = "lea.s.dkz+insanity@gmail.com"
+        let subject = "Feedback Insanitiy Progress Tracking"
+        let body = "Feature request or bug report"
 
-        // Use the iOS Mail app
-        let composeVC = MFMailComposeViewController()
-        composeVC.mailComposeDelegate = self
-        composeVC.setToRecipients(["lea.s.dkz+insanity@gmail.com"])
-        composeVC.setSubject("Feedback")
-        composeVC.setMessageBody("Feature request or bug report?", isHTML: false)
+        // Show default mail composer
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([recipientEmail])
+            mail.setSubject(subject)
+            mail.setMessageBody(body, isHTML: false)
 
-        // Present the view controller modally.
-        self.present(composeVC, animated: true, completion: nil)
+            present(mail, animated: true)
+
+        // Show third party email composer if default Mail app is not present
+        } else {
+            showAlert()
+        }
+
+    }
+    
+    func showAlert() {
+        self.present(alert, animated: true) {
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
+            self.alert.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc func dismissAlert() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     // MARK: MailComposeViewControllerDelegate

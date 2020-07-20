@@ -45,45 +45,26 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("CalendarViewController viewDidLoad")
         
+        DataBrain.sharedInstance.dataBrainCalendarDelegate = self
+
         currentUserID = DataBrain.sharedInstance.currentUserID
         
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
         
-        loadCalendar()
     }
+    
+
     
     override func viewWillDisappear(_ animated: Bool) {
         updateCalendar()
     }
 
-    func loadCalendar() {
-        db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
-            .getDocument { (document, error) in
-               if let err = error {
-                   print("Error retrieving document: \(err)")
-                   return
-               } else {
-                   if let doc = document, doc.exists {
-                       if let data = doc.data() {
-                        if let calendarDoneValue = data[K.FStore.Users.calendarField] as? [Bool] {
-                            self.newCalendar = calendarDoneValue
-                            DispatchQueue.main.async {
-                                print()
-                                self.collectionView.dataSource = self
-                                self.collectionView.delegate = self
-                                self.collectionView.reloadData()
-                            }
-                       }
-                   }
-               }
-           }
-       }
-    }
 
     func updateCalendar() {
+        DataBrain.sharedInstance.calendarCurrentUser = newCalendar
+        
         self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
             K.FStore.Users.calendarField: newCalendar
         ]) { error in
@@ -104,7 +85,7 @@ extension CalendarViewController:  UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("cellForItemAt called")
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "calendarCell", for: indexPath) as! CalendarCollectionViewCell
 
         switch indexPath.item {
@@ -119,12 +100,11 @@ extension CalendarViewController:  UICollectionViewDataSource {
             cell.calendarCellLabel.textColor = .label
             cell.backgroundColor = UIColor(named: "barShadowColor")
         default:
-            
             let index = indexPath.item-8
-            let workoutNumber = workOutCalendar[index]//calendarWorkout[index].type //calendar[index]
+            let workoutNumber = workOutCalendar[index]
             cell.calendarCellLabel.text = program[workoutNumber]
             cell.calendarCellLabel.textColor = .label
-            cell.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground // out of range
+            cell.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
         }
         
         return cell
@@ -142,10 +122,19 @@ extension CalendarViewController: UICollectionViewDelegate {
             let index = indexPath.item-8
             newCalendar[index] = newCalendar[index] == false ? true : false
             
-            let selectedCell:UICollectionViewCell = collectionView.cellForItem(at: indexPath as IndexPath)!
-            
-            selectedCell.contentView.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
+            self.collectionView.reloadData()
         }
+        
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
+}
+
+extension CalendarViewController: dataBrainCalendarDelegate {
+    func getCalendar() {
+        self.newCalendar = DataBrain.sharedInstance.calendarCurrentUser
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.reloadData()
+    }
 }

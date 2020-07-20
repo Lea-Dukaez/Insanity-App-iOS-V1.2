@@ -39,7 +39,7 @@ class FriendActivityViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DataBrain.sharedInstance.dataBrainDelegate = self
+        DataBrain.sharedInstance.dataBrainUserMaxValuesDelegate = self
         
         friendImage.image = UIImage(named: friendAvatar)
         friendPseudoLabel.text = friendPseudo
@@ -148,7 +148,7 @@ class FriendActivityViewController: UIViewController {
 
 }
 
-extension FriendActivityViewController: dataBrainClassDelegate {
+extension FriendActivityViewController: dataBrainUserMaxValuesDelegate {
     func getUserWorkoutInfo() {
         if DataBrain.sharedInstance.userMaxValues.isEmpty {
             self.progressLabel.text = "\(self.friendPseudo) hasn't started the first fit test yet."

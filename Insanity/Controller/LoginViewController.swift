@@ -72,6 +72,7 @@ class LoginViewController: UIViewController {
 //                        UserDefaults.standard.synchronize()
                         
                         DataBrain.sharedInstance.currentUserID = uid
+//                        self.updateCalendar()
                         DataBrain.sharedInstance.getCurrentUser()
                         
                         DispatchQueue.main.async {
@@ -86,6 +87,17 @@ class LoginViewController: UIViewController {
         }
     }
     
+//    func updateCalendar() {
+//        let calendar: [Bool] = Array(repeating: false, count: 72)
+//
+//        self.db.collection(K.FStore.Users.collectionUsersName).document(DataBrain.sharedInstance.currentUserID).setData([
+//            K.FStore.Users.calendarField: calendar
+//        ], merge: true) { error in
+//            if let err = error {
+//                print("Error adding document: \(err)")
+//            }
+//        }
+//    }
 
 
     func showAlert(for alert: UIAlertController) {

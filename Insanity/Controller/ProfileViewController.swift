@@ -35,7 +35,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ProfileViewController viewDidLoad")
         
         self.navigationItem.setHidesBackButton(true, animated: true);
 
@@ -54,9 +53,6 @@ class ProfileViewController: UIViewController {
         
         currentUserID = DataBrain.sharedInstance.currentUserID
         
-        let nbFollowing = DataBrain.sharedInstance.dataFollowedUsers.allKeys(forValue: K.FStore.Relationships.statusFollowing)
-        followingButton.setTitle("\(nbFollowing.count)\nFollowing", for: .normal)
-        
         loadUsers()
 
         getFollower()
@@ -69,6 +65,9 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let nbFollowing = DataBrain.sharedInstance.dataFollowedUsers.allKeys(forValue: K.FStore.Relationships.statusFollowing)
+        
+        self.followingButton.setTitle("\(nbFollowing.count)\nFollowing", for: .normal)
         self.currentUserLabel.text = DataBrain.sharedInstance.pseudoCurrentUser
         self.currentUserImage.image = UIImage(named: DataBrain.sharedInstance.avatarCurrentUser)
     }

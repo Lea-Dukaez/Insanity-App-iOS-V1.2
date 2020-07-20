@@ -47,6 +47,8 @@ class WelcomeViewController: UIViewController {
         }
     }
     
+
+    
     @IBAction func buttonSignUpPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: K.Segue.WelcomeVC.segueWelcomeToSignUp, sender: self)
     }
