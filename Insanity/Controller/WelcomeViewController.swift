@@ -15,9 +15,8 @@ class WelcomeViewController: UIViewController {
     @IBOutlet weak var logInButton: UIButton!
 
     override func viewDidLoad() {
-        print("WelcomeViewController viewDidLoad")
-        
         super.viewDidLoad()
+        
         logInButton.backgroundColor = .clear
         logInButton.layer.borderWidth = 1
         logInButton.layer.borderColor = UIColor.label.cgColor
@@ -47,7 +46,6 @@ class WelcomeViewController: UIViewController {
         }
     }
     
-
     
     @IBAction func buttonSignUpPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: K.Segue.WelcomeVC.segueWelcomeToSignUp, sender: self)

@@ -83,7 +83,6 @@ class FriendActivityViewController: UIViewController {
         var text = ""
         
         if self.chartBrain?.allWorkOutResults.count == 1 {
-            print("only one test")
             percentText = ""
             text = "Let's wait for the next fit test to see the progression."
         } else {

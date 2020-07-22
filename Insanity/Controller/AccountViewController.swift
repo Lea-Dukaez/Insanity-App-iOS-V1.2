@@ -25,7 +25,6 @@ class AccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("AccountViewController viewDidLoad")
 
         pseudoTextField.attributedPlaceholder = NSAttributedString(string: "Change your pseudonyme", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         

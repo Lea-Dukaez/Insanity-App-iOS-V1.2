@@ -36,6 +36,7 @@ struct ChartBrain {
 
         dataSet.barShadowColor = UIColor(named: "barShadowColor")!
         dataSet.setColor(UIColor(named: "BrandOrangeColor")!)
+        dataSet.highlightEnabled = false
         
         // add "date" Label for X Axis
         barChart.xAxis.labelCount = dateLabels.count

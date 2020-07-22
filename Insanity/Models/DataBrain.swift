@@ -48,7 +48,6 @@ class DataBrain {
 
 
     func getCurrentUser() {
-        print("DataBrain getCurrentUser called")
         self.db.collection(K.FStore.Users.collectionUsersName).document(currentUserID)
             .getDocument { (document, error) in
             if let doc = document {
@@ -126,7 +125,6 @@ class DataBrain {
                             // get only data for current user and followed friends
                             if (userID == self.currentUserID) || self.dataFollowedUsers[userID] == K.FStore.Relationships.statusFollowing {
                                 let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
-                                print(podiumCompetitor)
                                 self.dataPodium.append(podiumCompetitor)
                             }
                         }
@@ -135,73 +133,7 @@ class DataBrain {
             }
         }
     }
-    
-//    func recupPodiumMaxValuesNew() {
-//        dataPodium = []
-//
-//        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID)
-//
-//        db.runTransaction({ (transaction, errorPointer) -> Any? in
-//            let currentUserDocument: DocumentSnapshot
-//            do {
-//                try currentUserDocument = transaction.getDocument(currentUserRef)
-//            } catch let fetchError as NSError {
-//                errorPointer?.pointee = fetchError
-//                return nil
-//            }
-//
-//            guard let followedUsers = currentUserDocument.data()?[K.FStore.Users.followedUsersField] as? [String:String],
-//                let currentUserMax = currentUserDocument.data()?[K.FStore.Users.maxField] as? [Double] else {
-//                let error = NSError(
-//                    domain: "AppErrorDomain",
-//                    code: -1,
-//                    userInfo: [
-//                        NSLocalizedDescriptionKey: "Unable to retrieve followedUsers from snapshot \(currentUserRef)"
-//                    ]
-//                )
-//                errorPointer?.pointee = error
-//                return nil
-//            }
-//
-//            let podiumCompetitor = PodiumCompetitor(pseudo: pseudo, avatar: avatar, max: maxValues, userID: userID)
-//            self.dataPodium.append(podiumCompetitor)
-//
-//            let keys: [String] = followedUsers.map({ $0.key })
-//            for key in keys {
-//
-//                let followedUserRef = self.db.collection(K.FStore.Users.collectionUsersName).document(key)
-//
-//                let followedUserDocument: DocumentSnapshot
-//                do {
-//                    try followedUserDocument = transaction.getDocument(followedUserRef)
-//                } catch let fetchError as NSError {
-//                    errorPointer?.pointee = fetchError
-//                    return nil
-//                }
-//
-//                guard var followedUserMax = followedUserDocument.data()?[K.FStore.Users.maxField] as? [Double] else {
-//                    let error = NSError(
-//                        domain: "AppErrorDomain",
-//                        code: -1,
-//                        userInfo: [
-//                            NSLocalizedDescriptionKey: "Unable to retrieve followedUsers from snapshot \(currentUserRef)"
-//                        ]
-//                    )
-//                    errorPointer?.pointee = error
-//                    return nil
-//                }
-//            }
-//
-//            return nil
-//        }) { (object, error) in
-//            if let error = error {
-//                print("Transaction failed: \(error)")
-//            } else {
-//                print("Transaction successfully committed!")
-//            }
-//        }
-//    }
-//
+
     
     func recupUserMax(uid: String? = nil) {
         let userID = uid ?? self.currentUserID

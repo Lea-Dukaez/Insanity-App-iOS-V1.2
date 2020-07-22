@@ -37,9 +37,7 @@ class FollowersTableViewController: UITableViewController {
 
  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        print("cellForRowAt called to load data")
-        
+                
         let cell = self.tableView.dequeueReusableCell(withIdentifier: K.userCell.addFriendCellIdentifier, for: indexPath) as! AddFriendCell
 
         if followerUsers.count != 0 {
@@ -77,7 +75,8 @@ class FollowersTableViewController: UITableViewController {
             
             if cell.addButton.titleLabel?.text == "Waiting" {
                 // case: approve or reject follower request
-                let alert = UIAlertController(title: "Accept Follower", message: "", preferredStyle: .alert)
+                let user = self.followerUsers[indexPath.row].pseudo
+                let alert = UIAlertController(title: "Accept \(user)", message: "", preferredStyle: .alert)
 
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
                     self.followerUsers[indexPath.row].status = K.FStore.Relationships.statusFollowing

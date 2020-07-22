@@ -34,7 +34,6 @@ class PodiumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("PodiumViewController viewDidLoad")
 
         currentUserID = DataBrain.sharedInstance.currentUserID
         

@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     
     let db = Firestore.firestore()
 
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var goToSignUpLabel: FRHyperLabel!
@@ -86,19 +85,6 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
-//    func updateCalendar() {
-//        let calendar: [Bool] = Array(repeating: false, count: 72)
-//
-//        self.db.collection(K.FStore.Users.collectionUsersName).document(DataBrain.sharedInstance.currentUserID).setData([
-//            K.FStore.Users.calendarField: calendar
-//        ], merge: true) { error in
-//            if let err = error {
-//                print("Error adding document: \(err)")
-//            }
-//        }
-//    }
-
 
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {

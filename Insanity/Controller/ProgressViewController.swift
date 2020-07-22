@@ -30,6 +30,7 @@ class ProgressViewController: UIViewController {
 
         chartBrain = ChartBrain(barChart: barChart)
         chartBrain?.barChart.noDataText = ""
+//        chartBrain?.barChart.highlightFullBarEnabled = false
         
         addTestButton.backgroundColor = .clear
         addTestButton.layer.borderWidth = 1
@@ -41,7 +42,6 @@ class ProgressViewController: UIViewController {
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
-            print("no data recorded")
             progressLabel.text = "Let's get started with your first fit test."
             percentLabel.text = "Go!"
         } else {
@@ -82,7 +82,6 @@ class ProgressViewController: UIViewController {
         var text = ""
         
         if self.chartBrain?.allWorkOutResults.count == 1 {
-            print("only one test")
             percentText = "Keep Focus!"
             text = "Keep going and you will progress for your next fit test !"
         } else {
