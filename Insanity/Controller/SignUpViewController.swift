@@ -53,11 +53,15 @@ class SignUpViewController: UIViewController {
 
                     if let uid = dataResult?.user.uid {
                         let randomInt = Int.random(in: 0...17)
+                        let calendar: [Bool] = Array(repeating: false, count: 72)
+
                         DataBrain.sharedInstance.currentUserID = uid
                         DataBrain.sharedInstance.pseudoCurrentUser = pseudo
                         DataBrain.sharedInstance.avatarCurrentUser = K.avatarImages[randomInt]
                         DataBrain.sharedInstance.dataFollowedUsers = [String:String]()
                         DataBrain.sharedInstance.currentUserMaxValues = [Double]()
+                        DataBrain.sharedInstance.calendarCurrentUser = calendar
+                        print("signUp Auth succeeded : DataBrain.sharedInstance.calendarCurrentUser = \(DataBrain.sharedInstance.calendarCurrentUser)")
 
                         DataBrain.sharedInstance.createUserInfo(pseudoDefault: pseudo, avatarDefault: K.avatarImages[randomInt])
                         

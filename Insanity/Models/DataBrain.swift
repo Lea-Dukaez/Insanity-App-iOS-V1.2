@@ -30,8 +30,9 @@ class DataBrain {
     var dataFollowedUsers: [String:String] = [:]
     
     var dataBrainCalendarDelegate: dataBrainCalendarDelegate?
-    var calendarCurrentUser: [Bool] = [] {
+    var calendarCurrentUser: [Bool] = Array(repeating: false, count: 72) {
         didSet{
+            print("calendarCurrentUser didSet self.calendarCurrentUser = \(self.calendarCurrentUser)")
             self.dataBrainCalendarDelegate?.getCalendar()
         }
     }
