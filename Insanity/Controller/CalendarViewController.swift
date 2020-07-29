@@ -52,7 +52,6 @@ class CalendarViewController: UIViewController {
         
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
-        
     }
     
 

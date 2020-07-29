@@ -85,6 +85,24 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    func updateCalendar() {
+        let calendar: [Bool] = Array(repeating: false, count: 72)
+        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(DataBrain.sharedInstance.currentUserID)
+
+        currentUserRef.updateData([
+            K.FStore.Users.calendarField : calendar
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        
+        DataBrain.sharedInstance.calendarCurrentUser = calendar
+    }
+    
 
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {
