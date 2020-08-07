@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import Firebase
 
 class TestViewController: UIViewController {
     
@@ -63,6 +64,10 @@ class TestViewController: UIViewController {
             // Add a new document in Firestore for currentUser
             DataBrain.sharedInstance.saveNewWorkout(testResults: self.listWorkoutTest, workoutDate: self.workoutDate)
             DataBrain.sharedInstance.majMax(listTest: self.listWorkoutTest)
+            
+            // Update DatBrain var
+            updateDataBrain()
+            
             self.listWorkoutTest = [Double]()
             
             // dismiss view
@@ -71,6 +76,29 @@ class TestViewController: UIViewController {
         } else {
             showAlert()
         }
+    }
+    
+    func updateDataBrain() {
+        var newMaxValues: [Double] = []
+
+        // update DataBrain numberOfTestsCurrentUser
+        DataBrain.sharedInstance.numberOfTestsCurrentUser += 1
+        
+        // update DataBrain CurrentUserMaxValues
+        if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
+            DataBrain.sharedInstance.currentUserMaxValues = self.listWorkoutTest
+            DataBrain.sharedInstance.firstFitTestCurrentUser = self.listWorkoutTest
+        } else {
+            for index in 0..<DataBrain.sharedInstance.currentUserMaxValues.count {
+                newMaxValues.append(max(self.listWorkoutTest[index], DataBrain.sharedInstance.currentUserMaxValues[index]))
+            }
+            DataBrain.sharedInstance.currentUserMaxValues = newMaxValues
+        }
+
+        // update DataBrain allWorkOutResultsCurrentUser
+        let newWorkout = Workout(userID: DataBrain.sharedInstance.currentUserID, workOutResult: self.listWorkoutTest, date: Timestamp(date: self.workoutDate))
+        DataBrain.sharedInstance.allWorkOutResultsCurrentUser.append(newWorkout)
+
     }
 
     

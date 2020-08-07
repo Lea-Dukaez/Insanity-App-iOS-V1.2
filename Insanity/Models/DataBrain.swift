@@ -21,6 +21,10 @@ protocol dataBrainLogInDelegate {
     func getCurrentUserOK()
 }
 
+protocol DataBrainProgressDelegate {
+    func updateProgressChart()
+}
+
 class DataBrain {
     static let sharedInstance = DataBrain()
 
@@ -32,6 +36,7 @@ class DataBrain {
     var avatarCurrentUser: String = ""
     var pseudoCurrentUser: String = ""
     var dataFollowedUsers: [String:String] = [:]
+    var numberOfTestsCurrentUser: Double = 0
     
     var dataBrainLogInDelegate: dataBrainLogInDelegate?
     var didGetCurrentUser: Bool = false {
@@ -44,6 +49,23 @@ class DataBrain {
     var calendarCurrentUser: [Bool] = Array(repeating: false, count: 72) {
         didSet{
             self.dataBrainCalendarDelegate?.getCalendar()
+        }
+    }
+    
+    
+    var dataBrainProgressDelegate : DataBrainProgressDelegate?
+    var dateLabelsCurrentUserWorkout: [String] = []
+    var firstFitTestCurrentUser: [Double] = []
+    var allWorkOutResultsCurrentUser: [Workout] = [] {
+        didSet{
+            print(allWorkOutResultsCurrentUser)
+            print("allWorkOutResultsCurrentUser did set and self.allWorkOutResultsCurrentUser.count = \(self.allWorkOutResultsCurrentUser.count)")
+            print("allWorkOutResultsCurrentUser did set and self.numberOfTestsCurrentUser = \(self.numberOfTestsCurrentUser)")
+
+            if self.allWorkOutResultsCurrentUser.count == Int(self.numberOfTestsCurrentUser) {
+                print("inside self.allWorkOutResultsCurrentUser.count == Int(self.numberOfTestsCurrentUser) ")
+                self.dataBrainProgressDelegate?.updateProgressChart()
+            }
         }
     }
     
@@ -67,7 +89,8 @@ class DataBrain {
                         let avatar = data[K.FStore.Users.avatarField] as? String,
                         let followedUsers = data[K.FStore.Users.followedUsersField] as? [String:String],
                         let calendar = data[K.FStore.Users.calendarField] as? [Bool],
-                        let maxValues = data[K.FStore.Users.maxField] as? [Double] {
+                        let maxValues = data[K.FStore.Users.maxField] as? [Double],
+                        let numberOfTests = data[K.FStore.Users.numberOfTestsField] as? Double {
                         
                         self.didGetCurrentUser = true
                         self.currentUserMaxValues = maxValues
@@ -75,7 +98,7 @@ class DataBrain {
                         self.pseudoCurrentUser = pseudo
                         self.avatarCurrentUser = avatar
                         self.calendarCurrentUser = calendar
-                        
+                        self.numberOfTestsCurrentUser = numberOfTests
                     }
                 }
             }
@@ -93,7 +116,8 @@ class DataBrain {
             K.FStore.Users.calendarField:calendar,
             K.FStore.Users.pseudoField: pseudoDefault,
             K.FStore.Users.nameSearchField: pseudoDefault.lowercased(),
-            K.FStore.Users.avatarField: avatarDefault
+            K.FStore.Users.avatarField: avatarDefault,
+            K.FStore.Users.numberOfTestsField: 0
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")
@@ -172,6 +196,63 @@ class DataBrain {
         }
     }
     
+    // MARK: - Methods for Progress View Controller
+
+    func loadWorkoutData() {
+        
+        db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
+            .whereField(K.FStore.WorkoutTests.idField, isEqualTo: self.currentUserID)
+            .getDocuments() { (querySnapshot, error) in
+            if let err = error {
+                print("Error getting documents: \(err)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for (index, doc) in snapshotDocuments.enumerated() {
+                        print("loadWorkoutData inside for in snapshotDocuments.enumerated() ")
+
+                        let data = doc.data()
+                        if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
+                            let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
+                            let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
+                            
+                            // get the first fit test for the progression
+                            if index == 0 {
+                                self.firstFitTestCurrentUser = testResult
+                            }
+                            
+                            let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
+                            self.allWorkOutResultsCurrentUser.append(newWorkout)
+//                            self.chartBrain?.allWorkOutResults.append(newWorkout)
+                            let workOutDate = self.dateString(timeStampDate: newWorkout.date)
+                            self.dateLabelsCurrentUserWorkout.append(workOutDate)
+//                            self.chartBrain?.dateLabels.append(workOutDate)
+//                            print("self.chartBrain?.allWorkOutResults = \(self.chartBrain!.allWorkOutResults)")
+
+                            // when data is collected, generate barChart
+
+                        }
+                    }
+                    // here
+                    DispatchQueue.main.async {
+                        print("loadWorkoutData DispatchQueue.main.async")
+//                        let index = self.segment1.selectedSegmentIndex
+//                        self.updateProgressForWorkout(workOutSelected: index)
+//                        self.chartBrain?.barChartUpdate(workOutSelected: index)
+                    }
+                }
+            }
+        }
+    }
+    
+    // Func to format the Date of workout Results
+    func dateString(timeStampDate: Timestamp) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        let date = timeStampDate.dateValue()
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
+    }
     
     // MARK: - Methods for Test View Controller
     
@@ -202,6 +283,18 @@ class DataBrain {
                 return nil
             }
             
+            guard let oldNumberOfTests = userDocument.data()?[K.FStore.Users.numberOfTestsField] as? Double else {
+                let error = NSError(
+                    domain: "AppErrorDomain",
+                    code: -1,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "Unable to retrieve maxValue from snapshot \(userDocument)"
+                    ]
+                )
+                errorPointer?.pointee = error
+                return nil
+            }
+            
             guard let oldMaxValues = userDocument.data()?[K.FStore.Users.maxField] as? [Double] else {
                 let error = NSError(
                     domain: "AppErrorDomain",
@@ -215,16 +308,18 @@ class DataBrain {
             }
             
             // if it is the first time the user do the test
+            transaction.updateData([K.FStore.Users.numberOfTestsField: oldNumberOfTests+1], forDocument: userRef)
+
             if oldMaxValues.isEmpty {
                 transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
-                self.currentUserMaxValues = listTest
+//                self.currentUserMaxValues = listTest
                 return nil
             } else {
                 for index in 0..<oldMaxValues.count {
                     newMaxValues.append(max(listTest[index], oldMaxValues[index]))
                 }
                 transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
-                self.currentUserMaxValues = newMaxValues
+//                self.currentUserMaxValues = newMaxValues
                 return nil
             }
             

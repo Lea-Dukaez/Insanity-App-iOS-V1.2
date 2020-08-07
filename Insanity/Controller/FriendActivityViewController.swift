@@ -63,7 +63,7 @@ class FriendActivityViewController: UIViewController {
             segment1.selectedSegmentIndex = -1
         }
 
-        chartBrain?.barChartUpdate(workOutSelected: index)
+        chartBrain?.barChartUpdate(workOutSelected: index, uid: friendID)
         
         if DataBrain.sharedInstance.userMaxValues.isEmpty {
             print("no data recorded, so no progression")
@@ -125,7 +125,7 @@ class FriendActivityViewController: UIViewController {
                             DispatchQueue.main.async {
                                 let index = self.segment1.selectedSegmentIndex
                                 self.updateProgressForWorkout(workOutSelected: index)
-                                self.chartBrain?.barChartUpdate(workOutSelected: index)
+                                self.chartBrain?.barChartUpdate(workOutSelected: index, uid: self.friendID)
                             }
                         }
                     }

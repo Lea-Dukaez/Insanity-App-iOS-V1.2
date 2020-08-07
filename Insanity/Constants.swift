@@ -99,6 +99,8 @@ struct K {
             static let avatarField = "avatar"
             static let calendarField = "calendar"
             static let followedUsersField = "followedUsers"
+            static let numberOfTestsField = "numberOfTests"
+
         }
         struct WorkoutTests {
             static let collectionTestName = "workoutTests"

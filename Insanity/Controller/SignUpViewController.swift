@@ -62,6 +62,7 @@ class SignUpViewController: UIViewController {
                         DataBrain.sharedInstance.currentUserMaxValues = [Double]()
                         DataBrain.sharedInstance.calendarCurrentUser = calendar
                         DataBrain.sharedInstance.createUserInfo(pseudoDefault: pseudo, avatarDefault: K.avatarImages[randomInt])
+                        DataBrain.sharedInstance.numberOfTestsCurrentUser = 0 
                         
 //                         // keep UID for avoid login again after closing the app
 //                          UserDefaults.standard.set(uid, forKey: "USER_KEY_UID")

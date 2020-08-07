@@ -16,9 +16,13 @@ struct ChartBrain {
     var allWorkOutResults: [Workout] = []
     var dateLabels: [String] = []
     
-    func barChartUpdate(workOutSelected: Int) {
+    mutating func barChartUpdate(workOutSelected: Int, uid: String) {
         
         var barChartEntry = [ChartDataEntry]()
+        if uid == DataBrain.sharedInstance.currentUserID {
+            allWorkOutResults = DataBrain.sharedInstance.allWorkOutResultsCurrentUser
+        }
+        
         
         for i in 0..<allWorkOutResults.count {
             let value = BarChartDataEntry(x: Double(i), y: allWorkOutResults[i].workOutResult[workOutSelected])
@@ -48,7 +52,8 @@ struct ChartBrain {
         barChart.data = data
     }
     
-    func customizeGraphAppearance(for barChart: BarChartView, with data: BarChartData) {
+    mutating func customizeGraphAppearance(for barChart: BarChartView, with data: BarChartData) {
+        
         switch allWorkOutResults.count {
         case 1:
             data.barWidth = Double(0.08)
