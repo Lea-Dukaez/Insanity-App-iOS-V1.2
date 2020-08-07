@@ -50,6 +50,10 @@ class ProgressViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+
+    }
+    
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         var index = 0
@@ -82,7 +86,7 @@ class ProgressViewController: UIViewController {
         var text = ""
         
         if self.chartBrain?.allWorkOutResults.count == 1 {
-            percentText = "Keep Focus!"
+            percentText = "Focus!"
             text = "Keep going and you will progress for your next fit test !"
         } else {
             percentText = "+"+percentString+"%"
@@ -96,6 +100,7 @@ class ProgressViewController: UIViewController {
     // MARK: - Section DataBase Interactions
 
     func loadWorkoutData() {
+        print("loadWorkoutData called")
         db.collection(K.FStore.WorkoutTests.collectionTestName).order(by: K.FStore.WorkoutTests.dateField)
             .whereField(K.FStore.WorkoutTests.idField, isEqualTo: DataBrain.sharedInstance.currentUserID)
             .addSnapshotListener { (querySnapshot, error) in
@@ -118,18 +123,23 @@ class ProgressViewController: UIViewController {
                             self.chartBrain?.allWorkOutResults.append(newWorkout)
                             let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                             self.chartBrain?.dateLabels.append(workOutDate)
+                            print("self.chartBrain?.allWorkOutResults = \(self.chartBrain!.allWorkOutResults)")
 
                             // when data is collected, generate barChart
-                            DispatchQueue.main.async {
-                                let index = self.segment1.selectedSegmentIndex
-                                self.updateProgressForWorkout(workOutSelected: index)
-                                self.chartBrain?.barChartUpdate(workOutSelected: index)
-                            }
+
                         }
+                    }
+                    // here
+                    DispatchQueue.main.async {
+                        print("loadWorkoutData DispatchQueue.main.async")
+                        let index = self.segment1.selectedSegmentIndex
+                        self.updateProgressForWorkout(workOutSelected: index)
+                        self.chartBrain?.barChartUpdate(workOutSelected: index)
                     }
                 }
             }
         }
+        print("end of loadWorkoutData")
     }
     
     // Func to format the Date of workout Results

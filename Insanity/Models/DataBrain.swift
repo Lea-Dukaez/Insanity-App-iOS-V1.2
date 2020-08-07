@@ -17,6 +17,10 @@ protocol dataBrainCalendarDelegate {
     func getCalendar()
 }
 
+protocol dataBrainLogInDelegate {
+    func getCurrentUserOK()
+}
+
 class DataBrain {
     static let sharedInstance = DataBrain()
 
@@ -29,10 +33,16 @@ class DataBrain {
     var pseudoCurrentUser: String = ""
     var dataFollowedUsers: [String:String] = [:]
     
+    var dataBrainLogInDelegate: dataBrainLogInDelegate?
+    var didGetCurrentUser: Bool = false {
+        didSet{
+            self.dataBrainLogInDelegate?.getCurrentUserOK()
+        }
+    }
+    
     var dataBrainCalendarDelegate: dataBrainCalendarDelegate?
     var calendarCurrentUser: [Bool] = Array(repeating: false, count: 72) {
         didSet{
-            print("calendarCurrentUser didSet self.calendarCurrentUser = \(self.calendarCurrentUser)")
             self.dataBrainCalendarDelegate?.getCalendar()
         }
     }
@@ -59,11 +69,13 @@ class DataBrain {
                         let calendar = data[K.FStore.Users.calendarField] as? [Bool],
                         let maxValues = data[K.FStore.Users.maxField] as? [Double] {
                         
+                        self.didGetCurrentUser = true
                         self.currentUserMaxValues = maxValues
                         self.dataFollowedUsers = followedUsers
                         self.pseudoCurrentUser = pseudo
                         self.avatarCurrentUser = avatar
                         self.calendarCurrentUser = calendar
+                        
                     }
                 }
             }
@@ -205,12 +217,14 @@ class DataBrain {
             // if it is the first time the user do the test
             if oldMaxValues.isEmpty {
                 transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
+                self.currentUserMaxValues = listTest
                 return nil
             } else {
                 for index in 0..<oldMaxValues.count {
                     newMaxValues.append(max(listTest[index], oldMaxValues[index]))
                 }
                 transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
+                self.currentUserMaxValues = newMaxValues
                 return nil
             }
             

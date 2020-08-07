@@ -11,6 +11,8 @@ import FirebaseAuth
 import Firebase
 
 class AccountViewController: UIViewController {
+    
+    var newAvatar = ""
 
     @IBOutlet weak var currentUserImage: UIImageView!
     @IBOutlet weak var currentUserLabel: UILabel!
@@ -49,6 +51,9 @@ class AccountViewController: UIViewController {
         if pseudoTextField.text?.isEmpty == false {
             DataBrain.sharedInstance.pseudoCurrentUser = pseudoTextField.text!
         }
+        if newAvatar != "" {
+            DataBrain.sharedInstance.avatarCurrentUser = newAvatar
+        }
         DataBrain.sharedInstance.changePseudoAndImage()
         self.navigationController?.popViewController(animated: true)
     }
@@ -78,7 +83,7 @@ extension AccountViewController:  UICollectionViewDataSource {
 
 extension AccountViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        DataBrain.sharedInstance.avatarCurrentUser = K.avatarImages[indexPath.item]
+        newAvatar = K.avatarImages[indexPath.item]
     }
 
 }

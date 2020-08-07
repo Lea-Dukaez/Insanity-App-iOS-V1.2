@@ -61,8 +61,6 @@ class SignUpViewController: UIViewController {
                         DataBrain.sharedInstance.dataFollowedUsers = [String:String]()
                         DataBrain.sharedInstance.currentUserMaxValues = [Double]()
                         DataBrain.sharedInstance.calendarCurrentUser = calendar
-                        print("signUp Auth succeeded : DataBrain.sharedInstance.calendarCurrentUser = \(DataBrain.sharedInstance.calendarCurrentUser)")
-
                         DataBrain.sharedInstance.createUserInfo(pseudoDefault: pseudo, avatarDefault: K.avatarImages[randomInt])
                         
 //                         // keep UID for avoid login again after closing the app

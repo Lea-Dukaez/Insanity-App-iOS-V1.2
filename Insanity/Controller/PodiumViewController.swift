@@ -36,14 +36,14 @@ class PodiumViewController: UIViewController {
         super.viewDidLoad()
 
         currentUserID = DataBrain.sharedInstance.currentUserID
-        
-        workoutPickerView.dataSource = self
-        workoutPickerView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         DataBrain.sharedInstance.recupPodiumMaxValues()
+        workoutPickerView.dataSource = self
+        workoutPickerView.delegate = self
         defaultPodiumValue()
+    
     }
 
     func defaultPodiumValue() {

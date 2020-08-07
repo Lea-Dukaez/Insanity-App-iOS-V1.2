@@ -15,7 +15,6 @@ class CalendarViewController: UIViewController {
     
     let db = Firestore.firestore()
     var currentUserID = ""
-    var newCalendar: [Bool] = Array(repeating: false, count: 72)
         
     let program = [0:"week", 1:"Fit Test", 2:"Plyo Cardio Circuit", 3:"Cardio Power & Resistance", 4:"Cardio Recovery", 5:"Pure Cardio", 6:"Pure Cardio & Abs", 7:"Core Cardio & Balance", 8:"Fit Test / Max Interval Training", 9:"Max Interval Plyo", 10:"Max Cardio Conditioning", 11:"Max Recovery", 12:"Max Interval Circuit", 13:"Max Cardio Conditioning & Abs", 14:"Fit Test/ Max Interval Circuit",15:"Rest"]
         
@@ -45,28 +44,31 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        DataBrain.sharedInstance.dataBrainCalendarDelegate = self
 
+        DataBrain.sharedInstance.dataBrainCalendarDelegate = self
         currentUserID = DataBrain.sharedInstance.currentUserID
+        
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+
         
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.collectionView.reloadData()
+    }
 
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("Calendar VC viewWillDisappear self.newCalendar = \(self.newCalendar)")
         updateCalendar()
     }
 
 
     func updateCalendar() {
-        DataBrain.sharedInstance.calendarCurrentUser = newCalendar
-        
         self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
-            K.FStore.Users.calendarField: newCalendar
+            K.FStore.Users.calendarField: DataBrain.sharedInstance.calendarCurrentUser
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")
@@ -104,7 +106,7 @@ extension CalendarViewController:  UICollectionViewDataSource {
             let workoutNumber = workOutCalendar[index]
             cell.calendarCellLabel.text = program[workoutNumber]
             cell.calendarCellLabel.textColor = .label
-            cell.backgroundColor = newCalendar[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
+            cell.backgroundColor = DataBrain.sharedInstance.calendarCurrentUser[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
         }
         
         return cell
@@ -120,7 +122,7 @@ extension CalendarViewController: UICollectionViewDelegate {
 
         if indexPath.item > 8 && ![8,16,24,32,40,48,56,64,72].contains(indexPath.item) {
             let index = indexPath.item-8
-            newCalendar[index] = newCalendar[index] == false ? true : false
+            DataBrain.sharedInstance.calendarCurrentUser[index] = DataBrain.sharedInstance.calendarCurrentUser[index] == false ? true : false
             
             self.collectionView.reloadData()
         }
@@ -132,11 +134,6 @@ extension CalendarViewController: UICollectionViewDelegate {
 
 extension CalendarViewController: dataBrainCalendarDelegate {
     func getCalendar() {
-        print("getCalendar DataBrain.sharedInstance.calendarCurrentUser = \(DataBrain.sharedInstance.calendarCurrentUser)")
-        self.newCalendar = DataBrain.sharedInstance.calendarCurrentUser
-        print("get Calendar self.newCalendar = \(self.newCalendar)")
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
         self.collectionView.reloadData()
     }
 }

@@ -23,6 +23,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataBrain.sharedInstance.dataBrainLogInDelegate = self
+        
         emailTextField.attributedPlaceholder = NSAttributedString(string: "Email",
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password",
@@ -73,10 +75,6 @@ class LoginViewController: UIViewController {
                         DataBrain.sharedInstance.currentUserID = uid
 //                        self.updateCalendar()
                         DataBrain.sharedInstance.getCurrentUser()
-                        
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: K.Segue.LoginVC.segueLoginToHome, sender: self)
-                        }
                     }
                     self.emailTextField.text = ""
                     self.passwordTextField.text = ""
@@ -86,23 +84,23 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func updateCalendar() {
-        let calendar: [Bool] = Array(repeating: false, count: 72)
-        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(DataBrain.sharedInstance.currentUserID)
-
-        currentUserRef.updateData([
-            K.FStore.Users.calendarField : calendar
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document successfully updated")
-            }
-        }
-        
-        DataBrain.sharedInstance.calendarCurrentUser = calendar
-    }
-    
+//    func updateCalendar() {
+//        let calendar: [Bool] = Array(repeating: false, count: 72)
+//        let currentUserRef = db.collection(K.FStore.Users.collectionUsersName).document(DataBrain.sharedInstance.currentUserID)
+//
+//        currentUserRef.updateData([
+//            K.FStore.Users.calendarField : calendar
+//        ]) { err in
+//            if let err = err {
+//                print("Error updating document: \(err)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
+//
+//        DataBrain.sharedInstance.calendarCurrentUser = calendar
+//    }
+//
 
     func showAlert(for alert: UIAlertController) {
         self.present(alert, animated: true) {
@@ -125,4 +123,10 @@ class LoginViewController: UIViewController {
     }
     
 
+}
+
+extension LoginViewController: dataBrainLogInDelegate {
+    func getCurrentUserOK() {
+        self.performSegue(withIdentifier: K.Segue.LoginVC.segueLoginToHome, sender: self)
+    }
 }
