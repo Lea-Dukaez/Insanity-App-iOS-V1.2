@@ -63,7 +63,7 @@ class ProgressViewController: UIViewController {
             chartBrain?.barChartUpdate(workOutSelected: index, uid: DataBrain.sharedInstance.currentUserID)
             
             if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
-                print("no data recorded, so no progression")
+                print("no data")
             } else {
                 updateProgressForWorkout(workOutSelected: index)
             }

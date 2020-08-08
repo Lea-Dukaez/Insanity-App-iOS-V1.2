@@ -58,12 +58,7 @@ class DataBrain {
     var firstFitTestCurrentUser: [Double] = []
     var allWorkOutResultsCurrentUser: [Workout] = [] {
         didSet{
-            print(allWorkOutResultsCurrentUser)
-            print("allWorkOutResultsCurrentUser did set and self.allWorkOutResultsCurrentUser.count = \(self.allWorkOutResultsCurrentUser.count)")
-            print("allWorkOutResultsCurrentUser did set and self.numberOfTestsCurrentUser = \(self.numberOfTestsCurrentUser)")
-
             if self.allWorkOutResultsCurrentUser.count == Int(self.numberOfTestsCurrentUser) {
-                print("inside self.allWorkOutResultsCurrentUser.count == Int(self.numberOfTestsCurrentUser) ")
                 self.dataBrainProgressDelegate?.updateProgressChart()
             }
         }
@@ -208,8 +203,6 @@ class DataBrain {
             } else {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for (index, doc) in snapshotDocuments.enumerated() {
-                        print("loadWorkoutData inside for in snapshotDocuments.enumerated() ")
-
                         let data = doc.data()
                         if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
                             let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
@@ -222,22 +215,10 @@ class DataBrain {
                             
                             let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
                             self.allWorkOutResultsCurrentUser.append(newWorkout)
-//                            self.chartBrain?.allWorkOutResults.append(newWorkout)
                             let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                             self.dateLabelsCurrentUserWorkout.append(workOutDate)
-//                            self.chartBrain?.dateLabels.append(workOutDate)
-//                            print("self.chartBrain?.allWorkOutResults = \(self.chartBrain!.allWorkOutResults)")
-
-                            // when data is collected, generate barChart
 
                         }
-                    }
-                    // here
-                    DispatchQueue.main.async {
-                        print("loadWorkoutData DispatchQueue.main.async")
-//                        let index = self.segment1.selectedSegmentIndex
-//                        self.updateProgressForWorkout(workOutSelected: index)
-//                        self.chartBrain?.barChartUpdate(workOutSelected: index)
                     }
                 }
             }
@@ -312,14 +293,12 @@ class DataBrain {
 
             if oldMaxValues.isEmpty {
                 transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
-//                self.currentUserMaxValues = listTest
                 return nil
             } else {
                 for index in 0..<oldMaxValues.count {
                     newMaxValues.append(max(listTest[index], oldMaxValues[index]))
                 }
                 transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
-//                self.currentUserMaxValues = newMaxValues
                 return nil
             }
             

@@ -21,6 +21,7 @@ struct ChartBrain {
         var barChartEntry = [ChartDataEntry]()
         if uid == DataBrain.sharedInstance.currentUserID {
             allWorkOutResults = DataBrain.sharedInstance.allWorkOutResultsCurrentUser
+            dateLabels = DataBrain.sharedInstance.dateLabelsCurrentUserWorkout
         }
         
         
