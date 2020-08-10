@@ -13,7 +13,7 @@ import Firebase
 class TermsViewController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
-    let urlString = "https://insanityprogresstracking.blogspot.com/2020/07/privacy-policy-of-insanity-progress.html"
+    let urlString = "https://lea-s-dkz.wixsite.com/insanitytracking"
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }

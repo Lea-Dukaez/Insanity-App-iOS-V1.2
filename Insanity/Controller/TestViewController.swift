@@ -95,10 +95,22 @@ class TestViewController: UIViewController {
             DataBrain.sharedInstance.currentUserMaxValues = newMaxValues
         }
 
-        // update DataBrain allWorkOutResultsCurrentUser
+        // update DataBrain allWorkOutResultsCurrentUser & dateLabelsCurrentUserWorkout
         let newWorkout = Workout(userID: DataBrain.sharedInstance.currentUserID, workOutResult: self.listWorkoutTest, date: Timestamp(date: self.workoutDate))
+        let workOutDate = self.dateString(timeStampDate: newWorkout.date)
+        DataBrain.sharedInstance.dateLabelsCurrentUserWorkout.append(workOutDate)
         DataBrain.sharedInstance.allWorkOutResultsCurrentUser.append(newWorkout)
 
+    }
+    
+    // Func to format the Date of workout Results
+    func dateString(timeStampDate: Timestamp) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d"
+        let date = timeStampDate.dateValue()
+        let dateString = dateFormatter.string(from: date)
+        
+        return dateString
     }
 
     

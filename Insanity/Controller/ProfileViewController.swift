@@ -174,6 +174,7 @@ class ProfileViewController: UIViewController {
 //            UserDefaults.standard.removeObject(forKey: "USER_KEY_UID")
 //            UserDefaults.standard.synchronize()
             DataBrain.sharedInstance.allWorkOutResultsCurrentUser = []
+            DataBrain.sharedInstance.dateLabelsCurrentUserWorkout = []
             print("user logged out")
             DispatchQueue.main.async {
                 self.navigationController!.popToRootViewController(animated: true)

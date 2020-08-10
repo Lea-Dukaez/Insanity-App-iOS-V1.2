@@ -214,10 +214,9 @@ class DataBrain {
                             }
                             
                             let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
-                            self.allWorkOutResultsCurrentUser.append(newWorkout)
                             let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                             self.dateLabelsCurrentUserWorkout.append(workOutDate)
-
+                            self.allWorkOutResultsCurrentUser.append(newWorkout)
                         }
                     }
                 }
