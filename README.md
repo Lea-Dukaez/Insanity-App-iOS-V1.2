@@ -2,6 +2,8 @@
 
 App made to record Workout Results of Fit Test from Insanity Workout, track progress and compare yourself with friends. This is a second version with more features and a more modern design.
 
+App available in the App Store : Insanity Progress Tracking [Show in the App Store](https://apps.apple.com/us/app/id1524648423) 
+
 ## Motivation
 
 Taking up the challenge to complete the Insanity Workout Programm, I wanted to track my results and compare them with my friends'results. 
