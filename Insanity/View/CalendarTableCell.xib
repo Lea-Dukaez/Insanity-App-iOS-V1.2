@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseCalendarTableCell" rowHeight="68" id="KGk-i7-Jjw" customClass="CalendarTableCell" customModule="Insanity" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nrf-XK-Qin">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="68"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8l-6D-MdM" userLabel="dayView">
+                                <rect key="frame" x="0.0" y="0.0" width="80" height="68"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="irw-RX-vZe">
+                                        <rect key="frame" x="5" y="5" width="70" height="58"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21N-qR-R7e">
+                                                <rect key="frame" x="14.5" y="0.0" width="41.5" height="32.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" name="BrandOrangeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWl-eN-iUA">
+                                                <rect key="frame" x="20" y="32.5" width="30.5" height="25.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <color key="textColor" name="BrandOrangeColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="irw-RX-vZe" firstAttribute="leading" secondItem="n8l-6D-MdM" secondAttribute="leading" constant="5" id="F1u-Py-Q4z"/>
+                                    <constraint firstAttribute="bottom" secondItem="irw-RX-vZe" secondAttribute="bottom" constant="5" id="Jcj-zk-I2H"/>
+                                    <constraint firstItem="irw-RX-vZe" firstAttribute="top" secondItem="n8l-6D-MdM" secondAttribute="top" constant="5" id="LoC-6e-17A"/>
+                                    <constraint firstAttribute="trailing" secondItem="irw-RX-vZe" secondAttribute="trailing" constant="5" id="YKH-4U-8pq"/>
+                                    <constraint firstAttribute="width" constant="80" id="egD-rO-DnL"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kZP-dn-jHj" userLabel="activityView">
+                                <rect key="frame" x="88" y="0.0" width="232" height="68"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fit Test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJT-jD-N8d">
+                                        <rect key="frame" x="5" y="5" width="222" height="58"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="WJT-jD-N8d" secondAttribute="bottom" constant="5" id="f2a-ar-rzk"/>
+                                    <constraint firstItem="WJT-jD-N8d" firstAttribute="leading" secondItem="kZP-dn-jHj" secondAttribute="leading" constant="5" id="gjK-n3-kAb"/>
+                                    <constraint firstItem="WJT-jD-N8d" firstAttribute="top" secondItem="kZP-dn-jHj" secondAttribute="top" constant="5" id="mU1-Pf-Kte"/>
+                                    <constraint firstAttribute="trailing" secondItem="WJT-jD-N8d" secondAttribute="trailing" constant="5" id="uOE-d8-0bF"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="nrf-XK-Qin" secondAttribute="bottom" id="0me-CF-fmC"/>
+                    <constraint firstItem="nrf-XK-Qin" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ERG-EK-ZWq"/>
+                    <constraint firstItem="nrf-XK-Qin" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ex9-QD-L8c"/>
+                    <constraint firstAttribute="trailing" secondItem="nrf-XK-Qin" secondAttribute="trailing" id="tYy-53-xQ9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dayNumber" destination="21N-qR-R7e" id="CiV-vb-FtK"/>
+                <outlet property="dayOfTheWeek" destination="hWl-eN-iUA" id="0wg-Uw-qA8"/>
+                <outlet property="workoutLabel" destination="WJT-jD-N8d" id="OVl-tG-hWl"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="139.95535714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="BrandOrangeColor">
+            <color red="0.95300000905990601" green="0.65100002288818359" blue="0.51399999856948853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

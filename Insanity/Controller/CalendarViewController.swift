@@ -12,6 +12,12 @@ import Firebase
 class CalendarViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var calendarIcon: UIButton!
+    @IBOutlet weak var tableIcon: UIButton!
+    
+    let cell = "reuseCell"
     
     let db = Firestore.firestore()
     var currentUserID = ""
@@ -50,10 +56,19 @@ class CalendarViewController: UIViewController {
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-
         
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        tableView.register(UINib(nibName: "CalendarTableCell", bundle: nil), forCellReuseIdentifier: "reuseCalendarTableCell")
+
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
+        
+        calendarIcon.tintColor = UIColor(named: K.BrandColor.orangeBrancColor)
+        tableIcon.tintColor = .secondaryLabel
+        collectionView.alpha = 1
+        tableView.alpha = 0
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +90,23 @@ class CalendarViewController: UIViewController {
             }
         }
     }
+    
+    
+    @IBAction func calendarViewTapped(_ sender: UIButton) {
+        calendarIcon.tintColor = UIColor(named: K.BrandColor.orangeBrancColor)
+        collectionView.alpha = 1
+        tableIcon.tintColor = .secondaryLabel
+        tableView.alpha = 0
+        
+    }
+    
+    @IBAction func tableViewTapped(_ sender: UIButton) {
+        tableIcon.tintColor = UIColor(named: K.BrandColor.orangeBrancColor)
+        tableView.alpha = 1
+        calendarIcon.tintColor = .secondaryLabel
+        collectionView.alpha = 0
+    }
+    
     
 }
 
@@ -132,8 +164,45 @@ extension CalendarViewController: UICollectionViewDelegate {
     
 }
 
+extension CalendarViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return weekNb.count
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionTitleKey = (section+1)*8
+        return weekNb[sectionTitleKey]
+    }
+ 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return days.count - 1
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseCalendarTableCell", for: indexPath) as! CalendarTableCell
+
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        cell.dayNumber.text = "Day \((section*7) + (row+1))"
+        cell.dayOfTheWeek.text = "\(days[row+1])."
+        
+        let workoutNumber = workOutCalendar[(section*8) + (row+1)]
+        cell.workoutLabel.text = program[workoutNumber]
+
+        return cell
+    }
+    
+}
+
+extension CalendarViewController: UITableViewDelegate {
+    
+}
 extension CalendarViewController: dataBrainCalendarDelegate {
     func getCalendar() {
         self.collectionView.reloadData()
     }
 }
+

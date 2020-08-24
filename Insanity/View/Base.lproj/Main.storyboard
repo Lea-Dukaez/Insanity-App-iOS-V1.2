@@ -2044,8 +2044,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cwa-gL-O13">
+                                <rect key="frame" x="0.0" y="90" width="414" height="639"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="95H-eg-uaf">
-                                <rect key="frame" x="0.0" y="30" width="414" height="699"/>
+                                <rect key="frame" x="0.0" y="90" width="414" height="639"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wsz-wN-JNp">
                                     <size key="itemSize" width="128" height="128"/>
@@ -2081,19 +2085,66 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hZs-EX-lzI">
+                                <rect key="frame" x="10" y="10" width="394" height="60"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z7A-TW-6Xe">
+                                        <rect key="frame" x="0.0" y="0.0" width="254" height="60"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-PV-AFF">
+                                        <rect key="frame" x="264" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="APM-YU-elr"/>
+                                            <constraint firstAttribute="height" constant="60" id="BsT-Hk-P0t"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="rectangle.grid.1x2" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="light"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tableViewTapped:" destination="Gqy-es-NxO" eventType="touchUpInside" id="hni-I1-Rjw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CAn-rA-HU9">
+                                        <rect key="frame" x="334" y="0.0" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="0yC-fT-TAo"/>
+                                            <constraint firstAttribute="height" constant="60" id="O3p-hY-Cs4"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="calendar" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="light"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="calendarViewTapped:" destination="Gqy-es-NxO" eventType="touchUpInside" id="EZK-tc-tdb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="klg-kr-lbV" firstAttribute="bottom" secondItem="95H-eg-uaf" secondAttribute="bottom" constant="30" id="7XY-Uh-oMv"/>
-                            <constraint firstItem="95H-eg-uaf" firstAttribute="top" secondItem="klg-kr-lbV" secondAttribute="top" constant="30" id="97c-Ee-z2d"/>
+                            <constraint firstItem="Cwa-gL-O13" firstAttribute="top" secondItem="hZs-EX-lzI" secondAttribute="bottom" constant="20" id="Ccb-xa-fwy"/>
+                            <constraint firstItem="hZs-EX-lzI" firstAttribute="leading" secondItem="b7w-XM-7cF" secondAttribute="leading" constant="10" id="MYE-qB-Wrd"/>
+                            <constraint firstItem="hZs-EX-lzI" firstAttribute="top" secondItem="klg-kr-lbV" secondAttribute="top" constant="10" id="N0q-30-7yL"/>
+                            <constraint firstItem="Cwa-gL-O13" firstAttribute="leading" secondItem="klg-kr-lbV" secondAttribute="leading" id="Swa-Il-F07"/>
+                            <constraint firstItem="klg-kr-lbV" firstAttribute="trailing" secondItem="Cwa-gL-O13" secondAttribute="trailing" id="TGs-G6-bxY"/>
+                            <constraint firstItem="95H-eg-uaf" firstAttribute="top" secondItem="hZs-EX-lzI" secondAttribute="bottom" constant="20" id="UTm-M9-RDz"/>
                             <constraint firstItem="95H-eg-uaf" firstAttribute="leading" secondItem="klg-kr-lbV" secondAttribute="leading" id="X1C-vy-kP9"/>
+                            <constraint firstItem="klg-kr-lbV" firstAttribute="bottom" secondItem="Cwa-gL-O13" secondAttribute="bottom" constant="30" id="eco-EE-KKs"/>
                             <constraint firstItem="klg-kr-lbV" firstAttribute="trailing" secondItem="95H-eg-uaf" secondAttribute="trailing" id="f9L-Cd-N1W"/>
+                            <constraint firstAttribute="trailing" secondItem="hZs-EX-lzI" secondAttribute="trailing" constant="10" id="gED-KL-Ofr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="klg-kr-lbV"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Calendar" image="iconCalendar" id="tHz-g6-Ubg"/>
                     <connections>
+                        <outlet property="calendarIcon" destination="CAn-rA-HU9" id="ZtE-mW-fcm"/>
                         <outlet property="collectionView" destination="95H-eg-uaf" id="9Cb-LN-V9u"/>
+                        <outlet property="tableIcon" destination="EQ9-PV-AFF" id="m4Y-zc-dM2"/>
+                        <outlet property="tableView" destination="Cwa-gL-O13" id="Hqh-TM-wlF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GeM-C0-oUC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2115,6 +2166,7 @@
         <image name="avatar13" width="528" height="560"/>
         <image name="avatar14" width="528" height="560"/>
         <image name="avatar9" width="528" height="560"/>
+        <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="iconActivity" width="30" height="30"/>
         <image name="iconCalendar" width="30" height="30"/>
@@ -2122,6 +2174,7 @@
         <image name="iconTrophy" width="30" height="30"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="orangePodium" width="1000" height="1000"/>
+        <image name="rectangle.grid.1x2" catalog="system" width="128" height="101"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BrandOrangeColor">
             <color red="0.95300000905990601" green="0.65100002288818359" blue="0.51399999856948853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

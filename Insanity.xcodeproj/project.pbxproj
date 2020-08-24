@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0F764AF46A0531FF3F017AC4 /* Pods_Insanity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBD0E847B193FD1255230848 /* Pods_Insanity.framework */; };
+		662572F524F3A7F700E72B6D /* CalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662572F324F3A7F700E72B6D /* CalendarTableCell.swift */; };
+		662572F624F3A7F700E72B6D /* CalendarTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662572F424F3A7F700E72B6D /* CalendarTableCell.xib */; };
 		665B446624D16F090069E127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 665B446524D16F090069E127 /* GoogleService-Info.plist */; };
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
 		DB1F3E812499084C00F76EE1 /* AddFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */; };
@@ -51,6 +53,8 @@
 
 /* Begin PBXFileReference section */
 		18923745523456280EA15E20 /* Pods-Insanity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.release.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.release.xcconfig"; sourceTree = "<group>"; };
+		662572F324F3A7F700E72B6D /* CalendarTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableCell.swift; sourceTree = "<group>"; };
+		662572F424F3A7F700E72B6D /* CalendarTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarTableCell.xib; sourceTree = "<group>"; };
 		665B446524D16F090069E127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		775272C35787601C39137079 /* Pods-Insanity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.debug.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.debug.xcconfig"; sourceTree = "<group>"; };
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				DBA637CE249BADA2008E92CA /* AddFriendCell.xib */,
 				DBF15F6624AC681D004EF1D6 /* CalendarCollectionViewCell.swift */,
 				DBF15F6824AC7A85004EF1D6 /* ColumnFlowLayout.swift */,
+				662572F324F3A7F700E72B6D /* CalendarTableCell.swift */,
+				662572F424F3A7F700E72B6D /* CalendarTableCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662572F624F3A7F700E72B6D /* CalendarTableCell.xib in Resources */,
 				DBD7933224522661009358F8 /* LaunchScreen.storyboard in Resources */,
 				DB989B352452EE74009F2C6F /* UserCell.xib in Resources */,
 				DB69838E24543B0C00B84087 /* WorkoutCell.xib in Resources */,
@@ -356,6 +363,7 @@
 				DB97C55F246AF891008348E1 /* AvatarCollectionViewCell.swift in Sources */,
 				DB69839024543DCE00B84087 /* Workout.swift in Sources */,
 				DB989B392452F730009F2C6F /* TestViewController.swift in Sources */,
+				662572F524F3A7F700E72B6D /* CalendarTableCell.swift in Sources */,
 				DB97C559246A815C008348E1 /* SignUpViewController.swift in Sources */,
 				DBD793282452265D009358F8 /* SceneDelegate.swift in Sources */,
 				DBF15F6B24ACDFFF004EF1D6 /* CalendarViewController.swift in Sources */,
