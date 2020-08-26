@@ -22,6 +22,16 @@ class TestViewController: UIViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var validateButton: UIButton!
     
+    
+    @IBOutlet weak var SwitchKicksLabel: UILabel!
+    @IBOutlet weak var PowerJacksLabel: UILabel!
+    @IBOutlet weak var PowerKneesLabel: UILabel!
+    @IBOutlet weak var PowerJumpsLabel: UILabel!
+    @IBOutlet weak var GlobalJumpSquatLabel: UILabel!
+    @IBOutlet weak var SuicideJumpLabel: UILabel!
+    @IBOutlet weak var PushUpJacksLabel: UILabel!
+    @IBOutlet weak var LowPlankObliqueLabel: UILabel!
+    
     @IBOutlet weak var SKTextField: UITextField!
     @IBOutlet weak var PJKTextField: UITextField!
     @IBOutlet weak var PKTextField: UITextField!
@@ -30,6 +40,7 @@ class TestViewController: UIViewController {
     @IBOutlet weak var SJTextField: UITextField!
     @IBOutlet weak var PUJKTextField: UITextField!
     @IBOutlet weak var PMCTextField: UITextField!
+    
     
     override func viewWillAppear(_ animated: Bool) { navigationController?.isNavigationBarHidden = false }
     override func viewWillDisappear(_ animated: Bool) { navigationController?.isNavigationBarHidden = true }
