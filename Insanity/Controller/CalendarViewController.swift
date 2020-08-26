@@ -93,18 +93,23 @@ class CalendarViewController: UIViewController {
     
     
     @IBAction func calendarViewTapped(_ sender: UIButton) {
+        self.collectionView.reloadData()
         calendarIcon.tintColor = UIColor(named: K.BrandColor.orangeBrancColor)
         collectionView.alpha = 1
         tableIcon.tintColor = .secondaryLabel
         tableView.alpha = 0
         
+
+        
     }
     
     @IBAction func tableViewTapped(_ sender: UIButton) {
+        self.tableView.reloadData()
         tableIcon.tintColor = UIColor(named: K.BrandColor.orangeBrancColor)
         tableView.alpha = 1
         calendarIcon.tintColor = .secondaryLabel
         collectionView.alpha = 0
+        
     }
     
     
@@ -189,20 +194,42 @@ extension CalendarViewController: UITableViewDataSource {
         cell.dayNumber.text = "Day \((section*7) + (row+1))"
         cell.dayOfTheWeek.text = "\(days[row+1])."
         
-        let workoutNumber = workOutCalendar[(section*8) + (row+1)]
+        let index = (section*8) + (row+1)
+        let workoutNumber = workOutCalendar[index]
         cell.workoutLabel.text = program[workoutNumber]
-
+        
+        cell.backgroundColor = DataBrain.sharedInstance.calendarCurrentUser[index] ? UIColor(named: K.BrandColor.orangeBrancColor) : .secondarySystemBackground
+        
+        cell.accessoryType = DataBrain.sharedInstance.calendarCurrentUser[index] ? .checkmark : .none
+        
         return cell
     }
     
+
 }
 
 extension CalendarViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        let index = (section*8) + (row+1)
+        
+        DataBrain.sharedInstance.calendarCurrentUser[index] = DataBrain.sharedInstance.calendarCurrentUser[index] == false ? true : false
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.tableView.reloadData()
+        
+    }
+    
 }
+
 extension CalendarViewController: dataBrainCalendarDelegate {
     func getCalendar() {
         self.collectionView.reloadData()
+        self.tableView.reloadData()
     }
 }
 

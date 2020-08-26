@@ -10,6 +10,7 @@ import UIKit
 
 class CalendarTableCell: UITableViewCell {
 
+    @IBOutlet weak var activityCellView: UIView!
     @IBOutlet weak var dayNumber: UILabel!
     @IBOutlet weak var dayOfTheWeek: UILabel!
     @IBOutlet weak var workoutLabel: UILabel!

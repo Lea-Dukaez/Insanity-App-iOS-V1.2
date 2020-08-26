@@ -23,18 +23,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8l-6D-MdM" userLabel="dayView">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="68"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="irw-RX-vZe">
-                                        <rect key="frame" x="5" y="5" width="70" height="58"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="irw-RX-vZe">
+                                        <rect key="frame" x="5" y="8" width="70" height="52"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21N-qR-R7e">
-                                                <rect key="frame" x="14.5" y="0.0" width="41.5" height="32.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <rect key="frame" x="16.5" y="0.0" width="37.5" height="26"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" name="BrandOrangeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hWl-eN-iUA">
-                                                <rect key="frame" x="20" y="32.5" width="30.5" height="25.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <rect key="frame" x="22" y="26" width="26.5" height="26"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <color key="textColor" name="BrandOrangeColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -44,8 +44,8 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="irw-RX-vZe" firstAttribute="leading" secondItem="n8l-6D-MdM" secondAttribute="leading" constant="5" id="F1u-Py-Q4z"/>
-                                    <constraint firstAttribute="bottom" secondItem="irw-RX-vZe" secondAttribute="bottom" constant="5" id="Jcj-zk-I2H"/>
-                                    <constraint firstItem="irw-RX-vZe" firstAttribute="top" secondItem="n8l-6D-MdM" secondAttribute="top" constant="5" id="LoC-6e-17A"/>
+                                    <constraint firstAttribute="bottom" secondItem="irw-RX-vZe" secondAttribute="bottom" constant="8" id="Jcj-zk-I2H"/>
+                                    <constraint firstItem="irw-RX-vZe" firstAttribute="top" secondItem="n8l-6D-MdM" secondAttribute="top" constant="8" id="LoC-6e-17A"/>
                                     <constraint firstAttribute="trailing" secondItem="irw-RX-vZe" secondAttribute="trailing" constant="5" id="YKH-4U-8pq"/>
                                     <constraint firstAttribute="width" constant="80" id="egD-rO-DnL"/>
                                 </constraints>
@@ -54,15 +54,14 @@
                                 <rect key="frame" x="88" y="0.0" width="232" height="68"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fit Test" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJT-jD-N8d">
-                                        <rect key="frame" x="5" y="5" width="222" height="58"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <rect key="frame" x="10" y="5" width="217" height="58"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="WJT-jD-N8d" secondAttribute="bottom" constant="5" id="f2a-ar-rzk"/>
-                                    <constraint firstItem="WJT-jD-N8d" firstAttribute="leading" secondItem="kZP-dn-jHj" secondAttribute="leading" constant="5" id="gjK-n3-kAb"/>
+                                    <constraint firstItem="WJT-jD-N8d" firstAttribute="leading" secondItem="kZP-dn-jHj" secondAttribute="leading" constant="10" id="gjK-n3-kAb"/>
                                     <constraint firstItem="WJT-jD-N8d" firstAttribute="top" secondItem="kZP-dn-jHj" secondAttribute="top" constant="5" id="mU1-Pf-Kte"/>
                                     <constraint firstAttribute="trailing" secondItem="WJT-jD-N8d" secondAttribute="trailing" constant="5" id="uOE-d8-0bF"/>
                                 </constraints>
@@ -70,6 +69,7 @@
                         </subviews>
                     </stackView>
                 </subviews>
+                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="nrf-XK-Qin" secondAttribute="bottom" id="0me-CF-fmC"/>
                     <constraint firstItem="nrf-XK-Qin" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ERG-EK-ZWq"/>
@@ -79,6 +79,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="activityCellView" destination="kZP-dn-jHj" id="IMg-mh-Ahl"/>
                 <outlet property="dayNumber" destination="21N-qR-R7e" id="CiV-vb-FtK"/>
                 <outlet property="dayOfTheWeek" destination="hWl-eN-iUA" id="0wg-Uw-qA8"/>
                 <outlet property="workoutLabel" destination="WJT-jD-N8d" id="OVl-tG-hWl"/>
