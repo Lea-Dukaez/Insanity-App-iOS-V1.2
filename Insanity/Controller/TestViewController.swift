@@ -15,6 +15,7 @@ class TestViewController: UIViewController {
     var workoutDate = Date()
     var listWorkoutTest = [Double]()
     var textFieldArray = [UITextField]()
+    var workoutLabelsArray = [UILabel]()
     
     let alert = UIAlertController(title: "Incomplete", message: "Please fill all the exercises", preferredStyle: UIAlertController.Style.alert)
     let forbiddenNumber = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
@@ -52,11 +53,17 @@ class TestViewController: UIViewController {
         datePicker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
     
         textFieldArray = [SKTextField, PJKTextField, PKTextField, PJTextField, JSQTextField, SJTextField, PUJKTextField, PMCTextField]
+        workoutLabelsArray = [SwitchKicksLabel, PowerJacksLabel, PowerKneesLabel, PowerJumpsLabel,
+                              GlobalJumpSquatLabel, SuicideJumpLabel, PushUpJacksLabel, LowPlankObliqueLabel]
 
         for textField in textFieldArray {
             textField.delegate = self
             textField.smartInsertDeleteType = UITextSmartInsertDeleteType.no
             textField.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(doneButtonClicked))
+        }
+        
+        for (index,workoutLabel) in workoutLabelsArray.enumerated() {
+            workoutLabel.text = DataBrain.sharedInstance.currentUserMaxValues.isEmpty ? "" : "Best score: \(Int(DataBrain.sharedInstance.currentUserMaxValues[index]))"
         }
     }
     
