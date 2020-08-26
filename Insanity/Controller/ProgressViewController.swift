@@ -14,50 +14,67 @@ class ProgressViewController: UIViewController {
         
     var chartBrain: ChartBrain?
     
+    @IBOutlet weak var filterSegment: UISegmentedControl!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var percentLabel: UILabel!
     @IBOutlet weak var addTestButton: UIButton!
-    @IBOutlet weak var segment1: UISegmentedControl!
-    @IBOutlet weak var segment2: UISegmentedControl!
+    @IBOutlet weak var workoutSegment1: UISegmentedControl!
+    @IBOutlet weak var workoutSegment2: UISegmentedControl!
     @IBOutlet weak var barChart: BarChartView!
+    @IBOutlet weak var testsTableView: UITableView!
+    @IBOutlet weak var typeView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         DataBrain.sharedInstance.dataBrainProgressDelegate = self
+        
+        typeView.alpha = 1
+        testsTableView.alpha = 0
 
         chartBrain = ChartBrain(barChart: barChart)
         chartBrain?.barChart.noDataText = ""
         
-        addTestButton.backgroundColor = .clear
-        addTestButton.layer.borderWidth = 1
-        addTestButton.layer.borderColor = UIColor.label.cgColor
-        addTestButton.layer.cornerRadius = 3
-        
         UILabel.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).numberOfLines = 0
 
-        segment2.selectedSegmentIndex = -1
+        workoutSegment2.selectedSegmentIndex = -1
         
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
-            segment1.selectedSegmentIndex = -1
+            workoutSegment1.selectedSegmentIndex = -1
             progressLabel.text = "Let's get started with your first fit test."
             percentLabel.text = "Go!"
         } else {
-            segment1.selectedSegmentIndex = 0
+            workoutSegment1.selectedSegmentIndex = 0
             DataBrain.sharedInstance.loadWorkoutData()
         }
+        
+//        self.testsTableView.dataSource = self
+//         self.testsTableView.delegate = self
+         testsTableView.register(UINib(nibName: "TestResultCell", bundle: nil), forCellReuseIdentifier: "reuseTestResultCell")
     }
+    
+    
 
+    @IBAction func filterSegmentTapped(_ sender: UISegmentedControl) {
+        print(sender.selectedSegmentIndex)
+        if sender.selectedSegmentIndex == 0 {
+            typeView.alpha = 1
+            testsTableView.alpha = 0
+        } else {
+            typeView.alpha = 0
+            testsTableView.alpha = 1
+        }
+    }
     
     @IBAction func segmentedControlPressed(_ sender: UISegmentedControl) {
         if !DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
             var index = 0
-            if sender == segment1 {
-                index = segment1.selectedSegmentIndex
-                segment2.selectedSegmentIndex = -1
-            } else if sender == segment2 {
-                index = 4 + segment2.selectedSegmentIndex
-                segment1.selectedSegmentIndex = -1
+            if sender == workoutSegment1 {
+                index = workoutSegment1.selectedSegmentIndex
+                workoutSegment2.selectedSegmentIndex = -1
+            } else if sender == workoutSegment2 {
+                index = 4 + workoutSegment2.selectedSegmentIndex
+                workoutSegment1.selectedSegmentIndex = -1
             }
 
             chartBrain?.barChartUpdate(workOutSelected: index, uid: DataBrain.sharedInstance.currentUserID)
@@ -68,8 +85,8 @@ class ProgressViewController: UIViewController {
                 updateProgressForWorkout(workOutSelected: index)
             }
         } else {
-            segment1.selectedSegmentIndex = -1
-            segment2.selectedSegmentIndex = -1
+            workoutSegment1.selectedSegmentIndex = -1
+            workoutSegment2.selectedSegmentIndex = -1
         }
     }
     
@@ -107,12 +124,12 @@ class ProgressViewController: UIViewController {
 extension ProgressViewController: DataBrainProgressDelegate {
     func updateProgressChart() {
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
-            segment1.selectedSegmentIndex = -1
-            segment2.selectedSegmentIndex = -1
+            workoutSegment1.selectedSegmentIndex = -1
+            workoutSegment2.selectedSegmentIndex = -1
         } else {
-            segment1.selectedSegmentIndex = 0
-            segment2.selectedSegmentIndex = -1
-            let index = self.segment1.selectedSegmentIndex
+            workoutSegment1.selectedSegmentIndex = 0
+            workoutSegment2.selectedSegmentIndex = -1
+            let index = self.workoutSegment1.selectedSegmentIndex
             self.updateProgressForWorkout(workOutSelected: index)
             self.chartBrain?.barChartUpdate(workOutSelected: index, uid: DataBrain.sharedInstance.currentUserID)
         }
@@ -120,3 +137,40 @@ extension ProgressViewController: DataBrainProgressDelegate {
     
     
 }
+
+extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
+       func numberOfSections(in tableView: UITableView) -> Int {
+           return Int(DataBrain.sharedInstance.numberOfTestsCurrentUser)
+       }
+
+       func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        
+        let testDate = workoutsTestsSorted[section].date // FatalErro out of range => getDatatoLate ? 
+        
+        return DataBrain.sharedInstance.dateString(timeStampDate: testDate)
+       }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return K.workout.workoutMove.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseTestResultCell", for: indexPath) as! TestResultCell
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        
+        cell.workoutLabel.text = K.workout.workoutMove[row]
+        cell.workoutScore.text = String(format: "%.0f",workoutsTestsSorted[section].workOutResult[row])
+
+        return cell
+    }
+    
+
+}
+
+
+

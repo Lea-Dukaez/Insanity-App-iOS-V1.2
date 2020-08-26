@@ -1203,22 +1203,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53S-76-BCi">
-                                <rect key="frame" x="40" y="689" width="334" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tsm-i1-hZS" userLabel="Add Test View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="53S-76-BCi">
+                                        <rect key="frame" x="354" y="0.0" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="to4-xB-Zn9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" name="BrandOrangeColor"/>
+                                        <state key="normal" image="plus.circle.fill" catalog="system">
+                                            <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large" weight="medium"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="addTestPressed:" destination="0R8-ZT-1QA" eventType="touchUpInside" id="fug-sx-SeC"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="9zJ-wD-8dd"/>
+                                    <constraint firstAttribute="bottom" secondItem="53S-76-BCi" secondAttribute="bottom" id="AG3-UI-5w8"/>
+                                    <constraint firstAttribute="trailing" secondItem="53S-76-BCi" secondAttribute="trailing" constant="10" id="QgT-bc-oah"/>
+                                    <constraint firstAttribute="height" constant="50" id="eZn-6x-nDa"/>
+                                    <constraint firstItem="53S-76-BCi" firstAttribute="top" secondItem="Tsm-i1-hZS" secondAttribute="top" id="m7Z-pS-vs4"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                <state key="normal" title="ADD FIT TEST RESULTS">
-                                    <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="addTestPressed:" destination="0R8-ZT-1QA" eventType="touchUpInside" id="fug-sx-SeC"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="GpL-i3-Fmc">
-                                <rect key="frame" x="10" y="30" width="394" height="639"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6zc-c4-b2e" userLabel="Choice View">
+                                <rect key="frame" x="0.0" y="50" width="414" height="50"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Psc-GG-FvT">
+                                        <rect key="frame" x="40" y="5" width="334" height="41"/>
+                                        <segments>
+                                            <segment title="by Type"/>
+                                            <segment title="by Date"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="filterSegmentTapped:" destination="0R8-ZT-1QA" eventType="valueChanged" id="QFw-Ok-zx9"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="4JP-Ra-ezv"/>
+                                    <constraint firstAttribute="trailing" secondItem="Psc-GG-FvT" secondAttribute="trailing" constant="40" id="SZm-83-E2s"/>
+                                    <constraint firstAttribute="bottom" secondItem="Psc-GG-FvT" secondAttribute="bottom" constant="5" id="Txr-Ki-Cjt"/>
+                                    <constraint firstItem="Psc-GG-FvT" firstAttribute="top" secondItem="6zc-c4-b2e" secondAttribute="top" constant="5" id="X76-Ax-7Or"/>
+                                    <constraint firstItem="Psc-GG-FvT" firstAttribute="leading" secondItem="6zc-c4-b2e" secondAttribute="leading" constant="40" id="d82-Gf-Egt"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" alpha="0.0" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fWq-Y6-vHa">
+                                <rect key="frame" x="0.0" y="120" width="414" height="639"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="GpL-i3-Fmc" userLabel="Type Stack View">
+                                <rect key="frame" x="10" y="120" width="394" height="639"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Zdc-0l-A7o" userLabel="Segment Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="92"/>
@@ -1354,14 +1394,21 @@
                             <constraint firstAttribute="trailing" secondItem="GpL-i3-Fmc" secondAttribute="trailing" constant="10" id="65j-ua-dKy">
                                 <variation key="heightClass=regular-widthClass=regular" constant="50"/>
                             </constraint>
-                            <constraint firstItem="GpL-i3-Fmc" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" constant="30" id="Acn-TW-Dz4"/>
+                            <constraint firstItem="Tsm-i1-hZS" firstAttribute="top" secondItem="glq-rp-bN8" secondAttribute="top" id="6p0-ms-IWf"/>
+                            <constraint firstItem="Tsm-i1-hZS" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="Ejm-sA-gEP"/>
+                            <constraint firstItem="6zc-c4-b2e" firstAttribute="top" secondItem="Tsm-i1-hZS" secondAttribute="bottom" id="FaU-re-taV"/>
+                            <constraint firstItem="GpL-i3-Fmc" firstAttribute="top" secondItem="6zc-c4-b2e" secondAttribute="bottom" constant="20" id="HQq-Gz-aCn"/>
                             <constraint firstItem="GpL-i3-Fmc" firstAttribute="leading" secondItem="Gak-lA-93W" secondAttribute="leading" constant="10" id="OHb-iM-40X">
                                 <variation key="heightClass=regular-widthClass=regular" constant="50"/>
                             </constraint>
-                            <constraint firstItem="53S-76-BCi" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" constant="40" id="PES-Zi-6mx"/>
-                            <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="53S-76-BCi" secondAttribute="bottom" constant="30" id="Ump-Na-jxT"/>
-                            <constraint firstItem="53S-76-BCi" firstAttribute="top" secondItem="GpL-i3-Fmc" secondAttribute="bottom" constant="20" id="nUm-z9-f7g"/>
-                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="53S-76-BCi" secondAttribute="trailing" constant="40" id="qJA-Lb-ED6"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="6zc-c4-b2e" secondAttribute="trailing" id="P8u-0j-Y4F"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="fWq-Y6-vHa" secondAttribute="trailing" id="X90-iD-d7y"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="trailing" secondItem="Tsm-i1-hZS" secondAttribute="trailing" id="Xfu-zi-4Yp"/>
+                            <constraint firstItem="fWq-Y6-vHa" firstAttribute="top" secondItem="6zc-c4-b2e" secondAttribute="bottom" constant="20" id="dlb-lt-fFz"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="GpL-i3-Fmc" secondAttribute="bottom" id="gLK-0o-mQs"/>
+                            <constraint firstItem="fWq-Y6-vHa" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="qqu-rB-Lxz"/>
+                            <constraint firstItem="6zc-c4-b2e" firstAttribute="leading" secondItem="glq-rp-bN8" secondAttribute="leading" id="zAN-re-r5A"/>
+                            <constraint firstItem="glq-rp-bN8" firstAttribute="bottom" secondItem="fWq-Y6-vHa" secondAttribute="bottom" id="zdD-V0-8ZT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="glq-rp-bN8"/>
                     </view>
@@ -1370,10 +1417,13 @@
                     <connections>
                         <outlet property="addTestButton" destination="53S-76-BCi" id="Pxi-pN-ZAt"/>
                         <outlet property="barChart" destination="Y54-26-QBy" id="tTQ-sp-4mI"/>
+                        <outlet property="filterSegment" destination="Psc-GG-FvT" id="AOC-W4-9MX"/>
                         <outlet property="percentLabel" destination="Qut-mV-zlW" id="0Q2-Xk-B9s"/>
                         <outlet property="progressLabel" destination="nMV-dd-o7J" id="VWF-L0-pEY"/>
-                        <outlet property="segment1" destination="STN-OI-1Mi" id="jyF-LO-bep"/>
-                        <outlet property="segment2" destination="evY-rq-8MT" id="kwx-CG-r8w"/>
+                        <outlet property="testsTableView" destination="fWq-Y6-vHa" id="40c-zC-ISK"/>
+                        <outlet property="typeView" destination="GpL-i3-Fmc" id="ErP-Yo-zFs"/>
+                        <outlet property="workoutSegment1" destination="STN-OI-1Mi" id="jyF-LO-bep"/>
+                        <outlet property="workoutSegment2" destination="evY-rq-8MT" id="kwx-CG-r8w"/>
                         <segue destination="TnM-Vq-Ygn" kind="show" identifier="goToTest" id="amr-TI-1n0"/>
                     </connections>
                 </viewController>
@@ -2271,6 +2321,7 @@
         <image name="iconTrophy" width="30" height="30"/>
         <image name="info.circle" catalog="system" width="128" height="121"/>
         <image name="orangePodium" width="1000" height="1000"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="rectangle.grid.1x2" catalog="system" width="128" height="101"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <namedColor name="BrandOrangeColor">

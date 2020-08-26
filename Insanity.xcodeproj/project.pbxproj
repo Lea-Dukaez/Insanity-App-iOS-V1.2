@@ -11,6 +11,8 @@
 		662572F524F3A7F700E72B6D /* CalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662572F324F3A7F700E72B6D /* CalendarTableCell.swift */; };
 		662572F624F3A7F700E72B6D /* CalendarTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 662572F424F3A7F700E72B6D /* CalendarTableCell.xib */; };
 		665B446624D16F090069E127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 665B446524D16F090069E127 /* GoogleService-Info.plist */; };
+		66A9A9BB24F6F1F7006D03BE /* TestResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A9A9B924F6F1F7006D03BE /* TestResultCell.swift */; };
+		66A9A9BC24F6F1F7006D03BE /* TestResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66A9A9BA24F6F1F7006D03BE /* TestResultCell.xib */; };
 		DB02D3B2246EBCE100DAFB35 /* PodiumCompetitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */; };
 		DB1F3E812499084C00F76EE1 /* AddFriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */; };
 		DB3EF6F724C19407003828B6 /* InfosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EF6F624C19407003828B6 /* InfosTableViewController.swift */; };
@@ -56,6 +58,8 @@
 		662572F324F3A7F700E72B6D /* CalendarTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableCell.swift; sourceTree = "<group>"; };
 		662572F424F3A7F700E72B6D /* CalendarTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarTableCell.xib; sourceTree = "<group>"; };
 		665B446524D16F090069E127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		66A9A9B924F6F1F7006D03BE /* TestResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestResultCell.swift; sourceTree = "<group>"; };
+		66A9A9BA24F6F1F7006D03BE /* TestResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestResultCell.xib; sourceTree = "<group>"; };
 		775272C35787601C39137079 /* Pods-Insanity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Insanity.debug.xcconfig"; path = "Target Support Files/Pods-Insanity/Pods-Insanity.debug.xcconfig"; sourceTree = "<group>"; };
 		DB02D3B1246EBCE100DAFB35 /* PodiumCompetitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodiumCompetitor.swift; sourceTree = "<group>"; };
 		DB1F3E802499084C00F76EE1 /* AddFriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsTableViewController.swift; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				DBF15F6824AC7A85004EF1D6 /* ColumnFlowLayout.swift */,
 				662572F324F3A7F700E72B6D /* CalendarTableCell.swift */,
 				662572F424F3A7F700E72B6D /* CalendarTableCell.xib */,
+				66A9A9B924F6F1F7006D03BE /* TestResultCell.swift */,
+				66A9A9BA24F6F1F7006D03BE /* TestResultCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -280,6 +286,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66A9A9BC24F6F1F7006D03BE /* TestResultCell.xib in Resources */,
 				662572F624F3A7F700E72B6D /* CalendarTableCell.xib in Resources */,
 				DBD7933224522661009358F8 /* LaunchScreen.storyboard in Resources */,
 				DB989B352452EE74009F2C6F /* UserCell.xib in Resources */,
@@ -342,6 +349,7 @@
 			files = (
 				DB989B372452F085009F2C6F /* Constants.swift in Sources */,
 				DBF15F6924AC7A85004EF1D6 /* ColumnFlowLayout.swift in Sources */,
+				66A9A9BB24F6F1F7006D03BE /* TestResultCell.swift in Sources */,
 				DB3EF71B24C56F14003828B6 /* TermsFromSignUpViewController.swift in Sources */,
 				DBF15F6324AB19CB004EF1D6 /* DataBrain.swift in Sources */,
 				DBCA76E124AA1DE9005D1FD2 /* ChartBrain.swift in Sources */,
