@@ -63,7 +63,7 @@ class TestViewController: UIViewController {
         }
         
         for (index,workoutLabel) in workoutLabelsArray.enumerated() {
-            workoutLabel.text = DataBrain.sharedInstance.currentUserMaxValues.isEmpty ? "" : "Best score: \(Int(DataBrain.sharedInstance.currentUserMaxValues[index]))"
+            workoutLabel.text = DataBrain.sharedInstance.currentUserMaxValues.isEmpty ? "" : "Your best score: \(Int(DataBrain.sharedInstance.currentUserMaxValues[index]))"
         }
     }
     
