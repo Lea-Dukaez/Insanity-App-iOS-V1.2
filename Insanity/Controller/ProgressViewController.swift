@@ -9,10 +9,14 @@
 import UIKit
 import Firebase
 import Charts
+import SwipeCellKit
 
 class ProgressViewController: UIViewController {
         
     var chartBrain: ChartBrain?
+    
+    let forbiddenNumber = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
+    
     
     @IBOutlet weak var filterSegment: UISegmentedControl!
     @IBOutlet weak var progressLabel: UILabel!
@@ -23,6 +27,7 @@ class ProgressViewController: UIViewController {
     @IBOutlet weak var barChart: BarChartView!
     @IBOutlet weak var testsTableView: UITableView!
     @IBOutlet weak var typeView: UIStackView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,21 +53,19 @@ class ProgressViewController: UIViewController {
             DataBrain.sharedInstance.loadWorkoutData()
         }
         
-//        self.testsTableView.dataSource = self
-//         self.testsTableView.delegate = self
          testsTableView.register(UINib(nibName: "TestResultCell", bundle: nil), forCellReuseIdentifier: "reuseTestResultCell")
     }
     
     
 
     @IBAction func filterSegmentTapped(_ sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
         if sender.selectedSegmentIndex == 0 {
             typeView.alpha = 1
             testsTableView.alpha = 0
         } else {
             typeView.alpha = 0
             testsTableView.alpha = 1
+            testsTableView.reloadData()
         }
     }
     
@@ -123,6 +126,8 @@ class ProgressViewController: UIViewController {
 
 extension ProgressViewController: DataBrainProgressDelegate {
     func updateProgressChart() {
+        self.testsTableView.dataSource = self
+        self.testsTableView.delegate = self
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
             workoutSegment1.selectedSegmentIndex = -1
             workoutSegment2.selectedSegmentIndex = -1
@@ -139,24 +144,37 @@ extension ProgressViewController: DataBrainProgressDelegate {
 }
 
 extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
-       func numberOfSections(in tableView: UITableView) -> Int {
-           return Int(DataBrain.sharedInstance.numberOfTestsCurrentUser)
-       }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return Int(DataBrain.sharedInstance.numberOfTestsCurrentUser)
+    }
 
-       func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        let testDate = workoutsTestsSorted[section].date // FatalErro out of range => getDatatoLate ? 
         
-        return DataBrain.sharedInstance.dateString(timeStampDate: testDate)
-       }
+        if DataBrain.sharedInstance.allWorkOutResultsCurrentUser.isEmpty {
+            return nil
+        } else {
+            let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+            let testDate = workoutsTestsSorted[section].date
+            return DataBrain.sharedInstance.dateString(timeStampDate: testDate)
+            
+        }
+
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return K.workout.workoutMove.count
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseTestResultCell", for: indexPath) as! TestResultCell
+        
+        cell.delegate = self
         
         let section = indexPath.section
         let row = indexPath.row
@@ -172,5 +190,86 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
+extension ProgressViewController: SwipeTableViewCellDelegate {
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        guard orientation == .right else { return nil }
+        
+        let section = indexPath.section
+        let row = indexPath.row
+        
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        
+        let testDate = workoutsTestsSorted[section].date
+        let exoDate = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
+        let exoName = K.workout.workoutMove[row]
+        let exoScore = String(format: "%.0f",workoutsTestsSorted[section].workOutResult[row])
+        
+        let editAction = SwipeAction(style: .default, title: "Edit") { (action, indexPath) in
+            // code
+            print("tapped to edit")
+            
+            self.showEditAlert(exo: exoName, date: exoDate, number: exoScore)
+        }
 
+        // customize the action appearance
+        editAction.backgroundColor = UIColor(named: K.BrandColor.orangeBrancColor)
 
+        return [editAction]
+    }
+    
+    private func showEditAlert(exo: String, date: String, number: String) {
+        
+        var numberTextField = UITextField()
+        
+        
+        let alert = UIAlertController(title: "Edit", message: "\(exo) from \(date)", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Save", style: .default) { (action) in
+            if numberTextField.text == "" {
+                // close alert with no update
+                print("no change")
+            } else {
+                // save new data in database and update table view
+                print("new value saved")
+                print(numberTextField.text!)
+            }
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.delegate = self
+            alertTextField.placeholder = number
+            numberTextField = alertTextField
+        }
+        
+        alert.addAction(action)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
+    }
+    
+}
+
+extension ProgressViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+
+        //Prevent "0" characters to be followed by other number
+        if forbiddenNumber.contains(text) {
+            return false
+        }
+        //Limit the character count to 3.
+        if ((textField.text!) + string).count > 3 {
+            return false
+        }
+        //Only allow numbers. No Copy-Paste text values.
+        let allowedCharacterSet = CharacterSet.init(charactersIn: "0123456789")
+        let textCharacterSet = CharacterSet.init(charactersIn: textField.text! + string)
+        if !allowedCharacterSet.isSuperset(of: textCharacterSet) {
+            return false
+        }
+        return true
+    }
+}

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class TestResultCell: UITableViewCell {
+class TestResultCell: SwipeTableViewCell {
 
     @IBOutlet weak var workoutLabel: UILabel!
     @IBOutlet weak var workoutScore: UILabel!

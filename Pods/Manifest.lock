@@ -257,6 +257,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
   - Charts
@@ -265,6 +266,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FRHyperLabel
   - IQKeyboardManagerSwift (= 6.5.0)
+  - SwipeCellKit
 
 SPEC REPOS:
   trunk:
@@ -289,6 +291,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - leveldb-library
     - nanopb
+    - SwipeCellKit
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -312,7 +315,8 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 6cd19976c6e871907c4ed9127c2d3affdd4defc2
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: d0a123cef934e4b9abbc50a2ff23411d6641366f
+PODFILE CHECKSUM: f9275b4a7edb3ade57a4c2c1a6f6f422a5035f37
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

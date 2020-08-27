@@ -6,6 +6,7 @@ target 'Insanity' do
   # Pods for Insanity
   pod 'IQKeyboardManagerSwift', '6.5.0'
   pod 'FRHyperLabel'
+  pod 'SwipeCellKit'
   
   # Pod for Auth
   pod 'Firebase/Auth'

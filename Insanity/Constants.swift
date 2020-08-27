@@ -78,7 +78,7 @@ struct K {
                         0,14,9,10,11,12,7,15,
                         0,9,13,12,7,9,13,1]
         static let programm = [0:"week", 1:"Fit Test", 2:"Plyo Cardio Circuit", 3:"Cardio Power & Resistance", 4:"Cardio Recovery", 5:"Pure Cardio", 6:"Pure Cardio & Abs", 7:"Core Cardio & Balance", 8:"Fit Test / Max Interval Training", 9:"Max Interval Plyo", 10:"Max Cardio Conditioning", 11:"Max Recovery", 12:"Max Interval Circuit", 13:"Max Cardio Conditioning & Abs", 14:"Fit Test/ Max Interval Circuit",15:"Rest"]
-        static let workoutMove = ["Switch Kicks", "Power Jack", "Power Knees", "Power Jump", "Global Jump", "Suicide Jump", "Push-Up Jack", "Low Plank Oblique" ]
+        static let workoutMove = ["Switch Kicks", "Power Jacks", "Power Knees", "Power Jumps", "Globe Jumps", "Suicide Jumps", "Push-Up Jacks", "Low Plank Oblique" ]
         static let workoutCellIdentifier = "workoutMoveCell"
         static let workoutCellNibName = "WorkoutCell"
     }
