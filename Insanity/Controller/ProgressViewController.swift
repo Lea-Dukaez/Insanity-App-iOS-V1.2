@@ -15,8 +15,10 @@ class ProgressViewController: UIViewController {
         
     var chartBrain: ChartBrain?
     
+    var alert = UIAlertController()
+    var alertDeleteTest = UIAlertController()
+    var numberTextField = UITextField()
     let forbiddenNumber = ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
-    
     
     @IBOutlet weak var filterSegment: UISegmentedControl!
     @IBOutlet weak var progressLabel: UILabel!
@@ -53,7 +55,8 @@ class ProgressViewController: UIViewController {
             DataBrain.sharedInstance.loadWorkoutData()
         }
         
-         testsTableView.register(UINib(nibName: "TestResultCell", bundle: nil), forCellReuseIdentifier: "reuseTestResultCell")
+        testsTableView.register(UINib(nibName: "TestResultCell", bundle: nil), forCellReuseIdentifier: "reuseTestResultCell")
+        numberTextField.delegate = self
     }
     
     
@@ -148,7 +151,62 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return Int(DataBrain.sharedInstance.numberOfTestsCurrentUser)
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let frame = tableView.frame
 
+        // create Label for Title
+        let rectLabel = CGRect(x: 40, y: 0, width: frame.size.width-30, height: 50)
+        let titleLabel = UILabel(frame: rectLabel)
+        
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        let testDate = workoutsTestsSorted[section].date
+        
+        titleLabel.text = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
+        
+        // create Button for trash
+        let rectButton = CGRect(x: frame.size.width-60, y: 13, width: 25, height: 25)
+        let trashButton =  UIButton(frame: rectButton)
+        trashButton.setImage(UIImage(systemName: "trash"), for: .normal)
+        trashButton.tag = section
+        
+        trashButton.addTarget(self, action: #selector(self.showAlerDeleteTest), for: .touchUpInside)
+
+        // cerate Header View
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
+        
+        headerView.backgroundColor = .secondarySystemBackground
+        headerView.addSubview(titleLabel)
+        headerView.addSubview(trashButton)
+
+        return headerView
+    }
+    
+    
+    @objc func showAlerDeleteTest() {
+        // create alert to delete test
+        
+        alertDeleteTest = UIAlertController(title: "Delete Fit Test", message: "Are you sure ?"  , preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Save", style: .default) { (action) in
+            print("delete fit test, save changes and reload table view")
+        }
+        
+        
+        alertDeleteTest.addAction(action)
+        alertDeleteTest.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alertDeleteTest, animated: true) {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
+            self.alertDeleteTest.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50.0
+    }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -218,35 +276,41 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
 
         return [editAction]
     }
+
     
     private func showEditAlert(exo: String, date: String, number: String) {
         
-        var numberTextField = UITextField()
-        
-        
-        let alert = UIAlertController(title: "Edit", message: "\(exo) from \(date)", preferredStyle: .alert)
+        alert = UIAlertController(title: "Edit", message: "\(exo) from \(date)", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Save", style: .default) { (action) in
-            if numberTextField.text == "" {
+            if self.numberTextField.text == "" {
                 // close alert with no update
                 print("no change")
             } else {
                 // save new data in database and update table view
                 print("new value saved")
-                print(numberTextField.text!)
+                print(self.numberTextField.text!)
             }
         }
         
         alert.addTextField { (alertTextField) in
             alertTextField.delegate = self
             alertTextField.placeholder = number
-            numberTextField = alertTextField
+            self.numberTextField = alertTextField
         }
         
         alert.addAction(action)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true) {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
+            self.alert.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+        }
+
+    }
+    
+    @objc func dismissAlert() {
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
