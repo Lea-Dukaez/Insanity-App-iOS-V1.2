@@ -127,6 +127,8 @@ class ProgressViewController: UIViewController {
     
 }
 
+    // MARK: - DataBrainProgressDelegate
+
 extension ProgressViewController: DataBrainProgressDelegate {
     func updateProgressChart() {
         self.testsTableView.dataSource = self
@@ -146,6 +148,9 @@ extension ProgressViewController: DataBrainProgressDelegate {
     
 }
 
+// MARK: - UITableViewDataSource UITableViewDelegate
+
+
 extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,7 +165,7 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
         let rectLabel = CGRect(x: 40, y: 0, width: frame.size.width-30, height: 50)
         let titleLabel = UILabel(frame: rectLabel)
         
-        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
         let testDate = workoutsTestsSorted[section].date
         
         titleLabel.text = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
@@ -214,7 +219,7 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
         if DataBrain.sharedInstance.allWorkOutResultsCurrentUser.isEmpty {
             return nil
         } else {
-            let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+            let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
             let testDate = workoutsTestsSorted[section].date
             return DataBrain.sharedInstance.dateString(timeStampDate: testDate)
             
@@ -237,7 +242,7 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
         let section = indexPath.section
         let row = indexPath.row
         
-        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
         
         cell.workoutLabel.text = K.workout.workoutMove[row]
         cell.workoutScore.text = String(format: "%.0f",workoutsTestsSorted[section].workOutResult[row])
@@ -248,6 +253,9 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
 
 }
 
+// MARK: - SwipeTableViewCellDelegate
+
+
 extension ProgressViewController: SwipeTableViewCellDelegate {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
@@ -257,7 +265,7 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
         let section = indexPath.section
         let row = indexPath.row
         
-        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedAscending })
+        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
         
         let testDate = workoutsTestsSorted[section].date
         let exoDate = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
@@ -289,7 +297,9 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
             } else {
                 // save new data in database and update table view
                 print("new value saved")
+                
                 print(self.numberTextField.text!)
+                
             }
         }
         
@@ -314,6 +324,9 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
     }
     
 }
+
+// MARK: - UITextFieldDelegate
+
 
 extension ProgressViewController: UITextFieldDelegate {
     
