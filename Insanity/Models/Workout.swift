@@ -11,6 +11,7 @@ import Firebase
 
 struct Workout {
     let userID: String
-    let workOutResult: [Double]
+    let workoutID: String
+    var workOutResult: [Double]
     let date: Timestamp
 }

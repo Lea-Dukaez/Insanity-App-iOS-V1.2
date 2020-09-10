@@ -204,6 +204,7 @@ class DataBrain {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for (index, doc) in snapshotDocuments.enumerated() {
                         let data = doc.data()
+                        let workoutID = doc.documentID
                         if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
                             let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
                             let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
@@ -213,7 +214,7 @@ class DataBrain {
                                 self.firstFitTestCurrentUser = testResult
                             }
                             
-                            let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
+                            let newWorkout = Workout(userID: idCompetitor, workoutID: workoutID, workOutResult: testResult, date: testDate)
                             let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                             self.dateLabelsCurrentUserWorkout.append(workOutDate)
                             self.allWorkOutResultsCurrentUser.append(newWorkout)
@@ -234,10 +235,25 @@ class DataBrain {
         return dateString
     }
     
+    // save change for a specifique TestResults
+    
+    func changevalueInTestResult(docID: String, workoutresultModify: [Double]) {
+        self.db.collection(K.FStore.WorkoutTests.collectionTestName).document(docID).updateData([
+            K.FStore.WorkoutTests.testField: workoutresultModify,
+        ]) { error in
+            if let err = error {
+                print("Error saving changes in document: \(err)")
+            } else {
+                print("doc testResult updated")
+            }
+        }
+    }
+    
     // MARK: - Methods for Test View Controller
     
     func saveNewWorkout(testResults: [Double], workoutDate: Date) {
-        self.db.collection(K.FStore.WorkoutTests.collectionTestName).addDocument(data: [
+        var ref: DocumentReference? = nil
+        ref = self.db.collection(K.FStore.WorkoutTests.collectionTestName).addDocument(data: [
             K.FStore.WorkoutTests.idField: self.currentUserID,
             K.FStore.WorkoutTests.testField: testResults,
             K.FStore.WorkoutTests.dateField: Timestamp(date: workoutDate)
@@ -245,12 +261,70 @@ class DataBrain {
             if let err = error {
                 print("Error adding document: \(err)")
             } else {
-                print("Document added!")
+                print("Document added with ID: \(ref!.documentID)")
+                let newWorkoutID = ref!.documentID
+                self.updateDataBrain(docID: newWorkoutID, listWorkoutTest: testResults, workoutDate: workoutDate)
             }
         }
     }
     
-    func majMax(listTest: [Double]) {
+
+    func updateDataBrain(docID: String, listWorkoutTest: [Double], workoutDate: Date) {
+
+        // update DataBrain numberOfTestsCurrentUser
+        self.numberOfTestsCurrentUser += 1
+
+        // update DataBrain allWorkOutResultsCurrentUser & dateLabelsCurrentUserWorkout
+        let newWorkout = Workout(userID: DataBrain.sharedInstance.currentUserID, workoutID: docID, workOutResult: listWorkoutTest, date: Timestamp(date: workoutDate))
+        
+        let workOutDate = self.dateString(timeStampDate: newWorkout.date)
+        DataBrain.sharedInstance.dateLabelsCurrentUserWorkout.append(workOutDate)
+        DataBrain.sharedInstance.allWorkOutResultsCurrentUser.append(newWorkout)
+    }
+    
+    
+    func majMaxAfterValueUpdated(oldValue: Double, newValue: Double, exoNumber: Int) {
+
+        if newValue < oldValue && oldValue == self.currentUserMaxValues[exoNumber] {
+            
+            var findNewMax: Double = 0
+            
+            for index in 0..<allWorkOutResultsCurrentUser.count {
+                let value = allWorkOutResultsCurrentUser[index].workOutResult[exoNumber]
+                findNewMax = max(value, findNewMax)
+            }
+            
+            self.currentUserMaxValues[exoNumber] = findNewMax
+            
+            self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
+                K.FStore.Users.maxField: self.currentUserMaxValues,
+            ]) { error in
+                if let err = error {
+                    print("Error saving changes in document: \(err)")
+                } else {
+                    print("doc maxValue updated")
+                }
+            }
+            
+
+        } else if newValue > self.currentUserMaxValues[exoNumber] {
+            
+            self.currentUserMaxValues[exoNumber] = newValue
+            
+            self.db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID).updateData([
+                K.FStore.Users.maxField: self.currentUserMaxValues,
+            ]) { error in
+                if let err = error {
+                    print("Error saving changes in document: \(err)")
+                } else {
+                    print("doc maxValue updated")
+                }
+            }
+        }
+        
+    }
+    
+    func majMax(testResults: [Double]) {
         var newMaxValues: [Double] = []
         
         let userRef = db.collection(K.FStore.Users.collectionUsersName).document(self.currentUserID)
@@ -291,13 +365,18 @@ class DataBrain {
             transaction.updateData([K.FStore.Users.numberOfTestsField: oldNumberOfTests+1], forDocument: userRef)
 
             if oldMaxValues.isEmpty {
-                transaction.updateData([K.FStore.Users.maxField: listTest], forDocument: userRef)
+                transaction.updateData([K.FStore.Users.maxField: testResults], forDocument: userRef)
+                // update DataBrain variable
+                self.currentUserMaxValues = testResults
+                self.firstFitTestCurrentUser = testResults
                 return nil
             } else {
                 for index in 0..<oldMaxValues.count {
-                    newMaxValues.append(max(listTest[index], oldMaxValues[index]))
+                    newMaxValues.append(max(testResults[index], oldMaxValues[index]))
                 }
                 transaction.updateData([K.FStore.Users.maxField: newMaxValues], forDocument: userRef)
+                // update DataBrain variable
+                self.currentUserMaxValues = newMaxValues
                 return nil
             }
             

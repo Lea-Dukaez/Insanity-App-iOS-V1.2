@@ -107,6 +107,7 @@ class FriendActivityViewController: UIViewController {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for (index, doc) in snapshotDocuments.enumerated() {
                         let data = doc.data()
+                        let workoutID = doc.documentID
                         if let idCompetitor = data[K.FStore.WorkoutTests.idField] as? String,
                             let testResult = data[K.FStore.WorkoutTests.testField] as? [Double],
                             let testDate = data[K.FStore.WorkoutTests.dateField] as? Timestamp {
@@ -116,7 +117,7 @@ class FriendActivityViewController: UIViewController {
                                 self.firstValues = testResult
                             }
                             
-                            let newWorkout = Workout(userID: idCompetitor, workOutResult: testResult, date: testDate)
+                            let newWorkout = Workout(userID: idCompetitor, workoutID: workoutID, workOutResult: testResult, date: testDate)
                             self.chartBrain?.allWorkOutResults.append(newWorkout)
                             let workOutDate = self.dateString(timeStampDate: newWorkout.date)
                             self.chartBrain?.dateLabels.append(workOutDate)

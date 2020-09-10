@@ -215,14 +215,12 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        
         if DataBrain.sharedInstance.allWorkOutResultsCurrentUser.isEmpty {
             return nil
         } else {
             let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
             let testDate = workoutsTestsSorted[section].date
             return DataBrain.sharedInstance.dateString(timeStampDate: testDate)
-            
         }
 
     }
@@ -267,6 +265,7 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
         
         let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
         
+        let testDocID = workoutsTestsSorted[section].workoutID
         let testDate = workoutsTestsSorted[section].date
         let exoDate = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
         let exoName = K.workout.workoutMove[row]
@@ -276,7 +275,7 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
             // code
             print("tapped to edit")
             
-            self.showEditAlert(exo: exoName, date: exoDate, number: exoScore)
+            self.showEditAlert(docID: testDocID, exoRowNumber: row, section: section, exo: exoName, date: exoDate, number: exoScore)
         }
 
         // customize the action appearance
@@ -286,7 +285,7 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
     }
 
     
-    private func showEditAlert(exo: String, date: String, number: String) {
+    private func showEditAlert(docID: String, exoRowNumber: Int, section: Int, exo: String, date: String, number: String) {
         
         alert = UIAlertController(title: "Edit", message: "\(exo) from \(date)", preferredStyle: .alert)
         
@@ -295,11 +294,22 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
                 // close alert with no update
                 print("no change")
             } else {
-                // save new data in database and update table view
-                print("new value saved")
+
+                let index = DataBrain.sharedInstance.allWorkOutResultsCurrentUser.indices.filter { DataBrain.sharedInstance.allWorkOutResultsCurrentUser[$0].workoutID == docID } // return array with 1 element
                 
-                print(self.numberTextField.text!)
+                let oldValue = DataBrain.sharedInstance.allWorkOutResultsCurrentUser[index[0]].workOutResult[exoRowNumber]
+                print(oldValue)
+                let newValue = Double(self.numberTextField.text!)!
+                DataBrain.sharedInstance.allWorkOutResultsCurrentUser[index[0]].workOutResult[exoRowNumber] = newValue
+                let workOutResultUpdated = DataBrain.sharedInstance.allWorkOutResultsCurrentUser[index[0]].workOutResult
                 
+                // update all workout data + Max workout
+                DataBrain.sharedInstance.changevalueInTestResult(docID: docID, workoutresultModify: workOutResultUpdated)
+                DataBrain.sharedInstance.majMaxAfterValueUpdated(oldValue: oldValue, newValue: newValue, exoNumber: exoRowNumber)
+                
+                // update table view
+                self.testsTableView.reloadSections([section], with: .none)
+
             }
         }
         

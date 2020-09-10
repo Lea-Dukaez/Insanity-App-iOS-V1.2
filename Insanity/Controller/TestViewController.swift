@@ -81,10 +81,7 @@ class TestViewController: UIViewController {
             
             // Add a new document in Firestore for currentUser
             DataBrain.sharedInstance.saveNewWorkout(testResults: self.listWorkoutTest, workoutDate: self.workoutDate)
-            DataBrain.sharedInstance.majMax(listTest: self.listWorkoutTest)
-            
-            // Update DatBrain var
-            updateDataBrain()
+            DataBrain.sharedInstance.majMax(testResults: self.listWorkoutTest) 
             
             self.listWorkoutTest = [Double]()
             
@@ -95,42 +92,6 @@ class TestViewController: UIViewController {
             showAlert()
         }
     }
-    
-    func updateDataBrain() {
-        var newMaxValues: [Double] = []
-
-        // update DataBrain numberOfTestsCurrentUser
-        DataBrain.sharedInstance.numberOfTestsCurrentUser += 1
-        
-        // update DataBrain CurrentUserMaxValues
-        if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
-            DataBrain.sharedInstance.currentUserMaxValues = self.listWorkoutTest
-            DataBrain.sharedInstance.firstFitTestCurrentUser = self.listWorkoutTest
-        } else {
-            for index in 0..<DataBrain.sharedInstance.currentUserMaxValues.count {
-                newMaxValues.append(max(self.listWorkoutTest[index], DataBrain.sharedInstance.currentUserMaxValues[index]))
-            }
-            DataBrain.sharedInstance.currentUserMaxValues = newMaxValues
-        }
-
-        // update DataBrain allWorkOutResultsCurrentUser & dateLabelsCurrentUserWorkout
-        let newWorkout = Workout(userID: DataBrain.sharedInstance.currentUserID, workOutResult: self.listWorkoutTest, date: Timestamp(date: self.workoutDate))
-        let workOutDate = self.dateString(timeStampDate: newWorkout.date)
-        DataBrain.sharedInstance.dateLabelsCurrentUserWorkout.append(workOutDate)
-        DataBrain.sharedInstance.allWorkOutResultsCurrentUser.append(newWorkout)
-
-    }
-    
-    // Func to format the Date of workout Results
-    func dateString(timeStampDate: Timestamp) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d"
-        let date = timeStampDate.dateValue()
-        let dateString = dateFormatter.string(from: date)
-        
-        return dateString
-    }
-
     
     func showAlert() {
         self.present(alert, animated: true) {
