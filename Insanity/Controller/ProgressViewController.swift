@@ -33,6 +33,7 @@ class ProgressViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("progress view : view did load called")
         
         DataBrain.sharedInstance.dataBrainProgressDelegate = self
         
@@ -131,6 +132,7 @@ class ProgressViewController: UIViewController {
 
 extension ProgressViewController: DataBrainProgressDelegate {
     func updateProgressChart() {
+        print("updateProgressChart called")
         self.testsTableView.dataSource = self
         self.testsTableView.delegate = self
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {
@@ -170,43 +172,55 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
         
         titleLabel.text = DataBrain.sharedInstance.dateString(timeStampDate: testDate)
         
-        // create Button for trash
-        let rectButton = CGRect(x: frame.size.width-60, y: 13, width: 25, height: 25)
-        let trashButton =  UIButton(frame: rectButton)
-        trashButton.setImage(UIImage(systemName: "trash"), for: .normal)
-        trashButton.tag = section
-        
-        trashButton.addTarget(self, action: #selector(self.showAlerDeleteTest), for: .touchUpInside)
+//        // create Button for trash
+//        let rectButton = CGRect(x: frame.size.width-60, y: 13, width: 25, height: 25)
+//        let trashButton =  UIButton(frame: rectButton)
+//        trashButton.setImage(UIImage(systemName: "trash"), for: .normal)
+//
+//        trashButton.addTarget(self, action: #selector(self.showAlerDeleteTest(_:)), for: .touchUpInside)
+//
+//        trashButton.tag = section
 
         // cerate Header View
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
         
         headerView.backgroundColor = .secondarySystemBackground
         headerView.addSubview(titleLabel)
-        headerView.addSubview(trashButton)
+//        headerView.addSubview(trashButton)
 
         return headerView
     }
     
     
-    @objc func showAlerDeleteTest() {
-        // create alert to delete test
-        
-        alertDeleteTest = UIAlertController(title: "Delete Fit Test", message: "Are you sure ?"  , preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: "Save", style: .default) { (action) in
-            print("delete fit test, save changes and reload table view")
-        }
-        
-        
-        alertDeleteTest.addAction(action)
-        alertDeleteTest.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        present(alertDeleteTest, animated: true) {
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
-            self.alertDeleteTest.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
-        }
-    }
+//    @objc func showAlerDeleteTest(_ button:UIButton) {
+//
+//        let index = button.tag
+//
+//        let workoutsTestsSorted =  DataBrain.sharedInstance.allWorkOutResultsCurrentUser.sorted(by: { $0.date.compare($1.date) == .orderedDescending })
+//        let selectedTestDate = workoutsTestsSorted[index].date
+//        let selectedTestDateString = DataBrain.sharedInstance.dateString(timeStampDate: selectedTestDate)
+//        let selectedTestID = workoutsTestsSorted[index].workoutID
+//
+//        // create alert to delete test
+//
+//        alertDeleteTest = UIAlertController(title: "Delete Test", message: "Do you really want to delete your test from \(selectedTestDateString)?"  , preferredStyle: .alert)
+//
+//        let action = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+//
+//            print("delete fit test \(selectedTestID), save changes and reload table view")
+//            // update cancel attribut(field) from false to true, + change number of test -1
+//
+//        }
+//
+//
+//        alertDeleteTest.addAction(action)
+//        alertDeleteTest.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//
+//        present(alertDeleteTest, animated: true) {
+//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
+//            self.alertDeleteTest.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -272,9 +286,7 @@ extension ProgressViewController: SwipeTableViewCellDelegate {
         let exoScore = String(format: "%.0f",workoutsTestsSorted[section].workOutResult[row])
         
         let editAction = SwipeAction(style: .default, title: "Edit") { (action, indexPath) in
-            // code
-            print("tapped to edit")
-            
+                        
             self.showEditAlert(docID: testDocID, exoRowNumber: row, section: section, exo: exoName, date: exoDate, number: exoScore)
         }
 

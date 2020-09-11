@@ -67,7 +67,7 @@ struct ChartBrain {
         case 5:
             data.barWidth = Double(0.40)
         default:
-            data.barWidth = Double(0.60)
+            data.barWidth = Double(0.50)
         }
         
         barChart.legend.enabled = false

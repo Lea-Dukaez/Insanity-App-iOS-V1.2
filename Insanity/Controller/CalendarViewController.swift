@@ -59,6 +59,7 @@ class CalendarViewController: UIViewController {
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+        
         tableView.register(UINib(nibName: "CalendarTableCell", bundle: nil), forCellReuseIdentifier: "reuseCalendarTableCell")
 
         collectionView?.collectionViewLayout = columnLayout
@@ -98,8 +99,6 @@ class CalendarViewController: UIViewController {
         collectionView.alpha = 1
         tableIcon.tintColor = .secondaryLabel
         tableView.alpha = 0
-        
-
         
     }
     

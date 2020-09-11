@@ -249,6 +249,7 @@ class DataBrain {
         }
     }
     
+    
     // MARK: - Methods for Test View Controller
     
     func saveNewWorkout(testResults: [Double], workoutDate: Date) {

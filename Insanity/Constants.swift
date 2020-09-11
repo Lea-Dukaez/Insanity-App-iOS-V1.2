@@ -102,12 +102,15 @@ struct K {
             static let numberOfTestsField = "numberOfTests"
 
         }
+        
         struct WorkoutTests {
             static let collectionTestName = "workoutTests"
             static let dateField = "date"
             static let idField = "id"
             static let testField = "testResults"
+            static let canceledField = "canceled"
         }
+        
         struct Relationships {
             static let collectionRelationshipsName = "relationships"
             static let statusField = "status"

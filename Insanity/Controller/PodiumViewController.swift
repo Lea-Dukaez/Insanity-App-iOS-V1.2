@@ -43,7 +43,6 @@ class PodiumViewController: UIViewController {
         workoutPickerView.dataSource = self
         workoutPickerView.delegate = self
         defaultPodiumValue()
-    
     }
 
     func defaultPodiumValue() {
@@ -62,7 +61,7 @@ class PodiumViewController: UIViewController {
     }
     
 
-    func updatePodium(sportRow: Int) {        
+    func updatePodium(sportRow: Int) {
         let currentUserIndex = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].userID == currentUserID}
         
         var commentScore = ""
