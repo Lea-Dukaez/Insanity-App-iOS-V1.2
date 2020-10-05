@@ -257,7 +257,8 @@ class DataBrain {
         ref = self.db.collection(K.FStore.WorkoutTests.collectionTestName).addDocument(data: [
             K.FStore.WorkoutTests.idField: self.currentUserID,
             K.FStore.WorkoutTests.testField: testResults,
-            K.FStore.WorkoutTests.dateField: Timestamp(date: workoutDate)
+            K.FStore.WorkoutTests.dateField: Timestamp(date: workoutDate),
+            K.FStore.WorkoutTests.canceledField: false
         ]) { error in
             if let err = error {
                 print("Error adding document: \(err)")

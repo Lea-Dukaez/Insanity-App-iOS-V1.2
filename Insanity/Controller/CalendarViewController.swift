@@ -11,11 +11,16 @@ import Firebase
 
 class CalendarViewController: UIViewController {
     
+    @IBOutlet weak var clearButton: UIButton!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var calendarIcon: UIButton!
     @IBOutlet weak var tableIcon: UIButton!
+    
+    var alertResetCalendar = UIAlertController()
+
     
     let cell = "reuseCell"
     
@@ -50,6 +55,11 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        clearButton.backgroundColor = .clear
+        clearButton.layer.borderWidth = 1
+        clearButton.layer.cornerRadius = 3
+        clearButton.layer.borderColor = UIColor.secondaryLabel.cgColor
 
         DataBrain.sharedInstance.dataBrainCalendarDelegate = self
         currentUserID = DataBrain.sharedInstance.currentUserID
@@ -112,6 +122,37 @@ class CalendarViewController: UIViewController {
     }
     
     
+    @IBAction func resetPressed(_ sender: UIButton) {
+        showAlerResetCalendar()
+    }
+    
+    func showAlerResetCalendar() {
+        alertResetCalendar = UIAlertController(title: "Clear Calendar", message: "This action will clear all your calendar. Fit Test results will remain."  , preferredStyle: .alert)
+
+        let action = UIAlertAction(title: "Confirm", style: .destructive) { (action) in
+            
+            for index in DataBrain.sharedInstance.calendarCurrentUser.indices {
+                DataBrain.sharedInstance.calendarCurrentUser[index] = false
+            }
+            
+            self.collectionView.reloadData()
+            self.tableView.reloadData()
+        }
+        
+        alertResetCalendar.addAction(action)
+        alertResetCalendar.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alertResetCalendar, animated: true) {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert))
+            self.alertResetCalendar.view.superview?.subviews[0].addGestureRecognizer(tapGesture)
+        }
+    }
+    
+    @objc func dismissAlert() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
 }
 
 // MARK: - UICollectionViewDataSource
@@ -168,6 +209,9 @@ extension CalendarViewController: UICollectionViewDelegate {
     
 }
 
+
+// MARK: - UITableViewDataSource
+
 extension CalendarViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -206,6 +250,9 @@ extension CalendarViewController: UITableViewDataSource {
     
 
 }
+
+
+// MARK: - UITableViewDelegate
 
 extension CalendarViewController: UITableViewDelegate {
     

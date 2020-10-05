@@ -84,10 +84,12 @@ struct K {
     }
     
     struct podium {
-        static let first = "Well done ! You surpass them all. As Ayrton Senna said : 'I am not designed to come second or third. I am designed to win.'"
-        static let second = "Very good score but not good enough to reach for the first place !"
-        static let third = "At least you reach the podium ! Good job"
-        static let notOnPodium = "Sorry you miss the podium. But the best reward is improving your results. isn't it? Your best score for this exercice is: "
+        static let firstNoFriend = "Well done for your score. But you have no competitors... Start following friends to compare yourself with them and challenge yoursel !"
+        static let firstNoDataForFriends = "Well done for your score. But you have no competitors for now... Let's see when your firends start their first fit test !"
+        static let first = "Well done ! You beat them all. As Ayrton Senna said : 'I am not designed to come second or third. I am designed to win.'"
+        static let second = "Very good but not enough to reach the first place!"
+        static let third = "You've reached the podium ! Good job"
+        static let notOnPodium = "Sorry you've not reached the podium. Keep working hard. Your best score for this exercice is: "
     }
     
     struct FStore {
@@ -100,7 +102,6 @@ struct K {
             static let calendarField = "calendar"
             static let followedUsersField = "followedUsers"
             static let numberOfTestsField = "numberOfTests"
-
         }
         
         struct WorkoutTests {

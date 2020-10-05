@@ -33,7 +33,6 @@ class ProgressViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("progress view : view did load called")
         
         DataBrain.sharedInstance.dataBrainProgressDelegate = self
         
@@ -132,7 +131,6 @@ class ProgressViewController: UIViewController {
 
 extension ProgressViewController: DataBrainProgressDelegate {
     func updateProgressChart() {
-        print("updateProgressChart called")
         self.testsTableView.dataSource = self
         self.testsTableView.delegate = self
         if DataBrain.sharedInstance.currentUserMaxValues.isEmpty {

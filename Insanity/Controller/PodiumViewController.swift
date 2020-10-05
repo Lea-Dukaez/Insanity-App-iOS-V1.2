@@ -13,6 +13,9 @@ class PodiumViewController: UIViewController {
     
     var currentUserID: String = ""
     var workoutSelected = "Switch Kicks"
+    
+    private var commentScore = ""
+    private var commentLabel = ""
 
     @IBOutlet weak var scoreNotOnPodiumLabel: UILabel!
     @IBOutlet weak var textNotOnPodiumLabel: UILabel!
@@ -62,153 +65,169 @@ class PodiumViewController: UIViewController {
     
 
     func updatePodium(sportRow: Int) {
-        let currentUserIndex = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].userID == currentUserID}
         
-        var commentScore = ""
-        var commentLabel = ""
-        
-        if DataBrain.sharedInstance.dataPodium[currentUserIndex[0]].max.count == 0 {
+        // get an array containing the index of current user
+        let arrayCurrentUser = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].userID == currentUserID}
+        let indexCurrentUser = arrayCurrentUser[0]
+                
+        if DataBrain.sharedInstance.dataPodium[indexCurrentUser].max.count == 0 {
             // case no score recorded for current user
             commentScore = ""
             commentLabel = "Let's get started with your first fit test to compare yourself with your followed friends."
         } else {
             // case by default, current user out of Podium
-            commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[currentUserIndex[0]].max[sportRow]) // out of range
+            commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexCurrentUser].max[sportRow])
             commentLabel = K.podium.notOnPodium
         }
         
-   
         let dataPodiumFiltered = DataBrain.sharedInstance.dataPodium.filter { $0.max.isEmpty == false }
-
-        switch dataPodiumFiltered.count {
-        case 1:
+        let nbUsersData = dataPodiumFiltered.count
+        
+                
+        if nbUsersData == 1 {
             // case only 1 array Max not empty => Data for 1 user
-            let index = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == dataPodiumFiltered[0].max } // return array with 1 element
-            topOneImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[0]].avatar)
-            topOneLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[0]].max[sportRow])
-            topOnePseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[0]].pseudo
-            if DataBrain.sharedInstance.dataPodium[index[0]].userID == currentUserID {
-                commentLabel = "Well done for your score. But you have no competitors... Start following friends to compare yourself with them and challenge yourself !"
-                commentScore = ""
-            }
-        case 2:
+            let arrayFirstUser = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == dataPodiumFiltered[0].max } // return array with 1 element
+            
+            updateUIFirst(arrayFirstUser: arrayFirstUser, workout: sportRow, nbUsersData: nbUsersData)
+            
+        } else if nbUsersData == 2 {
             // case 2 array Max not empty => Data for 2 users
             let maxScore = dataPodiumFiltered.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
-            let index = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == maxScore!.max }
-            topOneImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[0]].avatar)
-            topOneLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[0]].max[sportRow])
-            topOnePseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[0]].pseudo
-            if DataBrain.sharedInstance.dataPodium[index[0]].userID == currentUserID {
-                commentLabel = K.podium.first
-                commentScore = ""
-            }
-            if index.count == 2 {
-                topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[1]].avatar)
-                topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[1]].max[sportRow])
-                topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[1]].pseudo
-                if DataBrain.sharedInstance.dataPodium[index[1]].userID == currentUserID {
-                    commentLabel = K.podium.second
-                    commentScore = ""
-                }
+            let arrayFirstUser = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == maxScore!.max }
+            
+            updateUIFirst(arrayFirstUser: arrayFirstUser, workout: sportRow, nbUsersData: nbUsersData)
+            
+            if arrayFirstUser.count == 2 {
+                let index = arrayFirstUser[1]
+                updateUISecond(indexSecond: index, workout: sportRow)
+        
             } else {
                 let secondScore = dataPodiumFiltered.filter { $0.max != maxScore!.max }
-                let indexSecond = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == secondScore[0].max }
-                topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexSecond[0]].avatar)
-                topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexSecond[0]].max[sportRow])
-                topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexSecond[0]].pseudo
-                if DataBrain.sharedInstance.dataPodium[indexSecond[0]].userID == currentUserID {
-                    commentLabel = K.podium.second
-                    commentScore = ""
-                }
+                let arrayIndexSecond = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == secondScore[0].max }
+                
+                let index = arrayIndexSecond[0]
+                updateUISecond(indexSecond: index, workout: sportRow)
             }
         
-        case 3...4:
+        } else if nbUsersData >= 3 {
             // case 3 or more array "Max" not empty => Data for 3 users or more
             let maxScore = dataPodiumFiltered.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
-            let index = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == maxScore!.max }
-            topOneImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[0]].avatar)
-            topOneLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[0]].max[sportRow])
-            topOnePseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[0]].pseudo
-            if DataBrain.sharedInstance.dataPodium[index[0]].userID == currentUserID {
-                commentLabel = K.podium.first
-                commentScore = ""
-            }
-            if index.count == 3 || index.count == 4 {
-                // case Ex-aequo between Top 1-2-3-4
-                topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[1]].avatar)
-                topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[1]].max[sportRow])
-                topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[1]].pseudo
-                topThreeImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[2]].avatar)
-                topThreeLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[2]].max[sportRow])
-                topThreePseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[2]].pseudo
-                if DataBrain.sharedInstance.dataPodium[index[1]].userID == currentUserID {
-                    commentLabel = K.podium.second
-                    commentScore = ""
-                } else if DataBrain.sharedInstance.dataPodium[index[2]].userID == currentUserID {
-                    commentLabel = K.podium.third
-                    commentScore = ""
-                } else {
-                    if index.count == 4 && DataBrain.sharedInstance.dataPodium[index[3]].userID == currentUserID {
-                        commentLabel = K.podium.notOnPodium
-                        commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[3]].max[sportRow])
-                    }
-                }
-            } else if index.count == 2 {
+            let arrayFirstUser = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == maxScore!.max }
+            
+            updateUIFirst(arrayFirstUser: arrayFirstUser, workout: sportRow, nbUsersData: nbUsersData)
+
+            if arrayFirstUser.count >= 3 { //  == 3 || arrayFirstUser.count == 4
+                // case Ex-aequo between Top 1-2-3-4 ...
+                
+                let indexSecond = arrayFirstUser[1]
+                updateUISecond(indexSecond: indexSecond, workout: sportRow)
+            
+                let indexThird = arrayFirstUser[2]
+                updateUIThird(indexThird: indexThird, workout: sportRow)
+                
+                updateUINotOnPodium(arrayFirstUser[0], indexSecond, indexThird, indexCurrentUser, workout: sportRow)
+
+                
+            } else if arrayFirstUser.count == 2 {
                 // case Ex-aequo between Top 1-2
-                topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[index[1]].avatar)
-                topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[index[1]].max[sportRow])
-                topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[index[1]].pseudo
-                if DataBrain.sharedInstance.dataPodium[index[1]].userID == currentUserID {
-                    commentLabel = K.podium.second
-                    commentScore = ""
-                }
+                
+                let indexSecond = arrayFirstUser[1]
+                updateUISecond(indexSecond: indexSecond, workout: sportRow)
+                
+                let thirdScore = dataPodiumFiltered.filter { $0.max != maxScore!.max }
+                let arrayIndexThird = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == thirdScore[0].max }
+                let indexThird = arrayIndexThird[0]
+                updateUIThird(indexThird: indexThird, workout: sportRow)
+                
+                updateUINotOnPodium(arrayFirstUser[0], indexSecond, indexThird, indexCurrentUser, workout: sportRow)
+                
             } else {
-                // case No Ex-aequo between Top 1-2
+                // case No Ex-aequo for first place
+
                 let dataPodiumWithouFirst = dataPodiumFiltered.filter { $0.max != maxScore!.max }
                 let SecondMaxScore = dataPodiumWithouFirst.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
-                let indexSecond = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == SecondMaxScore!.max }
-                topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexSecond[0]].avatar)
-                topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexSecond[0]].max[sportRow])
-                topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexSecond[0]].pseudo
-                if DataBrain.sharedInstance.dataPodium[indexSecond[0]].userID == currentUserID {
-                    commentLabel = K.podium.second
-                    commentScore = ""
-                }
-                if indexSecond.count == 2 || indexSecond.count == 3 {
+                let arrayIndexSecond = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == SecondMaxScore!.max }
+                let indexSecond = arrayIndexSecond[0]
+                updateUISecond(indexSecond: indexSecond, workout: sportRow)
+
+                if arrayIndexSecond.count >= 2 { //  == 2 || arrayIndexSecond.count == 3 {
                     // case, after Top 1, Ex-aequo between Top 2-3-4
-                    topThreeImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexSecond[1]].avatar)
-                    topThreeLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexSecond[1]].max[sportRow])
-                    topThreePseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexSecond[1]].pseudo
-                    if DataBrain.sharedInstance.dataPodium[indexSecond[1]].userID == currentUserID {
-                        commentLabel = K.podium.third
-                        commentScore = ""
-                    }
-                    if indexSecond.count == 3 && DataBrain.sharedInstance.dataPodium[indexSecond[2]].userID == currentUserID{
-                        commentLabel = K.podium.notOnPodium
-                        commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexSecond[2]].max[sportRow])
-                    }
+                    
+                    let indexThird = arrayIndexSecond[1]
+                    updateUIThird(indexThird: indexThird, workout: sportRow)
+                    
+                    updateUINotOnPodium(arrayFirstUser[0], indexSecond, indexThird, indexCurrentUser, workout: sportRow)
+                    
                 } else {
-                    // case No Ex-aequo between Top 1-2-3
+                    // case No Ex-aequo anywhere
+
                     let dataPodiumThird = dataPodiumWithouFirst.filter { $0.max != SecondMaxScore!.max }
                     let thirdMaxScore = dataPodiumThird.max { user1, user2  in user1.max[sportRow] < user2.max[sportRow] }
-                    let indexThird = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == thirdMaxScore!.max }
-                    topThreeImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexThird[0]].avatar)
-                    topThreeLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexThird[0]].max[sportRow])
-                    topThreePseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexThird[0]].pseudo
-                    if DataBrain.sharedInstance.dataPodium[indexThird[0]].userID == currentUserID {
-                          commentLabel = K.podium.third
-                        commentScore = ""
-                    }
+                    let arrayIndexThird = DataBrain.sharedInstance.dataPodium.indices.filter { DataBrain.sharedInstance.dataPodium[$0].max == thirdMaxScore!.max }
+                    
+                    let indexThird = arrayIndexThird[0]
+                    updateUIThird(indexThird: indexThird, workout: sportRow)
+                    
+                    updateUINotOnPodium(arrayFirstUser[0], indexSecond, indexThird, indexCurrentUser, workout: sportRow)
+                    
                 }
             }
-        default:
-            // case if dataPodium contains only empty array => dataPodiumFiltered.count = 0
-            print("No data recorded")
         }
-        
+
         textNotOnPodiumLabel.text = commentLabel
         scoreNotOnPodiumLabel.text = commentScore
     }
+    
+    
+    private func updateUIFirst(arrayFirstUser: [Range<Array<PodiumCompetitor>.Index>.Element], workout: Int, nbUsersData: Int) {
+        let indexFirst = arrayFirstUser[0]
+        
+        self.topOneImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexFirst].avatar)
+        self.topOneLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexFirst].max[workout])
+        self.topOnePseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexFirst].pseudo
+        
+        if DataBrain.sharedInstance.dataPodium[indexFirst].userID == currentUserID && nbUsersData == 1 {
+            commentLabel = DataBrain.sharedInstance.dataPodium.count == 1 ? K.podium.firstNoFriend : K.podium.firstNoDataForFriends
+            commentScore = ""
+        } else {
+            commentLabel = K.podium.first
+            commentScore = ""
+        }
+    }
+    
+    private func updateUISecond(indexSecond: Range<Array<PodiumCompetitor>.Index>.Element, workout: Int) {
+        topTwoImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexSecond].avatar)
+        topTwoLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexSecond].max[workout])
+        topTwoPseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexSecond].pseudo
+        
+        if DataBrain.sharedInstance.dataPodium[indexSecond].userID == currentUserID {
+            commentLabel = K.podium.second
+            commentScore = ""
+        }
+    }
+    
+    private func updateUIThird(indexThird: Range<Array<PodiumCompetitor>.Index>.Element, workout: Int) {
+        topThreeImage.image = UIImage(named: DataBrain.sharedInstance.dataPodium[indexThird].avatar)
+        topThreeLabel.text = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexThird].max[workout])
+        topThreePseudoLabel.text = DataBrain.sharedInstance.dataPodium[indexThird].pseudo
+        
+        if DataBrain.sharedInstance.dataPodium[indexThird].userID == currentUserID {
+            commentLabel = K.podium.third
+            commentScore = ""
+        }
+    }
+    
+    private func updateUINotOnPodium(_ indexFirst: Range<Array<PodiumCompetitor>.Index>.Element, _ indexSecond: Range<Array<PodiumCompetitor>.Index>.Element, _ indexThird: Range<Array<PodiumCompetitor>.Index>.Element, _ indexCurrentUser: Range<Array<PodiumCompetitor>.Index>.Element, workout: Int) {
+        
+        if DataBrain.sharedInstance.dataPodium[indexFirst].userID != currentUserID &&
+            DataBrain.sharedInstance.dataPodium[indexSecond].userID != currentUserID &&
+            DataBrain.sharedInstance.dataPodium[indexThird].userID != currentUserID
+        {
+            commentLabel = K.podium.notOnPodium
+            commentScore = String(format: "%.0f", DataBrain.sharedInstance.dataPodium[indexCurrentUser].max[workout])
+        }
+    }
+    
         
 }
 
